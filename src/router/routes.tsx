@@ -1,5 +1,4 @@
 import DevelopmentInquiry from '../pages/development_inquiry'
-import EstimateCalculation from '../pages/estimate_calculation'
 import Home from '../pages/home'
 import Portfolio from '../pages/portfolio'
 import MyRouteProp from './MyRouteProp'
