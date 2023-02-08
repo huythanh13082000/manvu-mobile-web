@@ -26,7 +26,7 @@ const routes: Array<MyRouteProp> = [
   },
   {
     path: ROUTE.ESTIMATE_CALCULATION,
-    element: <EstimateCalculation />,
+    element: <DevelopmentInquiry />,
   },
 ]
 export default routes
