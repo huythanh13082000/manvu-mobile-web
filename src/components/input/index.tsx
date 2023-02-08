@@ -1,5 +1,4 @@
-import {makeStyles} from '@material-ui/core'
-import React from 'react'
+import { makeStyles } from '@material-ui/core'
 
 const useStyles = makeStyles({
   container_input_base: {
@@ -13,7 +12,7 @@ const useStyles = makeStyles({
       lineHeight: '27px',
       color: '#1F293',
       '&>span': {
-        color: '#2C97EB',
+        color: '#F22828',
       },
     },
     '&>input': {

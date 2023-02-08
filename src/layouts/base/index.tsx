@@ -9,7 +9,8 @@ const useStyles = makeStyles({
     display: 'flex',
     '&>div:nth-child(1)': {},
     '&>div:nth-child(2)': {
-      width: '80%',
+      boxSizing: 'border-box',
+      width: 'calc(100% - 300px)',
       background: '#F3F4F6',
     },
   },
