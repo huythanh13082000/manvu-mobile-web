@@ -13,6 +13,8 @@ import AddIcon from '@material-ui/icons/Add'
 import DeleteOutlineIcon from '@material-ui/icons/DeleteOutline'
 import {useState} from 'react'
 import {Pagination} from '@material-ui/lab'
+import {useNavigate} from 'react-router-dom'
+import {ROUTE} from '../../router/routes'
 
 const useStyles = makeStyles({
   container_portfolio: {
@@ -77,6 +79,7 @@ const GreenCheckbox = withStyles({
 const Portfolio = () => {
   const classes = useStyles()
   const [selectList, selectListData] = useState<string[]>([])
+  const navigate = useNavigate()
 
   const handleClick = (id: string) => {
     if (selectList.includes(id)) {
@@ -91,7 +94,11 @@ const Portfolio = () => {
       <div>
         <div>
           포트폴리오{' '}
-          <Button variant='contained' color='primary'>
+          <Button
+            variant='contained'
+            color='primary'
+            onClick={() => navigate(ROUTE.CREATE_PORTFOLIO)}
+          >
             <AddIcon />
             추가
           </Button>

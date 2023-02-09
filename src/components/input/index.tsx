@@ -1,8 +1,9 @@
-import { makeStyles } from '@material-ui/core'
+import {makeStyles} from '@material-ui/core'
 
 const useStyles = makeStyles({
   container_input_base: {
     width: '100%',
+    position: 'relative',
     '&>label': {
       display: 'inline-block',
       marginBottom: '10px',
@@ -23,6 +24,12 @@ const useStyles = makeStyles({
       border: '1px solid #9CA3AF',
       borderRadius: '4px',
       boxSizing: 'border-box',
+      fontSize: '16px',
+    },
+    '&>span': {
+      position: 'absolute',
+      top: '54px',
+      right: '13px',
     },
   },
 })
@@ -33,6 +40,7 @@ const InputBase = (props: {
   require?: boolean
   onChange: (event: any) => void
   type?: 'text' | 'number'
+  icon?: any
 }) => {
   const classes = useStyles()
   return (
@@ -48,6 +56,11 @@ const InputBase = (props: {
         required={props.require}
         onChange={(e) => props.onChange(e.target.value)}
       />
+      {props.icon && (
+        <span>
+          <>{props.icon}</>
+        </span>
+      )}
     </div>
   )
 }

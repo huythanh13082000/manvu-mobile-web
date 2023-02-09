@@ -1,11 +1,11 @@
-import { makeStyles } from '@material-ui/core'
-import { useLocation, useNavigate } from 'react-router-dom'
+import {makeStyles} from '@material-ui/core'
+import {useLocation, useNavigate} from 'react-router-dom'
 import IconBagMenu from '../../asset/icons/icon_bag_menu'
 import IconMoneyMenu from '../../asset/icons/icon_money_menu'
 import IconNoteMenu from '../../asset/icons/icon_note_menu'
 
 import logoMenu from '../../asset/images/logo-menu.png'
-import { ROUTE } from '../../router/routes'
+import {ROUTE} from '../../router/routes'
 
 const useStyles = makeStyles({
   container_menu: {
@@ -37,6 +37,7 @@ const useStyles = makeStyles({
       alignItem: 'center',
       padding: '16px',
       borderRadius: '4px',
+      margin: '0.5rem 0',
       '&>p': {
         margin: '0 16px',
       },
@@ -44,6 +45,9 @@ const useStyles = makeStyles({
     '&>div:hover': {
       background: '#0065F2',
       color: 'white',
+    },
+    '&>div:nth-child(1):hover': {
+      background: 'white',
     },
   },
 })
