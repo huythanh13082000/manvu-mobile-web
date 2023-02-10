@@ -1,18 +1,50 @@
 import {PayloadAction} from '@reduxjs/toolkit'
-import {call, takeEvery} from 'redux-saga/effects'
+import {NavigateFunction} from 'react-router-dom'
+import {call, put, takeEvery} from 'redux-saga/effects'
 import {authApi} from '../../apis/authApi'
+import {snackBarActions} from '../../components/snackbar/snackbarSlice'
+import {ROUTE} from '../../router/routes'
 import {LoginType} from '../../types/login.type'
+import {exportResults} from '../../utils'
 import {authAction} from './authSlice'
 
+function setTokens(params: LoginType) {
+  localStorage.setItem('accessToken', params.token.accessToken || '')
+  localStorage.setItem('refreshToken', params.token.refreshToken || '')
+  localStorage.setItem(
+    'expiresInAccessToken',
+    params.token.expiresInAccessToken || ''
+  )
+  localStorage.setItem(
+    'expiresInRefreshToken',
+    params.token.expiresInRefreshToken || ''
+  )
+}
+
 function* login(
-  action: PayloadAction<{user_email: string; user_password: string}>
+  action: PayloadAction<{
+    data: {user_email: string; user_password: string}
+    history: NavigateFunction
+  }>
 ) {
   try {
     console.log(action.payload)
-    const data: LoginType = yield call(authApi.login, action.payload)
-    console.log(data)
+    const data: LoginType = yield call(authApi.login, action.payload.data)
+    setTokens(exportResults(data))
+    yield put(
+      snackBarActions.setStateSnackBar({
+        content: '잘못된 비밀번호 또는 계정',
+        type: 'success',
+      })
+    )
+    action.payload.history(ROUTE.HOME)
   } catch (error: any) {
-    console.log(1221, error)
+    yield put(
+      snackBarActions.setStateSnackBar({
+        content: '잘못된 비밀번호 또는 계정',
+        type: 'error',
+      })
+    )
   }
 }
 

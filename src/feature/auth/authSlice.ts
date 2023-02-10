@@ -1,4 +1,5 @@
 import {createSlice, PayloadAction} from '@reduxjs/toolkit'
+import { NavigateFunction } from 'react-router-dom';
 
 const initialState = {}
 
@@ -8,7 +9,10 @@ const authSlice = createSlice({
   reducers: {
     login: (
       state,
-      action: PayloadAction<{user_email: string; user_password: string}>
+      action: PayloadAction<{
+        data: {user_email: string; user_password: string}
+        history: NavigateFunction
+      }>
     ) => {
       console.log(122, action)
     },

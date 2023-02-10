@@ -7,6 +7,7 @@ import reportWebVitals from './reportWebVitals'
 import './index.scss'
 import BaseLayout from './layouts/base'
 import Router from './router'
+import CustomizedSnackbars from './components/snackbar'
 
 const container = document.getElementById('root')!
 const root = createRoot(container)
@@ -15,7 +16,7 @@ root.render(
   <React.StrictMode>
     <Provider store={store}>
       <BrowserRouter>
-        {/* <CustomizedSnackbars /> */}
+        <CustomizedSnackbars />
         <BaseLayout>
           <Router />
         </BaseLayout>

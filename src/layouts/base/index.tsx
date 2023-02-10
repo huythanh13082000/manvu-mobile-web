@@ -1,8 +1,8 @@
-import {makeStyles} from '@material-ui/styles'
-import React, {ReactNode, useEffect} from 'react'
-import {Route, useLocation} from 'react-router-dom'
+import { makeStyles } from '@material-ui/styles'
+import React, { ReactNode } from 'react'
+import { useLocation } from 'react-router-dom'
 import Menu from '../../components/menu'
-import {ROUTE} from '../../router/routes'
+import { ROUTE } from '../../router/routes'
 interface Props {
   children: ReactNode
 }
@@ -21,7 +21,6 @@ const useStyles = makeStyles({
 const BaseLayout: React.FC<Props> = ({children}) => {
   const classes = useStyles()
   const location = useLocation()
-  useEffect(() => {}, [])
 
   return (
     <div className={classes.container_base_layout}>

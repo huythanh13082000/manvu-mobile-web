@@ -22,7 +22,7 @@ const routes: Array<MyRouteProp> = [
   {
     path: ROUTE.HOME,
     element: <Portfolio />,
-    private: false,
+    private: true,
   },
   {
     path: ROUTE.PORTFOLIO,

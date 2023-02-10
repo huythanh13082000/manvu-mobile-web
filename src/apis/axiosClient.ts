@@ -10,8 +10,8 @@ const axiosClient = axios.create({
 // export const setTokenAxios = () => {}
 axiosClient.interceptors.request.use(
   function (config: AxiosRequestConfig) {
-    // const token = localStorage.getItem('token') || ''
-    // axiosClient.defaults.headers.common['Authorization'] = token
+    const token = localStorage.getItem('token') || ''
+    axiosClient.defaults.headers.common['Authorization'] = token
     return config
   },
   function (error) {
