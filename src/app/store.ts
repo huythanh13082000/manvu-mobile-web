@@ -6,9 +6,12 @@ import {
   ThunkAction,
 } from '@reduxjs/toolkit'
 import createSagaMiddleware from 'redux-saga'
+import {authReducer} from '../feature/auth/authSlice'
 import rootSaga from './rootSaga'
 
-const rootReducer = combineReducers({})
+const rootReducer = combineReducers({
+  authReducer,
+})
 
 const sagaMiddleware = createSagaMiddleware()
 const middleware = [...getDefaultMiddleware({thunk: false}), sagaMiddleware]

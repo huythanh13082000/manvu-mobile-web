@@ -1,1 +1,2 @@
-export const AUTH_API = ''
+export const LOGIN = '/auth/login'
+export const LOGOUT = ''

@@ -1,6 +1,7 @@
-import { Navigate } from 'react-router-dom'
+import {Navigate} from 'react-router-dom'
 import MyRouteProp from './MyRouteProp'
 import RoleRoute from './roleRoute'
+import {ROUTE} from './routes'
 interface Props {
   item: MyRouteProp
 }
@@ -13,7 +14,7 @@ function PrivateRoute(props: Props) {
       return <>{props.item.element}</>
     }
   } else {
-    return <Navigate to={{pathname: '/login'}} />
+    return <Navigate to={{pathname: ROUTE.LOGIN}} />
   }
 }
 

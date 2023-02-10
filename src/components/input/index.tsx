@@ -1,4 +1,4 @@
-import {makeStyles} from '@material-ui/core'
+import {makeStyles, StyledProps} from '@material-ui/core'
 
 const useStyles = makeStyles({
   container_input_base: {
@@ -39,8 +39,10 @@ const InputBase = (props: {
   placeholder: string
   require?: boolean
   onChange: (event: any) => void
-  type?: 'text' | 'number'
+  type?: 'text' | 'number' | 'password'
   icon?: any
+  style?: React.CSSProperties
+  value?: string
 }) => {
   const classes = useStyles()
   return (
@@ -50,11 +52,13 @@ const InputBase = (props: {
       </label>
       <br />
       <input
+        style={props.style ? {...props.style} : {}}
         type={props.type ? props.type : 'text'}
         id={props.label}
         placeholder={props.placeholder}
         required={props.require}
         onChange={(e) => props.onChange(e.target.value)}
+        value={props.value}
       />
       {props.icon && (
         <span>
