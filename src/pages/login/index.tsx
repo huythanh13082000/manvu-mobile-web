@@ -84,7 +84,6 @@ const Login = () => {
       })
     )
   }
-  console.log(username)
   return (
     <div className={classes.container_login}>
       <div>

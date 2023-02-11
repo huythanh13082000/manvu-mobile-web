@@ -1,9 +1,11 @@
 import {makeStyles} from '@mui/styles'
-import React, {useRef, useState} from 'react'
+import React, {useRef, useState, useEffect} from 'react'
 import uploadImages from '../../asset/images/upload-images.png'
 import CancelIcon from '@material-ui/icons/Cancel'
 import ArrowUpwardIcon from '@material-ui/icons/ArrowUpward'
 import ArrowDownwardIcon from '@material-ui/icons/ArrowDownward'
+import {useParams} from 'react-router-dom'
+import {BASE_URL} from '../../constants'
 
 const useStyles = makeStyles({
   container_upload_images: {
@@ -92,8 +94,9 @@ const useStyles = makeStyles({
 const UploadImages = (props: {images: any; setImages: (e: any) => void}) => {
   const classes = useStyles()
   const inputRef = useRef<HTMLInputElement>(null)
-  const [listImage, setListImage] = useState<any[]>([...props.images])
-  const [listFile, setListFile] = useState<any[]>([...props.images])
+  const [listImage, setListImage] = useState<any[]>([])
+  const [listFile, setListFile] = useState<any[]>([])
+  const {id} = useParams()
 
   const handleDelete = (params: string) => {
     const index = listImage.indexOf(params)
@@ -109,23 +112,32 @@ const UploadImages = (props: {images: any; setImages: (e: any) => void}) => {
     const index = listImage.indexOf(params)
     if (index !== 0) {
       const images = [...listImage]
+      const files = [...listFile]
+      files[index] = listFile[index - 1]
+      files[index - 1] = listFile[index]
       images[index] = listImage[index - 1]
       images[index - 1] = listImage[index]
       setListImage([...images])
+      setListFile([...files])
+      props.setImages([...files])
     }
   }
   const handleDown = (params: string) => {
     const index = listImage.indexOf(params)
     if (index !== listImage.length - 1) {
       const images = [...listImage]
+      const files = [...listFile]
+      files[index] = listFile[index + 1]
+      files[index + 1] = listFile[index]
       images[index] = listImage[index + 1]
       images[index + 1] = listImage[index]
       setListImage([...images])
+      setListFile([...files])
+      props.setImages([...files])
     }
   }
 
   const handleChange = (e: any) => {
-    console.log(122121, e.target.files)
     const data = [...e.target.files]
     const images = data.map((item) => {
       return URL.createObjectURL(item)
@@ -135,14 +147,28 @@ const UploadImages = (props: {images: any; setImages: (e: any) => void}) => {
     props.setImages([...listFile, ...e.target.files])
   }
 
-  console.log('test', listFile)
-  console.log('test1', listImage)
+  useEffect(() => {
+    if (id && props.images) {
+      setListImage(props.images)
+      setListFile(props.images)
+    }
+  }, [id, props.images])
+
   return (
     <div className={classes.container_upload_images}>
       <div>
-        {listImage.map((item) => (
-          <div>
-            <img src={item} alt='' />
+        {listImage.map((item, index) => (
+          <div key={index}>
+            <img
+              src={
+                typeof item === 'string' && item.includes('blob')
+                  ? item
+                  : typeof item === 'string'
+                  ? `${BASE_URL}${item}`
+                  : URL.createObjectURL(item)
+              }
+              alt=''
+            />
             <span onClick={() => handleDelete(item)}>
               <CancelIcon />
             </span>

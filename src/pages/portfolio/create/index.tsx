@@ -1,8 +1,8 @@
 import Button from '@material-ui/core/Button'
 import ArrowBackIcon from '@material-ui/icons/ArrowBack'
 import {makeStyles} from '@mui/styles'
-import {useState} from 'react'
-import {useNavigate} from 'react-router-dom'
+import {useState, useEffect} from 'react'
+import {useLocation, useNavigate, useParams} from 'react-router-dom'
 import InputBase from '../../../components/input'
 import UploadAvatar from '../../../components/upload_avatar'
 import UploadImages from '../../../components/upload_images'
@@ -10,6 +10,9 @@ import {PortfolioType} from '../../../types/portfolio.type'
 import {TextareaAutosize} from '@material-ui/core'
 import {useAppDispatch} from '../../../app/hooks'
 import {portfolioAction} from '../../../feature/portfolio/portfolioSlice'
+import {portfolioApi} from '../../../apis/portfolioApi'
+import {exportResults} from '../../../utils'
+import {BASE_URL} from '../../../constants'
 
 const useStyles = makeStyles({
   container_create_portfolio: {
@@ -69,27 +72,59 @@ const CreatePortfolio = () => {
   const classes = useStyles()
   const navigate = useNavigate()
   const dispatch = useAppDispatch()
+  const {id} = useParams()
   const [data, setData] = useState<PortfolioType>({
     title: '',
     programming_language: '',
     description: '',
     images: [],
   })
-  const createPortfolio = () => {
-    const formDataLogo = new FormData()
-    const formDataImages = new FormData()
-    formDataLogo.append('picture', data.logo)
-    data.images &&
-      data.images.forEach((file, i) => {
-        formDataImages.append(`pictures`, file)
-      })
-    dispatch(
-      portfolioAction.create({
-        data: {...data, logo: formDataLogo, images: formDataImages},
-        history: navigate,
-      })
-    )
+  const handlePortfolio = () => {
+    if (id) {
+      dispatch(
+        portfolioAction.update({
+          data: {
+            ...data,
+            logo: data.logo,
+            images: data.images,
+            portfolio_id: Number(id),
+          },
+          history: navigate,
+        })
+      )
+    } else {
+      const formDataLogo = new FormData()
+      const formDataImages = new FormData()
+      formDataLogo.append('picture', data.logo)
+      data.images &&
+        data.images.forEach((file, i) => {
+          formDataImages.append(`pictures`, file)
+        })
+      dispatch(
+        portfolioAction.create({
+          data: {...data, logo: formDataLogo, images: formDataImages},
+          history: navigate,
+        })
+      )
+    }
   }
+  useEffect(() => {
+    if (id) {
+      const getDetail = async () => {
+        const data = await portfolioApi.getDetail(Number(id))
+        const portfolio: PortfolioType = exportResults(data)
+        setData({
+          images: portfolio.images,
+          title: portfolio.title,
+          description: portfolio.description,
+          logo: portfolio.logo,
+          programming_language: portfolio.programming_language,
+        })
+      }
+      getDetail()
+    }
+  }, [id])
+
   return (
     <div className={classes.container_create_portfolio}>
       <div>
@@ -111,11 +146,13 @@ const CreatePortfolio = () => {
             onChange={(e) => setData({...data, title: e})}
             label='제목'
             placeholder='입력하십시오'
+            value={data.title}
           />
           <InputBase
             onChange={(e) => setData({...data, programming_language: e})}
             label='개발언어'
             placeholder='입력하십시오'
+            value={data.programming_language}
           />
           <div style={{display: 'inherit'}}>
             <label
@@ -142,6 +179,7 @@ const CreatePortfolio = () => {
                 fontSize: '16px',
               }}
               onChange={(e) => setData({...data, description: e.target.value})}
+              value={data.description}
             />
           </div>
           <div>
@@ -153,7 +191,7 @@ const CreatePortfolio = () => {
           </div>
         </div>
         <div>
-          <Button onClick={createPortfolio}>완료</Button>
+          <Button onClick={handlePortfolio}>완료</Button>
         </div>
       </div>
     </div>

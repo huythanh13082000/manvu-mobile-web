@@ -14,6 +14,7 @@ export const ROUTE = {
   DEVELOPMENT_INQUIRY: '/development_inquiry',
   CREATE_DEVELOPMENT_INQUIRY: '/create_development_inquiry',
   CREATE_PORTFOLIO: '/create_portfolio',
+  UPDATE_PORTFOLIO: '/update_portfolio/:id',
   CREATE_ESTIMATE_CALCULATION: '/create_estimate_calculation',
   LOGIN: '/login',
 }
@@ -46,6 +47,11 @@ const routes: Array<MyRouteProp> = [
   },
   {
     path: ROUTE.CREATE_PORTFOLIO,
+    element: <CreatePortfolio />,
+    private: true,
+  },
+  {
+    path: ROUTE.UPDATE_PORTFOLIO,
     element: <CreatePortfolio />,
     private: true,
   },

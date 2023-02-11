@@ -4,4 +4,5 @@ export interface PortfolioType {
   programming_language: string
   description?: string
   images?: any[] | FormData
+  portfolio_id?: number
 }

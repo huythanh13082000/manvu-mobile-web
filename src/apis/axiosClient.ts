@@ -1,16 +1,22 @@
 import axios, {AxiosRequestConfig, AxiosResponse} from 'axios'
+import { BASE_URL } from '../constants'
+
+
 
 const axiosClient = axios.create({
-  baseURL: 'http://3.35.47.171:3535/',
+  baseURL: BASE_URL,
   headers: {
     'Content-Type': 'application/json',
     'Access-Control-Allow-Origin': '*',
   },
 })
+export const setTokenAxios = () => {
+  const token = localStorage.getItem('accessToken')
+  axiosClient.defaults.headers.common['Authorization'] = `Bearer ${token}`
+}
+
 axiosClient.interceptors.request.use(
   function (config: AxiosRequestConfig) {
-    const token = localStorage.getItem('accessToken') || ''
-    axiosClient.defaults.headers.common['Authorization'] = `Bearer ${token}`
     return config
   },
   function (error) {

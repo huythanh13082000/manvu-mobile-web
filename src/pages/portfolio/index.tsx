@@ -15,6 +15,13 @@ import {useState} from 'react'
 import {Pagination} from '@material-ui/lab'
 import {useNavigate} from 'react-router-dom'
 import {ROUTE} from '../../router/routes'
+import React, {useEffect} from 'react'
+import {useAppDispatch, useAppSelector} from '../../app/hooks'
+import {
+  portfolioAction,
+  selectListPortfolio,
+  selectTotalPortfolio,
+} from '../../feature/portfolio/portfolioSlice'
 
 const useStyles = makeStyles({
   container_portfolio: {
@@ -25,12 +32,14 @@ const useStyles = makeStyles({
       height: '500px',
       background: 'white',
       '&>div:nth-child(3)': {
-        display: 'flex',
-        padding: '0.3rem 1rem',
-        border: '1px solid rgba(196, 196, 196, 0.5)',
-        alignItems: 'center',
-        justifyContent: 'space-between',
-        '&>div': {},
+        '&>div': {
+          display: 'flex',
+          padding: '0.3rem 1rem',
+          border: '1px solid rgba(196, 196, 196, 0.5)',
+          alignItems: 'center',
+          justifyContent: 'space-between',
+          '&>div': {},
+        },
       },
       '&>div:nth-child(1)': {
         fontWeight: 500,
@@ -78,10 +87,23 @@ const GreenCheckbox = withStyles({
 
 const Portfolio = () => {
   const classes = useStyles()
-  const [selectList, selectListData] = useState<string[]>([])
+  const [selectList, selectListData] = useState<number[]>([])
   const navigate = useNavigate()
+  const dispatch = useAppDispatch()
+  const listPortfolio = useAppSelector(selectListPortfolio)
+  const total = useAppSelector(selectTotalPortfolio)
+  const [page, setPage] = React.useState(1)
+  const handleChangePagination = (
+    event: React.ChangeEvent<unknown>,
+    value: number
+  ) => {
+    setPage(value)
+  }
+  useEffect(() => {
+    dispatch(portfolioAction.get({page, perPage: 10}))
+  }, [dispatch, page])
 
-  const handleClick = (id: string) => {
+  const handleClick = (id: number) => {
     if (selectList.includes(id)) {
       selectListData([...selectList.filter((item) => item !== id)])
     } else {
@@ -121,24 +143,45 @@ const Portfolio = () => {
           )}
         </div>
         <div>
-          <FormControlLabel
-            control={
-              <GreenCheckbox
-                // checked={state.checkedG}
-                // onChange={handleChange}
-                name='checkedG'
-              />
-            }
-            label='Custom color'
-            onClick={() => handleClick('1')}
-          />
-          <div>
-            <ArrowUpwardIcon style={{marginRight: '1rem'}} />
-            <ArrowDownwardIcon />
-          </div>
+          {listPortfolio.map((item) => (
+            <div>
+              <div>
+                <FormControlLabel
+                  control={
+                    <GreenCheckbox
+                      // checked={state.checkedG}
+                      // onChange={handleChange}
+                      name='checkedG'
+                    />
+                  }
+                  label=''
+                  onClick={() =>
+                    item.portfolio_id && handleClick(item.portfolio_id)
+                  }
+                />
+                <span
+                  onClick={() =>
+                    navigate(`/update_portfolio/${item.portfolio_id}`)
+                  }
+                >
+                  {item.title}
+                </span>
+              </div>
+              <div>
+                <ArrowUpwardIcon style={{marginRight: '1rem'}} />
+                <ArrowDownwardIcon />
+              </div>
+            </div>
+          ))}
         </div>
+
         <div>
-          <Pagination count={10} showFirstButton showLastButton />
+          <Pagination
+            showFirstButton
+            showLastButton
+            page={total && total / 10}
+            onChange={handleChangePagination}
+          />
         </div>
       </div>
     </div>

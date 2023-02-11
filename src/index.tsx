@@ -8,9 +8,12 @@ import './index.scss'
 import BaseLayout from './layouts/base'
 import Router from './router'
 import CustomizedSnackbars from './components/snackbar'
+import {setTokenAxios} from './apis/axiosClient'
 
 const container = document.getElementById('root')!
 const root = createRoot(container)
+
+setTokenAxios()
 
 root.render(
   <React.StrictMode>

@@ -8,4 +8,5 @@ export const HTTP_STATUS = {
   NOT_FOUND: 404,
   INTERNAL_SERVER_ERROR: 500,
 }
+export const BASE_URL = 'http://3.35.47.171:3535/'
 

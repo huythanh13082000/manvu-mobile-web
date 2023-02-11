@@ -16,7 +16,6 @@ const snackbarSlice = createSlice({
   initialState,
   reducers: {
     setStateSnackBar(state, action: PayloadAction<SnackBarType>) {
-      console.log(1221, action.payload)
       state.open = false
       state.type = 'error'
       state.content = ''

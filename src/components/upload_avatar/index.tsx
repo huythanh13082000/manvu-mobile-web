@@ -2,6 +2,7 @@ import {makeStyles} from '@mui/styles'
 import React, {useState, useRef, useEffect} from 'react'
 import inboxOut from '../../asset/images/inbox-out.png'
 import CloseIcon from '@material-ui/icons/Close'
+import {BASE_URL} from '../../constants'
 
 const useStyles = makeStyles({
   container_upload_avatar: {
@@ -36,21 +37,28 @@ const UploadAvatar = (props: {
   setImage: (params?: FormData) => void
 }) => {
   const classes = useStyles()
-  const [avatar, setAvatar] = useState(props.image)
+  const [avatar, setAvatar] = useState('')
   const inputRef = useRef<HTMLInputElement>(null)
 
   const handleChange = (e: any) => {
+    props.setImage(e.target.files[0])
     let url = URL.createObjectURL(e.target.files[0])
     setAvatar(url)
-    props.setImage(e.target.files[0])
-    console.log(url)
   }
+  useEffect(() => {
+    if (typeof props.image !== 'object' && props.image) setAvatar(props.image)
+  }, [props.image])
   return (
     <div style={{display: 'flex'}}>
       <div
         className={classes.container_upload_avatar}
         onClick={() => inputRef && inputRef.current && inputRef.current.click()}
-        style={{backgroundImage: `url('${avatar}')`}}
+        style={{
+          backgroundImage:
+            avatar && avatar.includes('http')
+              ? `url('${avatar}')`
+              : `url('${BASE_URL}/${avatar}')`,
+        }}
       >
         {!avatar && (
           <>
