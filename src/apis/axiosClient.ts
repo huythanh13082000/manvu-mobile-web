@@ -7,11 +7,10 @@ const axiosClient = axios.create({
     'Access-Control-Allow-Origin': '*',
   },
 })
-// export const setTokenAxios = () => {}
 axiosClient.interceptors.request.use(
   function (config: AxiosRequestConfig) {
-    const token = localStorage.getItem('token') || ''
-    axiosClient.defaults.headers.common['Authorization'] = token
+    const token = localStorage.getItem('accessToken') || ''
+    axiosClient.defaults.headers.common['Authorization'] = `Bearer ${token}`
     return config
   },
   function (error) {

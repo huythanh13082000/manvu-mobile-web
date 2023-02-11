@@ -1,5 +1,5 @@
 import {makeStyles} from '@mui/styles'
-import React, {useState, useRef} from 'react'
+import React, {useState, useRef, useEffect} from 'react'
 import inboxOut from '../../asset/images/inbox-out.png'
 import CloseIcon from '@material-ui/icons/Close'
 
@@ -31,15 +31,18 @@ const useStyles = makeStyles({
   },
 })
 
-const UploadAvatar = () => {
+const UploadAvatar = (props: {
+  image: any
+  setImage: (params?: FormData) => void
+}) => {
   const classes = useStyles()
-  const [avatar, setAvatar] = useState('')
+  const [avatar, setAvatar] = useState(props.image)
   const inputRef = useRef<HTMLInputElement>(null)
 
   const handleChange = (e: any) => {
     let url = URL.createObjectURL(e.target.files[0])
-    // setAvatar(e.target.files[0])
     setAvatar(url)
+    props.setImage(e.target.files[0])
     console.log(url)
   }
   return (

@@ -1,9 +1,10 @@
-import { TextareaAutosize } from '@material-ui/core'
+import {TextareaAutosize} from '@material-ui/core'
 import Button from '@material-ui/core/Button'
-import { makeStyles } from '@mui/styles'
+import {makeStyles} from '@mui/styles'
 import InputBase from '../../../components/input'
 import InputSelectApi from '../../../components/input_select_api'
 import UploadImages from '../../../components/upload_images'
+
 
 const useStyles = makeStyles({
   container_create_estimate_calculation: {
@@ -48,6 +49,7 @@ const useStyles = makeStyles({
 
 const CreateEstimateCalculation = () => {
   const classes = useStyles()
+
   return (
     <div className={classes.container_create_estimate_calculation}>
       <InputSelectApi
@@ -94,7 +96,7 @@ const CreateEstimateCalculation = () => {
       />
       <div>
         <p>이미지 업로드</p>
-        <UploadImages />
+        {/* <UploadImages /> */}
       </div>
       <div>
         <Button>완료</Button>

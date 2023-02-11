@@ -1,8 +1,8 @@
-import { makeStyles } from '@material-ui/styles'
-import React, { ReactNode } from 'react'
-import { useLocation } from 'react-router-dom'
+import {makeStyles} from '@material-ui/styles'
+import React, {ReactNode} from 'react'
+import {useLocation} from 'react-router-dom'
 import Menu from '../../components/menu'
-import { ROUTE } from '../../router/routes'
+import {ROUTE} from '../../router/routes'
 interface Props {
   children: ReactNode
 }
@@ -14,7 +14,7 @@ const useStyles = makeStyles({
       boxSizing: 'border-box',
       width: 'calc(100%)',
       background: '#F3F4F6',
-      height: '100vh',
+      minHeight: '100vh',
     },
   },
 })

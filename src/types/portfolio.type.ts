@@ -1,8 +1,7 @@
 export interface PortfolioType {
-  portfolio_name: string
-  logo: string
+  logo?: any
   title: string
   programming_language: string
-  description: string
-  images: string[]
+  description?: string
+  images?: any[] | FormData
 }

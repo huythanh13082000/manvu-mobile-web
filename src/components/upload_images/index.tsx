@@ -89,21 +89,21 @@ const useStyles = makeStyles({
   },
 })
 
-const UploadImages = () => {
+const UploadImages = (props: {images: any; setImages: (e: any) => void}) => {
   const classes = useStyles()
   const inputRef = useRef<HTMLInputElement>(null)
-  const [listImage, setListImage] = useState<string[]>([
-    'https://www.publicdomainpictures.net/pictures/320000/nahled/background-image.png',
-    'https://www.freecodecamp.org/news/content/images/2022/09/jonatan-pie-3l3RwQdHRHg-unsplash.jpg',
-    'https://hatrabbits.com/wp-content/uploads/2017/01/random.jpg',
-  ])
+  const [listImage, setListImage] = useState<any[]>([...props.images])
+  const [listFile, setListFile] = useState<any[]>([...props.images])
 
   const handleDelete = (params: string) => {
-    if (!listImage.includes(params)) {
-      setListImage([...listImage, params])
-    } else {
-      setListImage([...listImage.filter((item) => item !== params)])
-    }
+    const index = listImage.indexOf(params)
+    setListImage([...listImage.filter((item) => item !== listImage[index])])
+    const newListFile: any[] = []
+    listFile.forEach((item, i = 0) => {
+      if (i !== index) newListFile.push(item)
+    })
+    setListFile([...newListFile])
+    props.setImages([...newListFile])
   }
   const handleUp = (params: string) => {
     const index = listImage.indexOf(params)
@@ -125,14 +125,18 @@ const UploadImages = () => {
   }
 
   const handleChange = (e: any) => {
-    console.log(e.target.files)
-    const listFile = [...e.target.files]
-    const images = listFile.map((item) => {
+    console.log(122121, e.target.files)
+    const data = [...e.target.files]
+    const images = data.map((item) => {
       return URL.createObjectURL(item)
     })
     setListImage([...listImage, ...images])
+    setListFile([...listFile, ...e.target.files])
+    props.setImages([...listFile, ...e.target.files])
   }
 
+  console.log('test', listFile)
+  console.log('test1', listImage)
   return (
     <div className={classes.container_upload_images}>
       <div>

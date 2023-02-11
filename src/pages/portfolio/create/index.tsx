@@ -1,11 +1,15 @@
-import React from 'react'
-import {makeStyles} from '@mui/styles'
+import Button from '@material-ui/core/Button'
 import ArrowBackIcon from '@material-ui/icons/ArrowBack'
+import {makeStyles} from '@mui/styles'
+import {useState} from 'react'
+import {useNavigate} from 'react-router-dom'
 import InputBase from '../../../components/input'
 import UploadAvatar from '../../../components/upload_avatar'
 import UploadImages from '../../../components/upload_images'
-import {useNavigate} from 'react-router-dom'
-import Button from '@material-ui/core/Button'
+import {PortfolioType} from '../../../types/portfolio.type'
+import {TextareaAutosize} from '@material-ui/core'
+import {useAppDispatch} from '../../../app/hooks'
+import {portfolioAction} from '../../../feature/portfolio/portfolioSlice'
 
 const useStyles = makeStyles({
   container_create_portfolio: {
@@ -64,6 +68,28 @@ const useStyles = makeStyles({
 const CreatePortfolio = () => {
   const classes = useStyles()
   const navigate = useNavigate()
+  const dispatch = useAppDispatch()
+  const [data, setData] = useState<PortfolioType>({
+    title: '',
+    programming_language: '',
+    description: '',
+    images: [],
+  })
+  const createPortfolio = () => {
+    const formDataLogo = new FormData()
+    const formDataImages = new FormData()
+    formDataLogo.append('picture', data.logo)
+    data.images &&
+      data.images.forEach((file, i) => {
+        formDataImages.append(`pictures`, file)
+      })
+    dispatch(
+      portfolioAction.create({
+        data: {...data, logo: formDataLogo, images: formDataImages},
+        history: navigate,
+      })
+    )
+  }
   return (
     <div className={classes.container_create_portfolio}>
       <div>
@@ -76,30 +102,58 @@ const CreatePortfolio = () => {
         <div>
           <div>
             <p>로고 업로드</p>
-            <UploadAvatar />
+            <UploadAvatar
+              image={data?.logo}
+              setImage={(e) => setData({...data, logo: e})}
+            />
           </div>
           <InputBase
-            onChange={() => console.log(1)}
+            onChange={(e) => setData({...data, title: e})}
             label='제목'
             placeholder='입력하십시오'
           />
           <InputBase
-            onChange={() => console.log(1)}
+            onChange={(e) => setData({...data, programming_language: e})}
             label='개발언어'
             placeholder='입력하십시오'
           />
-          <InputBase
-            onChange={() => console.log(1)}
-            label='소개 및 내용'
-            placeholder='입력하십시오'
-          />
+          <div style={{display: 'inherit'}}>
+            <label
+              style={{
+                margin: '10px 0',
+                display: 'inline-block',
+                fontSize: '18px',
+              }}
+              htmlFor='textarea'
+            >
+              서비스의 주요 기능
+            </label>
+            <br />
+            <TextareaAutosize
+              aria-label='minimum height'
+              minRows={3}
+              id='textarea'
+              placeholder='예: 인테리어 업체와 소비자 매칭 서비스'
+              style={{
+                width: '100%',
+                paddingLeft: '10px',
+                height: '144px',
+                boxSizing: 'border-box',
+                fontSize: '16px',
+              }}
+              onChange={(e) => setData({...data, description: e.target.value})}
+            />
+          </div>
           <div>
             <p>이미지 업로드</p>
-            <UploadImages />
+            <UploadImages
+              images={data.images}
+              setImages={(e) => setData({...data, images: e})}
+            />
           </div>
         </div>
         <div>
-          <Button>완료</Button>
+          <Button onClick={createPortfolio}>완료</Button>
         </div>
       </div>
     </div>
