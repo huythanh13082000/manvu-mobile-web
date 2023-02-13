@@ -34,6 +34,7 @@ const useStyles = makeStyles({
       width: '100%',
       height: '500px',
       background: 'white',
+      minHeight: 'calc(100vh - 32px)',
       '&>div:nth-child(3)': {
         '&>div': {
           display: 'flex',
@@ -86,9 +87,7 @@ const GreenCheckbox = withStyles({
     },
   },
   checked: {},
-})((props: CheckboxProps) => (
-  <Checkbox color='default' {...props} />
-))
+})((props: CheckboxProps) => <Checkbox color='default' {...props} />)
 
 const Portfolio = () => {
   const classes = useStyles()
@@ -159,8 +158,8 @@ const Portfolio = () => {
           <FormControlLabel
             control={<GreenCheckbox name='checkedG' />}
             onClick={selectAll}
-            value={checkAll}
             label=''
+            checked={checkAll}
           />
           {selectList.length > 0 && (
             <Button
@@ -172,33 +171,41 @@ const Portfolio = () => {
             </Button>
           )}
         </div>
-        <div>
-          {listPortfolio.map((item) => (
+        {listPortfolio.length === 0 ? (
+          <div>
             <div>
-              <div>
-                <FormControlLabel
-                  control={<GreenCheckbox name='checkedG' />}
-                  checked={selectList.includes(Number(item.portfolio_id))}
-                  label=''
-                  onClick={() =>
-                    item.portfolio_id && handleClick(item.portfolio_id)
-                  }
-                />
-                <span
-                  onClick={() =>
-                    navigate(`/update_portfolio/${item.portfolio_id}`)
-                  }
-                >
-                  {item.title}
-                </span>
-              </div>
-              <div>
-                <ArrowUpwardIcon style={{marginRight: '1rem'}} />
-                <ArrowDownwardIcon />
-              </div>
+              <p>entry</p>
             </div>
-          ))}
-        </div>
+          </div>
+        ) : (
+          <div>
+            {listPortfolio.map((item) => (
+              <div key={item.portfolio_id}>
+                <div>
+                  <FormControlLabel
+                    control={<GreenCheckbox name='checkedG' />}
+                    checked={selectList.includes(Number(item.portfolio_id))}
+                    label=''
+                    onClick={() =>
+                      item.portfolio_id && handleClick(item.portfolio_id)
+                    }
+                  />
+                  <span
+                    onClick={() =>
+                      navigate(`/update_portfolio/${item.portfolio_id}`)
+                    }
+                  >
+                    {item.title}
+                  </span>
+                </div>
+                <div>
+                  <ArrowUpwardIcon style={{marginRight: '1rem'}} />
+                  <ArrowDownwardIcon />
+                </div>
+              </div>
+            ))}
+          </div>
+        )}
 
         <div>
           <Pagination
