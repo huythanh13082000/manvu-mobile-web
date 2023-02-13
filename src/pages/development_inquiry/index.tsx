@@ -2,20 +2,27 @@ import {
   Checkbox,
   CheckboxProps,
   FormControlLabel,
-  withStyles
+  withStyles,
 } from '@material-ui/core'
 import Button from '@material-ui/core/Button'
-import { green } from '@material-ui/core/colors'
+import {green} from '@material-ui/core/colors'
 import Menu from '@material-ui/core/Menu'
 import MenuItem from '@material-ui/core/MenuItem'
 import AddIcon from '@material-ui/icons/Add'
 import ArrowDropDownIcon from '@material-ui/icons/ArrowDropDown'
 import DeleteOutlineIcon from '@material-ui/icons/DeleteOutline'
-import { Pagination } from '@material-ui/lab'
-import { makeStyles } from '@mui/styles'
-import { useState } from 'react'
-import { useNavigate } from 'react-router-dom'
-import { ROUTE } from '../../router/routes'
+import {Pagination} from '@material-ui/lab'
+import {makeStyles} from '@mui/styles'
+import {useEffect, useState} from 'react'
+import {useNavigate} from 'react-router-dom'
+import {orderProjectApi} from '../../apis/orderProjectApi'
+import {useAppDispatch, useAppSelector} from '../../app/hooks'
+import {
+  orderProjectAction,
+  selectListOrderProject,
+  selectTotalOrderProject,
+} from '../../feature/order_project/orderProjectSlice'
+import {ROUTE} from '../../router/routes'
 
 const useStyles = makeStyles({
   container_portfolio: {
@@ -116,6 +123,10 @@ const GreenCheckbox = withStyles({
 const DevelopmentInquiry = () => {
   const classes = useStyles()
   const navigate = useNavigate()
+  const dispatch = useAppDispatch()
+  const listOrderProject = useAppSelector(selectListOrderProject)
+  const total = useAppSelector(selectTotalOrderProject)
+  const [page, setPage] = useState<number>(1)
   const [selectList, selectListData] = useState<string[]>([])
   const [anchorEl, setAnchorEl] = useState<HTMLButtonElement | null>(null)
   const [selectStatus, setSelectStatus] = useState<string>('')
@@ -135,7 +146,16 @@ const DevelopmentInquiry = () => {
       selectListData([...selectList, id])
     }
   }
-
+  const handleChangePagination = (
+    event: React.ChangeEvent<unknown>,
+    value: number
+  ) => {
+    setPage(value)
+  }
+  useEffect(() => {
+    dispatch(orderProjectAction.get({page, perPage: 10}))
+  }, [dispatch, page])
+  console.log(111, listOrderProject)
   return (
     <div className={classes.container_portfolio}>
       <div>
@@ -208,7 +228,12 @@ const DevelopmentInquiry = () => {
           </span>
         </div>
         <div>
-          <Pagination count={10} showFirstButton showLastButton />
+          <Pagination
+            page={total && total / 10}
+            onChange={handleChangePagination}
+            showFirstButton
+            showLastButton
+          />
         </div>
       </div>
     </div>

@@ -8,6 +8,7 @@ import {
 import createSagaMiddleware from 'redux-saga'
 import {snackBarReducer} from '../components/snackbar/snackbarSlice'
 import {authReducer} from '../feature/auth/authSlice'
+import {orderProjectReducer} from '../feature/order_project/orderProjectSlice'
 import {portfolioReducer} from '../feature/portfolio/portfolioSlice'
 import rootSaga from './rootSaga'
 
@@ -15,6 +16,7 @@ const rootReducer = combineReducers({
   authReducer,
   snackBarReducer,
   portfolioReducer,
+  orderProjectReducer,
 })
 
 const sagaMiddleware = createSagaMiddleware()

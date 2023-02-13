@@ -9,3 +9,7 @@ export const UPLOAD_fILE = '/system/upload-file'
 //Portfolios
 
 export const PORTFOLIO = '/portfolio'
+
+//order_project
+
+export const ORDER_PROJECT = '/order-project'
