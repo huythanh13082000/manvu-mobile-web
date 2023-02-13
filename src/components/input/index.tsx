@@ -1,4 +1,4 @@
-import {makeStyles, StyledProps} from '@material-ui/core'
+import { makeStyles } from '@material-ui/core'
 
 const useStyles = makeStyles({
   container_input_base: {

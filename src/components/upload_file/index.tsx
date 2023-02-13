@@ -1,10 +1,9 @@
 import {makeStyles} from '@mui/styles'
-import {useEffect, useState} from 'react'
-import InputBase from '../input'
+import download from '../../asset/images/download.png'
 import excel from '../../asset/images/excel.png'
 import pdf from '../../asset/images/pdf.png'
 import {BASE_URL} from '../../constants'
-import download from '../../asset/images/download.png'
+import InputBase from '../input'
 
 const useStyles = makeStyles({
   container_upload_file: {
@@ -77,7 +76,7 @@ const UploadFile = (props: {file?: string}) => {
         />
       </div>
       {props.file && (
-        <a href={`${BASE_URL}/${props.file}`} target='_blank'>
+        <a href={`${BASE_URL}/${props.file}`} target='_blank' rel='noreferrer'>
           <span>
             <img src={props.file.includes('.pdf') ? pdf : excel} alt='' />
             <div>{props.file}</div>

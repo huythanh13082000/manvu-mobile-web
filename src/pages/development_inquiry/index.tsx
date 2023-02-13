@@ -2,30 +2,28 @@ import {
   Checkbox,
   CheckboxProps,
   FormControlLabel,
-  withStyles,
+  withStyles
 } from '@material-ui/core'
 import Button from '@material-ui/core/Button'
-import {green} from '@material-ui/core/colors'
+import { green } from '@material-ui/core/colors'
 import Menu from '@material-ui/core/Menu'
 import MenuItem from '@material-ui/core/MenuItem'
-import AddIcon from '@material-ui/icons/Add'
 import ArrowDropDownIcon from '@material-ui/icons/ArrowDropDown'
 import DeleteOutlineIcon from '@material-ui/icons/DeleteOutline'
-import {Pagination} from '@material-ui/lab'
-import {makeStyles} from '@mui/styles'
+import { Pagination } from '@material-ui/lab'
+import { makeStyles } from '@mui/styles'
 import moment from 'moment'
-import {useEffect, useState} from 'react'
-import {useNavigate} from 'react-router-dom'
-import {useAppDispatch, useAppSelector} from '../../app/hooks'
+import { useEffect, useState } from 'react'
+import { useNavigate } from 'react-router-dom'
+import { useAppDispatch, useAppSelector } from '../../app/hooks'
+import excel from '../../asset/images/excel.png'
+import pdf from '../../asset/images/pdf.png'
+import { BASE_URL } from '../../constants'
 import {
   orderProjectAction,
   selectListOrderProject,
-  selectTotalOrderProject,
+  selectTotalOrderProject
 } from '../../feature/order_project/orderProjectSlice'
-import {ROUTE} from '../../router/routes'
-import excel from '../../asset/images/excel.png'
-import pdf from '../../asset/images/pdf.png'
-import {BASE_URL} from '../../constants'
 
 const useStyles = makeStyles({
   container_portfolio: {
@@ -164,8 +162,6 @@ const DevelopmentInquiry = () => {
   const [page, setPage] = useState<number>(1)
   const [selectList, selectListData] = useState<string[]>([])
   const [anchorEl, setAnchorEl] = useState<HTMLButtonElement | null>(null)
-  const open = Boolean(anchorEl)
-  const id = open ? 'simple-popover' : undefined
 
   const handleClose = () => {
     setAnchorEl(null)
@@ -265,7 +261,7 @@ const DevelopmentInquiry = () => {
                 - {item.position}
                 {item.planFile && (
                   <p>
-                    <a href={`${BASE_URL}/${item.planFile}`} target='_blank'>
+                    <a href={`${BASE_URL}/${item.planFile}`} target='_blank' rel="noreferrer">
                       <span>
                         <img
                           src={

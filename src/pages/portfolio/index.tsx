@@ -2,29 +2,27 @@ import {
   Checkbox,
   CheckboxProps,
   FormControlLabel,
-  withStyles,
+  withStyles
 } from '@material-ui/core'
-import {green} from '@material-ui/core/colors'
-import {makeStyles} from '@mui/styles'
-import ArrowUpwardIcon from '@material-ui/icons/ArrowUpward'
-import ArrowDownwardIcon from '@material-ui/icons/ArrowDownward'
 import Button from '@material-ui/core/Button'
+import { green } from '@material-ui/core/colors'
 import AddIcon from '@material-ui/icons/Add'
+import ArrowDownwardIcon from '@material-ui/icons/ArrowDownward'
+import ArrowUpwardIcon from '@material-ui/icons/ArrowUpward'
 import DeleteOutlineIcon from '@material-ui/icons/DeleteOutline'
-import {ChangeEventHandler, useState} from 'react'
-import {Pagination} from '@material-ui/lab'
-import {useNavigate} from 'react-router-dom'
-import {ROUTE} from '../../router/routes'
-import React, {useEffect} from 'react'
-import {useAppDispatch, useAppSelector} from '../../app/hooks'
+import { Pagination } from '@material-ui/lab'
+import { makeStyles } from '@mui/styles'
+import React, { useEffect, useState } from 'react'
+import { useNavigate } from 'react-router-dom'
+import { portfolioApi } from '../../apis/portfolioApi'
+import { useAppDispatch, useAppSelector } from '../../app/hooks'
+import { snackBarActions } from '../../components/snackbar/snackbarSlice'
 import {
   portfolioAction,
   selectListPortfolio,
-  selectTotalPortfolio,
+  selectTotalPortfolio
 } from '../../feature/portfolio/portfolioSlice'
-import {portfolioApi} from '../../apis/portfolioApi'
-import {ResDelete} from '../../types/resDelete.type'
-import {snackBarActions} from '../../components/snackbar/snackbarSlice'
+import { ROUTE } from '../../router/routes'
 
 const useStyles = makeStyles({
   container_portfolio: {
