@@ -16,4 +16,7 @@ export const portfolioApi = {
   update: (payload: PortfolioType) => {
     return axiosClient.put(`${PORTFOLIO}/${payload.portfolio_id}`, payload)
   },
+  delete: async (ids: number[]) => {
+    return await axiosClient.delete(PORTFOLIO, {data: {ids}})
+  },
 }

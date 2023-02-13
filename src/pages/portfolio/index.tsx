@@ -11,7 +11,7 @@ import ArrowDownwardIcon from '@material-ui/icons/ArrowDownward'
 import Button from '@material-ui/core/Button'
 import AddIcon from '@material-ui/icons/Add'
 import DeleteOutlineIcon from '@material-ui/icons/DeleteOutline'
-import {useState} from 'react'
+import {ChangeEventHandler, useState} from 'react'
 import {Pagination} from '@material-ui/lab'
 import {useNavigate} from 'react-router-dom'
 import {ROUTE} from '../../router/routes'
@@ -22,6 +22,9 @@ import {
   selectListPortfolio,
   selectTotalPortfolio,
 } from '../../feature/portfolio/portfolioSlice'
+import {portfolioApi} from '../../apis/portfolioApi'
+import {ResDelete} from '../../types/resDelete.type'
+import {snackBarActions} from '../../components/snackbar/snackbarSlice'
 
 const useStyles = makeStyles({
   container_portfolio: {
@@ -83,16 +86,19 @@ const GreenCheckbox = withStyles({
     },
   },
   checked: {},
-})((props: CheckboxProps) => <Checkbox color='default' {...props} />)
+})((props: CheckboxProps) => (
+  <Checkbox color='default' {...props} onChange={(e) => console.log(e)} />
+))
 
 const Portfolio = () => {
   const classes = useStyles()
-  const [selectList, selectListData] = useState<number[]>([])
+  const [selectList, setSelectList] = useState<number[]>([])
   const navigate = useNavigate()
   const dispatch = useAppDispatch()
   const listPortfolio = useAppSelector(selectListPortfolio)
   const total = useAppSelector(selectTotalPortfolio)
-  const [page, setPage] = React.useState(1)
+  const [page, setPage] = useState(1)
+  const [checkAll, setCheckAll] = useState(false)
   const handleChangePagination = (
     event: React.ChangeEvent<unknown>,
     value: number
@@ -105,14 +111,35 @@ const Portfolio = () => {
 
   const handleClick = (id: number) => {
     if (selectList.includes(id)) {
-      selectListData([...selectList.filter((item) => item !== id)])
+      setSelectList([...selectList.filter((item) => item !== id)])
     } else {
-      selectListData([...selectList, id])
+      setSelectList([...selectList, id])
     }
   }
-  const handleDelele= ()=>{
-    
+  const handleDelele = async () => {
+    const res: any = portfolioApi.delete(selectList)
+    if (res.success) {
+      dispatch(portfolioAction.get({page, perPage: 10}))
+      dispatch(
+        snackBarActions.setStateSnackBar({content: 'success', type: 'success'})
+      )
+      setSelectList([])
+    }
   }
+  const selectAll = () => {
+    if (checkAll) {
+      setSelectList([])
+      setCheckAll(false)
+    } else {
+      setCheckAll(true)
+      setSelectList([...listPortfolio.map((item) => Number(item.portfolio_id))])
+    }
+  }
+  useEffect(() => {
+    if (selectList.length === 0) {
+      setCheckAll(false)
+    }
+  }, [selectList])
 
   return (
     <div className={classes.container_portfolio}>
@@ -130,17 +157,17 @@ const Portfolio = () => {
         </div>
         <div>
           <FormControlLabel
-            control={
-              <GreenCheckbox
-                // checked={state.checkedG}
-                // onChange={handleChange}
-                name='checkedG'
-              />
-            }
+            control={<GreenCheckbox name='checkedG' />}
+            onClick={selectAll}
+            value={checkAll}
             label=''
           />
           {selectList.length > 0 && (
-            <Button variant='contained' color='secondary'>
+            <Button
+              variant='contained'
+              color='secondary'
+              onClick={handleDelele}
+            >
               <DeleteOutlineIcon /> 삭제
             </Button>
           )}
@@ -150,13 +177,8 @@ const Portfolio = () => {
             <div>
               <div>
                 <FormControlLabel
-                  control={
-                    <GreenCheckbox
-                      // checked={state.checkedG}
-                      // onChange={handleChange}
-                      name='checkedG'
-                    />
-                  }
+                  control={<GreenCheckbox name='checkedG' />}
+                  checked={selectList.includes(Number(item.portfolio_id))}
                   label=''
                   onClick={() =>
                     item.portfolio_id && handleClick(item.portfolio_id)

@@ -1,7 +1,5 @@
 import axios, {AxiosRequestConfig, AxiosResponse} from 'axios'
-import { BASE_URL } from '../constants'
-
-
+import {BASE_URL} from '../constants'
 
 const axiosClient = axios.create({
   baseURL: BASE_URL,
