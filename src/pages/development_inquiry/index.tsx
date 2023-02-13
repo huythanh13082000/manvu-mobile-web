@@ -2,28 +2,29 @@ import {
   Checkbox,
   CheckboxProps,
   FormControlLabel,
-  withStyles
+  withStyles,
 } from '@material-ui/core'
 import Button from '@material-ui/core/Button'
-import { green } from '@material-ui/core/colors'
+import {green} from '@material-ui/core/colors'
 import Menu from '@material-ui/core/Menu'
 import MenuItem from '@material-ui/core/MenuItem'
 import ArrowDropDownIcon from '@material-ui/icons/ArrowDropDown'
 import DeleteOutlineIcon from '@material-ui/icons/DeleteOutline'
-import { Pagination } from '@material-ui/lab'
-import { makeStyles } from '@mui/styles'
+import {Pagination} from '@material-ui/lab'
+import {makeStyles} from '@mui/styles'
 import moment from 'moment'
-import { useEffect, useState } from 'react'
-import { useNavigate } from 'react-router-dom'
-import { useAppDispatch, useAppSelector } from '../../app/hooks'
+import {useEffect, useState} from 'react'
+import {useNavigate} from 'react-router-dom'
+import {useAppDispatch, useAppSelector} from '../../app/hooks'
 import excel from '../../asset/images/excel.png'
 import pdf from '../../asset/images/pdf.png'
-import { BASE_URL } from '../../constants'
+import {BASE_URL} from '../../constants'
 import {
   orderProjectAction,
   selectListOrderProject,
-  selectTotalOrderProject
+  selectTotalOrderProject,
 } from '../../feature/order_project/orderProjectSlice'
+import {getTimeAgo} from '../../utils'
 
 const useStyles = makeStyles({
   container_portfolio: {
@@ -160,8 +161,9 @@ const DevelopmentInquiry = () => {
   const listOrderProject = useAppSelector(selectListOrderProject)
   const total = useAppSelector(selectTotalOrderProject)
   const [page, setPage] = useState<number>(1)
-  const [selectList, selectListData] = useState<string[]>([])
+  const [selectList, setSelectList] = useState<number[]>([])
   const [anchorEl, setAnchorEl] = useState<HTMLButtonElement | null>(null)
+  const [checkboxStatus, setCheckboxStatus] = useState<number>(1)
 
   const handleClose = () => {
     setAnchorEl(null)
@@ -169,11 +171,11 @@ const DevelopmentInquiry = () => {
   const handleClickPopup = (event: React.MouseEvent<HTMLButtonElement>) => {
     setAnchorEl(event.currentTarget)
   }
-  const handleClick = (id: string) => {
+  const handleClick = (id: number) => {
     if (selectList.includes(id)) {
-      selectListData([...selectList.filter((item) => item !== id)])
+      setSelectList([...selectList.filter((item) => item !== id)])
     } else {
-      selectListData([...selectList, id])
+      setSelectList([...selectList, id])
     }
   }
   const handleChangePagination = (
@@ -188,29 +190,33 @@ const DevelopmentInquiry = () => {
   return (
     <div className={classes.container_portfolio}>
       <div>
-        <div>
-          제작문의{' '}
-          {/* <Button
-            variant='contained'
-            color='primary'
-            onClick={() => navigate(ROUTE.CREATE_DEVELOPMENT_INQUIRY)}
-          >
-            <AddIcon />
-            추가
-          </Button> */}
-        </div>
+        <div>제작문의 </div>
         <div>
           <span>
             <FormControlLabel
               style={{marginRight: '0'}}
               control={
                 <GreenCheckbox
-                  // checked={state.checkedG}
-                  // onChange={handleChange}
                   name='checkedG'
+                  indeterminate={
+                    selectList.length < listOrderProject.length &&
+                    selectList.length !== 0
+                  }
                 />
               }
               label=''
+              checked={listOrderProject.length === selectList.length}
+              onClick={() => {
+                if (checkboxStatus !== 1) {
+                  setSelectList([])
+                  setCheckboxStatus(1)
+                } else {
+                  setCheckboxStatus(2)
+                  setSelectList([
+                    ...listOrderProject.map((item) => Number(item.orderId)),
+                  ])
+                }
+              }}
             />
 
             <span onClick={handleClickPopup}>
@@ -223,10 +229,51 @@ const DevelopmentInquiry = () => {
               open={Boolean(anchorEl)}
               onClose={handleClose}
             >
-              <MenuItem onClick={handleClose}>모두</MenuItem>
-              <MenuItem onClick={handleClose}>전제 선택 해제</MenuItem>
-              <MenuItem onClick={handleClose}>미완료</MenuItem>
-              <MenuItem onClick={handleClose}>처리완료</MenuItem>
+              <MenuItem
+                onClick={() => {
+                  setSelectList([
+                    ...listOrderProject.map((item) => Number(item.orderId)),
+                  ])
+                  handleClose()
+                }}
+              >
+                모두
+              </MenuItem>
+              <MenuItem
+                onClick={() => {
+                  setSelectList([])
+                  handleClose()
+                  setCheckboxStatus(2)
+                }}
+              >
+                전제 선택 해제
+              </MenuItem>
+              <MenuItem
+                onClick={() => {
+                  setSelectList([
+                    ...listOrderProject
+                      .filter((item) => !item.isDone)
+                      .map((item) => Number(item.orderId)),
+                  ])
+                  setCheckboxStatus(3)
+                  handleClose()
+                }}
+              >
+                미완료
+              </MenuItem>
+              <MenuItem
+                onClick={() => {
+                  setSelectList([
+                    ...listOrderProject
+                      .filter((item) => item.isDone)
+                      .map((item) => Number(item.orderId)),
+                  ])
+                  setCheckboxStatus(4)
+                  handleClose()
+                }}
+              >
+                처리완료
+              </MenuItem>
             </Menu>
           </span>
 
@@ -240,15 +287,10 @@ const DevelopmentInquiry = () => {
           {listOrderProject.map((item) => (
             <div style={item.isDone ? {} : {background: 'white'}}>
               <FormControlLabel
-                control={
-                  <GreenCheckbox
-                    // checked={state.checkedG}
-                    // onChange={handleChange}
-                    name='checkedG'
-                  />
-                }
+                control={<GreenCheckbox name='checkedG' />}
                 label={item.companyName}
-                onClick={() => handleClick('1')}
+                checked={selectList.includes(Number(item.orderId))}
+                onClick={() => handleClick(Number(item.orderId))}
               />
               <p>
                 <span
@@ -261,7 +303,11 @@ const DevelopmentInquiry = () => {
                 - {item.position}
                 {item.planFile && (
                   <p>
-                    <a href={`${BASE_URL}/${item.planFile}`} target='_blank' rel="noreferrer">
+                    <a
+                      href={`${BASE_URL}/${item.planFile}`}
+                      target='_blank'
+                      rel='noreferrer'
+                    >
                       <span>
                         <img
                           src={
@@ -278,7 +324,7 @@ const DevelopmentInquiry = () => {
                 )}
               </p>
               <span>
-                <span>{moment(item.created_at).locale('ko').format('LT')}</span>{' '}
+                <span>{item.created_at && getTimeAgo(item.created_at)}</span>{' '}
                 <span
                   style={
                     item.isDone
