@@ -42,8 +42,8 @@ const useStyles = makeStyles({
         },
       },
       '&>div:nth-child(1)': {
-        fontWeight: 500,
-        fontSize: '16px',
+        fontWeight: 700,
+        fontSize: '20px',
         lineHeight: '24px',
         color: '#13191D',
         display: 'flex',
@@ -109,6 +109,9 @@ const Portfolio = () => {
     } else {
       selectListData([...selectList, id])
     }
+  }
+  const handleDelele= ()=>{
+    
   }
 
   return (

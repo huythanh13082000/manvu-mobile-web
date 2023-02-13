@@ -42,7 +42,8 @@ const InputBase = (props: {
   type?: 'text' | 'number' | 'password'
   icon?: any
   style?: React.CSSProperties
-  value?: string
+  value?: string | number
+  disabled?: boolean
 }) => {
   const classes = useStyles()
   return (
@@ -52,6 +53,7 @@ const InputBase = (props: {
       </label>
       <br />
       <input
+        disabled={props.disabled}
         style={props.style ? {...props.style} : {}}
         type={props.type ? props.type : 'text'}
         id={props.label}

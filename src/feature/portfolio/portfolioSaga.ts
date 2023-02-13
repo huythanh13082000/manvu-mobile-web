@@ -85,13 +85,21 @@ function* updatePortfolio(
       })
       ListImages = [...images]
     }
-    console.log(11111,image);
+    console.log(11111, image)
     yield call(portfolioApi.update, {
       ...action.payload.data,
       logo: image,
       images: ListImages,
     })
-  } catch (error) {}
+    yield put(
+      snackBarActions.setStateSnackBar({content: 'success', type: 'success'})
+    )
+    action.payload.history(-1)
+  } catch (error) {
+    yield put(
+      snackBarActions.setStateSnackBar({content: 'error', type: 'error'})
+    )
+  }
 }
 
 export default function* portfolioSaga() {

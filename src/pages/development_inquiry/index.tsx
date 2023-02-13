@@ -13,9 +13,9 @@ import ArrowDropDownIcon from '@material-ui/icons/ArrowDropDown'
 import DeleteOutlineIcon from '@material-ui/icons/DeleteOutline'
 import {Pagination} from '@material-ui/lab'
 import {makeStyles} from '@mui/styles'
+import moment from 'moment'
 import {useEffect, useState} from 'react'
 import {useNavigate} from 'react-router-dom'
-import {orderProjectApi} from '../../apis/orderProjectApi'
 import {useAppDispatch, useAppSelector} from '../../app/hooks'
 import {
   orderProjectAction,
@@ -23,6 +23,9 @@ import {
   selectTotalOrderProject,
 } from '../../feature/order_project/orderProjectSlice'
 import {ROUTE} from '../../router/routes'
+import excel from '../../asset/images/excel.png'
+import pdf from '../../asset/images/pdf.png'
+import {BASE_URL} from '../../constants'
 
 const useStyles = makeStyles({
   container_portfolio: {
@@ -30,40 +33,72 @@ const useStyles = makeStyles({
     margin: '1rem',
     '&>div:nth-child(1)': {
       width: '100%',
-      height: '500px',
+      minHeight: '80vh',
       background: 'white',
       '&>div:nth-child(3)': {
-        display: 'flex',
-        padding: '0.3rem 1rem',
-        border: '1px solid rgba(196, 196, 196, 0.5)',
-        alignItems: 'center',
-        justifyContent: 'space-between',
-        '&>span': {
-          color: '#4D4D4D',
-          '&>span:nth-child(2)': {
-            display: 'inline-block',
-            fontWeight: 400,
-            fontSize: '14px',
-            lineHeight: '16px',
-            color: '#F22828',
-            background: 'rgba(242, 40, 40, 0.3)',
-            borderRadius: '16px',
-            padding: '4px 0',
-            marginLeft: '16px',
-            width: '63px',
-            textAlign: 'center',
-          },
-        },
-        '&>p': {
-          color: '#4D4D4D',
+        '&>div': {
+          display: 'flex',
+          padding: '0.3rem 1rem',
+          borderTop: '1px solid rgba(196, 196, 196, 0.5)',
+          background: '#F3F4F6',
+          alignItems: 'center',
+          justifyContent: 'space-between',
           '&>span': {
             color: '#4D4D4D',
+            '&>span:nth-child(2)': {
+              display: 'inline-block',
+              fontWeight: 400,
+              fontSize: '14px',
+              lineHeight: '16px',
+              color: '#F22828',
+              background: 'rgba(242, 40, 40, 0.3)',
+              borderRadius: '16px',
+              padding: '4px 0',
+              marginLeft: '16px',
+              width: '63px',
+              textAlign: 'center',
+            },
+          },
+          '&>p': {
+            color: '#4D4D4D',
+            '&>span': {
+              color: '#4D4D4D',
+            },
+            '&>p': {
+              margin: '5px 0 0 0',
+              '&>a': {
+                textDecoration: 'none',
+                color: '#C4C4C4',
+                fontWeight: 400,
+                fontSize: '14px',
+                '&>span': {
+                  display: 'flex',
+                  width: '132px',
+                  height: '32px',
+                  border: '1px solid #C4C4C4',
+                  borderRadius: '24px',
+                  alignItems: 'center',
+                  padding: '0 10px',
+                  '&>img': {
+                    width: '18px',
+                    height: '18px',
+                  },
+                  '&>div': {
+                    WebkitLineClamp: 1,
+                    WebkitBoxOrient: 'vertical',
+                    overflow: 'hidden',
+                    textOverflow: 'ellipsis',
+                    lineHeight: '24px',
+                  },
+                },
+              },
+            },
           },
         },
       },
       '&>div:nth-child(1)': {
-        fontWeight: 500,
-        fontSize: '16px',
+        fontWeight: 700,
+        fontSize: '20px',
         lineHeight: '24px',
         color: '#13191D',
         display: 'flex',
@@ -129,7 +164,6 @@ const DevelopmentInquiry = () => {
   const [page, setPage] = useState<number>(1)
   const [selectList, selectListData] = useState<string[]>([])
   const [anchorEl, setAnchorEl] = useState<HTMLButtonElement | null>(null)
-  const [selectStatus, setSelectStatus] = useState<string>('')
   const open = Boolean(anchorEl)
   const id = open ? 'simple-popover' : undefined
 
@@ -161,14 +195,14 @@ const DevelopmentInquiry = () => {
       <div>
         <div>
           제작문의{' '}
-          <Button
+          {/* <Button
             variant='contained'
             color='primary'
             onClick={() => navigate(ROUTE.CREATE_DEVELOPMENT_INQUIRY)}
           >
             <AddIcon />
             추가
-          </Button>
+          </Button> */}
         </div>
         <div>
           <span>
@@ -208,24 +242,63 @@ const DevelopmentInquiry = () => {
           )}
         </div>
         <div>
-          <FormControlLabel
-            control={
-              <GreenCheckbox
-                // checked={state.checkedG}
-                // onChange={handleChange}
-                name='checkedG'
+          {listOrderProject.map((item) => (
+            <div style={item.isDone ? {} : {background: 'white'}}>
+              <FormControlLabel
+                control={
+                  <GreenCheckbox
+                    // checked={state.checkedG}
+                    // onChange={handleChange}
+                    name='checkedG'
+                  />
+                }
+                label={item.companyName}
+                onClick={() => handleClick('1')}
               />
-            }
-            label='김진철'
-            onClick={() => handleClick('1')}
-          />
-          <p>
-            <span>안녕하세요 질문 있습니다</span> - 저와 함께 식사 하실래요?
-            저와 함께 식사 하실래요? 저와 함께 식사 하실래요...
-          </p>
-          <span>
-            <span>08:30</span> <span>미완료</span>
-          </span>
+              <p>
+                <span
+                  onClick={() =>
+                    navigate(`/update_development_inquiry/${item.orderId}`)
+                  }
+                >
+                  {item.projectName}
+                </span>{' '}
+                - {item.position}
+                {item.planFile && (
+                  <p>
+                    <a href={`${BASE_URL}/${item.planFile}`} target='_blank'>
+                      <span>
+                        <img
+                          src={
+                            item.planFile?.toString().includes('.pdf')
+                              ? pdf
+                              : excel
+                          }
+                          alt=''
+                        />
+                        <div>{item.planFile?.toString()}</div>
+                      </span>
+                    </a>
+                  </p>
+                )}
+              </p>
+              <span>
+                <span>{moment(item.created_at).locale('ko').format('LT')}</span>{' '}
+                <span
+                  style={
+                    item.isDone
+                      ? {
+                          color: '#0065F2',
+                          background: 'rgba(0, 101, 242, 0.3)',
+                        }
+                      : {}
+                  }
+                >
+                  {item.isDone ? '미완료' : '완료'}
+                </span>
+              </span>
+            </div>
+          ))}
         </div>
         <div>
           <Pagination

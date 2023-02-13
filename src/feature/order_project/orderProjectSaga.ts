@@ -1,4 +1,5 @@
 import {PayloadAction} from '@reduxjs/toolkit'
+import {NavigateFunction} from 'react-router-dom'
 import {call, put, takeEvery} from 'redux-saga/effects'
 import {orderProjectApi} from '../../apis/orderProjectApi'
 import {snackBarActions} from '../../components/snackbar/snackbarSlice'
@@ -18,6 +19,25 @@ export function* getOrderProject(action: PayloadAction<GetParamsType>) {
   }
 }
 
+function* updateOrderProject(
+  action: PayloadAction<{data: OrderProjectType; history: NavigateFunction}>
+) {
+  try {
+    yield call(orderProjectApi.update, {
+      ...action.payload.data,
+    })
+    yield put(
+      snackBarActions.setStateSnackBar({content: 'success', type: 'success'})
+    )
+    action.payload.history(-1)
+  } catch (error) {
+    yield put(
+      snackBarActions.setStateSnackBar({content: 'error', type: 'error'})
+    )
+  }
+}
+
 export default function* orderProjectSaga() {
   yield takeEvery(orderProjectAction.get.type, getOrderProject)
+  yield takeEvery(orderProjectAction.update.type, updateOrderProject)
 }
