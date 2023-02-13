@@ -110,7 +110,6 @@ const CreateDevelopmentInquiry = () => {
       const getDetail = async () => {
         const data = await orderProjectApi.getDetail(Number(id))
         const orderProject: OrderProjectType = exportResults(data)
-        console.log(333, orderProject)
         setData({
           projectName: orderProject.projectName,
           governmentSupport: orderProject.governmentSupport,

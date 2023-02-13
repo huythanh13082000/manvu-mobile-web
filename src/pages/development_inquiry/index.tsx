@@ -189,7 +189,6 @@ const DevelopmentInquiry = () => {
   useEffect(() => {
     dispatch(orderProjectAction.get({page, perPage: 10}))
   }, [dispatch, page])
-  console.log(111, listOrderProject)
   return (
     <div className={classes.container_portfolio}>
       <div>

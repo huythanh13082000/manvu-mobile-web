@@ -33,7 +33,6 @@ function* createPortfolio(
     yield put(
       snackBarActions.setStateSnackBar({content: 'error', type: 'error'})
     )
-    console.log(error)
   }
 }
 
@@ -43,7 +42,6 @@ function* getPortfolio(action: PayloadAction<GetParamsType>) {
       yield call(portfolioApi.get, action.payload)
     yield put(portfolioAction.getSuccess({data: data.data}))
   } catch (error) {
-    console.log(error)
     yield put(
       snackBarActions.setStateSnackBar({content: 'error', type: 'error'})
     )
@@ -65,7 +63,6 @@ function* updatePortfolio(
       )
       image = dataImage.data
     }
-    console.log(6666, image)
     if (action.payload.data.images) {
       const listIndex: number[] = []
       const images = [...(action.payload.data.images as any[])]
@@ -85,7 +82,6 @@ function* updatePortfolio(
       })
       ListImages = [...images]
     }
-    console.log(11111, image)
     yield call(portfolioApi.update, {
       ...action.payload.data,
       logo: image,

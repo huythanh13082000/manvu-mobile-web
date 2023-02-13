@@ -23,13 +23,11 @@ const orderProjectSlice = createSlice({
       state,
       action: PayloadAction<{data: OrderProjectType; history: NavigateFunction}>
     ) => {
-      console.log(action)
     },
     update: (
       state,
       action: PayloadAction<{data: OrderProjectType; history: NavigateFunction}>
     ) => {
-      console.log(action)
     },
     get: (state, action: PayloadAction<GetParamsType>) => {
       state.loading = true

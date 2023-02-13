@@ -14,7 +14,6 @@ const authSlice = createSlice({
         history: NavigateFunction
       }>
     ) => {
-      console.log(122, action)
     },
   },
 })

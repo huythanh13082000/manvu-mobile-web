@@ -87,7 +87,7 @@ const GreenCheckbox = withStyles({
   },
   checked: {},
 })((props: CheckboxProps) => (
-  <Checkbox color='default' {...props} onChange={(e) => console.log(e)} />
+  <Checkbox color='default' {...props} />
 ))
 
 const Portfolio = () => {

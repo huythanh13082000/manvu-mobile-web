@@ -23,13 +23,11 @@ const portfolioSlice = createSlice({
       state,
       action: PayloadAction<{data: PortfolioType; history: NavigateFunction}>
     ) => {
-      console.log(action)
     },
     update: (
       state,
       action: PayloadAction<{data: PortfolioType; history: NavigateFunction}>
     ) => {
-      console.log(action)
     },
     get: (state, action: PayloadAction<GetParamsType>) => {
       state.loading = true
