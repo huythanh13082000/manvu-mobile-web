@@ -2,27 +2,27 @@ import {
   Checkbox,
   CheckboxProps,
   FormControlLabel,
-  withStyles
+  withStyles,
 } from '@material-ui/core'
 import Button from '@material-ui/core/Button'
-import { green } from '@material-ui/core/colors'
+import {green} from '@material-ui/core/colors'
 import AddIcon from '@material-ui/icons/Add'
 import ArrowDownwardIcon from '@material-ui/icons/ArrowDownward'
 import ArrowUpwardIcon from '@material-ui/icons/ArrowUpward'
 import DeleteOutlineIcon from '@material-ui/icons/DeleteOutline'
-import { Pagination } from '@material-ui/lab'
-import { makeStyles } from '@mui/styles'
-import React, { useEffect, useState } from 'react'
-import { useNavigate } from 'react-router-dom'
-import { portfolioApi } from '../../apis/portfolioApi'
-import { useAppDispatch, useAppSelector } from '../../app/hooks'
-import { snackBarActions } from '../../components/snackbar/snackbarSlice'
+import {Pagination} from '@material-ui/lab'
+import {makeStyles} from '@mui/styles'
+import React, {useEffect, useState} from 'react'
+import {useNavigate} from 'react-router-dom'
+import {portfolioApi} from '../../apis/portfolioApi'
+import {useAppDispatch, useAppSelector} from '../../app/hooks'
+import {snackBarActions} from '../../components/snackbar/snackbarSlice'
 import {
   portfolioAction,
   selectListPortfolio,
-  selectTotalPortfolio
+  selectTotalPortfolio,
 } from '../../feature/portfolio/portfolioSlice'
-import { ROUTE } from '../../router/routes'
+import {ROUTE} from '../../router/routes'
 
 const useStyles = makeStyles({
   container_portfolio: {
@@ -40,7 +40,11 @@ const useStyles = makeStyles({
           border: '1px solid rgba(196, 196, 196, 0.5)',
           alignItems: 'center',
           justifyContent: 'space-between',
-          '&>div': {},
+          '&>div': {
+            '&>span': {
+              fontSize: '14px',
+            },
+          },
         },
       },
       '&>div:nth-child(1)': {
@@ -55,7 +59,6 @@ const useStyles = makeStyles({
           background: '#0065F2',
           fontWeight: 500,
           fontSize: '14px',
-          lineHeight: '20px',
           fontFamily: 'Noto Sans KR',
         },
       },
@@ -114,7 +117,7 @@ const Portfolio = () => {
     }
   }
   const handleDelele = async () => {
-    const res: any = portfolioApi.delete(selectList)
+    const res: any = await portfolioApi.delete(selectList)
     if (res.success) {
       dispatch(portfolioAction.get({page, perPage: 10}))
       dispatch(
@@ -164,6 +167,7 @@ const Portfolio = () => {
               variant='contained'
               color='secondary'
               onClick={handleDelele}
+              style={{height: '32px', padding: '4px'}}
             >
               <DeleteOutlineIcon /> 삭제
             </Button>

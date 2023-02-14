@@ -14,4 +14,7 @@ export const orderProjectApi = {
   update: (payload: OrderProjectType) => {
     return axiosClient.put(`${ORDER_PROJECT}/${payload.orderId}`, payload)
   },
+  delete: async (ids: number[]) => {
+    return await axiosClient.delete(ORDER_PROJECT, {data: {ids}})
+  },
 }

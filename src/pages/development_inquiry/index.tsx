@@ -15,9 +15,11 @@ import {makeStyles} from '@mui/styles'
 import moment from 'moment'
 import {useEffect, useState} from 'react'
 import {useNavigate} from 'react-router-dom'
+import {orderProjectApi} from '../../apis/orderProjectApi'
 import {useAppDispatch, useAppSelector} from '../../app/hooks'
 import excel from '../../asset/images/excel.png'
 import pdf from '../../asset/images/pdf.png'
+import {snackBarActions} from '../../components/snackbar/snackbarSlice'
 import {BASE_URL} from '../../constants'
 import {
   orderProjectAction,
@@ -35,15 +37,20 @@ const useStyles = makeStyles({
       minHeight: '80vh',
       background: 'white',
       '&>div:nth-child(3)': {
+        '& .MuiFormControlLabel-label': {
+          fontSize: '14px',
+          lineHeight: '20px',
+        },
         '&>div': {
           display: 'flex',
           padding: '0.3rem 1rem',
-          borderTop: '1px solid rgba(196, 196, 196, 0.5)',
+          border: '1px solid rgba(196, 196, 196, 0.5)',
           background: '#F3F4F6',
           alignItems: 'center',
           justifyContent: 'space-between',
           '&>span': {
             color: '#4D4D4D',
+            fontSize: '14px',
             '&>span:nth-child(2)': {
               display: 'inline-block',
               fontWeight: 400,
@@ -60,8 +67,10 @@ const useStyles = makeStyles({
           },
           '&>p': {
             color: '#4D4D4D',
+            fontSize: '14px',
             '&>span': {
               color: '#4D4D4D',
+              fontSize: '14px',
             },
             '&>p': {
               margin: '5px 0 0 0',
@@ -92,6 +101,7 @@ const useStyles = makeStyles({
                 },
               },
             },
+            // '&>span':{}
           },
         },
       },
@@ -184,6 +194,19 @@ const DevelopmentInquiry = () => {
   ) => {
     setPage(value)
   }
+
+  const handleDelele = async () => {
+    const res: any = await orderProjectApi.delete(selectList)
+    console.log(res)
+    if (res.success) {
+      dispatch(orderProjectAction.get({page, perPage: 10}))
+      dispatch(
+        snackBarActions.setStateSnackBar({content: 'success', type: 'success'})
+      )
+      setSelectList([])
+    }
+  }
+
   useEffect(() => {
     dispatch(orderProjectAction.get({page, perPage: 10}))
   }, [dispatch, page])
@@ -278,7 +301,12 @@ const DevelopmentInquiry = () => {
           </span>
 
           {selectList.length > 0 && (
-            <Button variant='contained' color='secondary'>
+            <Button
+              variant='contained'
+              color='secondary'
+              onClick={handleDelele}
+              style={{height: '32px', padding: '4px', marginLeft: '1rem'}}
+            >
               <DeleteOutlineIcon /> 삭제
             </Button>
           )}

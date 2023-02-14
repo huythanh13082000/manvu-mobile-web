@@ -23,7 +23,10 @@ axiosClient.interceptors.request.use(
 )
 axiosClient.interceptors.response.use(
   function (response: AxiosResponse) {
-    return response.data
+    console.log(12212121, response)
+    if (response.data.code === 401) {
+      localStorage.clear()
+    } else return response.data
   },
   function (error) {
     console.log(error)

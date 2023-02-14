@@ -11,6 +11,7 @@ export function* getOrderProject(action: PayloadAction<GetParamsType>) {
   try {
     const data: {data: {listOrder: OrderProjectType[]; total: number}} =
       yield call(orderProjectApi.get, action.payload)
+    console.log(3343434, data)
     yield put(orderProjectAction.getSuccess({data: data.data}))
   } catch (error) {
     yield put(
