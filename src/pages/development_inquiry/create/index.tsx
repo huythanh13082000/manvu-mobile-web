@@ -321,6 +321,9 @@ const CreateDevelopmentInquiry = () => {
             disabled
           />
         </div>
+        <div
+          style={{borderBottom: '1px dashed #000000', marginTop: '1.5rem'}}
+        ></div>
 
         <div>
           <InputBase

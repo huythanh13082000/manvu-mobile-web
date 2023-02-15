@@ -9,14 +9,20 @@ import {orderProjectAction} from './orderProjectSlice'
 
 export function* getOrderProject(action: PayloadAction<GetParamsType>) {
   try {
-    const data: {data: {listOrder: OrderProjectType[]; total: number}} =
-      yield call(orderProjectApi.get, action.payload)
+    const data: {
+      code: number
+      data: {listOrder: OrderProjectType[]; total: number}
+    } = yield call(orderProjectApi.get, action.payload)
     console.log(3343434, data)
-    yield put(orderProjectAction.getSuccess({data: data.data}))
+    if (data.code === 0) {
+      yield put(orderProjectAction.getSuccess({data: data.data}))
+    } else {
+      yield put(
+        snackBarActions.setStateSnackBar({content: 'error', type: 'error'})
+      )
+    }
   } catch (error) {
-    yield put(
-      snackBarActions.setStateSnackBar({content: 'error', type: 'error'})
-    )
+    console.log(error)
   }
 }
 
@@ -24,17 +30,24 @@ function* updateOrderProject(
   action: PayloadAction<{data: OrderProjectType; history: NavigateFunction}>
 ) {
   try {
-    yield call(orderProjectApi.update, {
+    const data: {
+      code: number
+    } = yield call(orderProjectApi.update, {
       ...action.payload.data,
     })
-    yield put(
-      snackBarActions.setStateSnackBar({content: 'success', type: 'success'})
-    )
-    action.payload.history(-1)
+    console.log(data)
+    if (data.code === 0) {
+      yield put(
+        snackBarActions.setStateSnackBar({content: 'success', type: 'success'})
+      )
+      action.payload.history(-1)
+    } else {
+      yield put(
+        snackBarActions.setStateSnackBar({content: 'error', type: 'error'})
+      )
+    }
   } catch (error) {
-    yield put(
-      snackBarActions.setStateSnackBar({content: 'error', type: 'error'})
-    )
+    console.log(error)
   }
 }
 

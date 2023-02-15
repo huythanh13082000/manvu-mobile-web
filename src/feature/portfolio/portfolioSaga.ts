@@ -20,31 +20,43 @@ function* createPortfolio(
       uploadApi.uploadImages,
       action.payload.data.images as FormData
     )
-    yield call(portfolioApi.create, {
+    const data: {
+      code: number
+    } = yield call(portfolioApi.create, {
       ...action.payload.data,
       logo: dataImage.data,
       images: dataImages.data,
     })
-    yield put(
-      snackBarActions.setStateSnackBar({content: 'success', type: 'success'})
-    )
-    action.payload.history(-1)
+    if (data.code === 0) {
+      yield put(
+        snackBarActions.setStateSnackBar({content: 'success', type: 'success'})
+      )
+      action.payload.history(-1)
+    } else {
+      yield put(
+        snackBarActions.setStateSnackBar({content: 'error', type: 'error'})
+      )
+    }
   } catch (error) {
-    yield put(
-      snackBarActions.setStateSnackBar({content: 'error', type: 'error'})
-    )
+    console.log(error)
   }
 }
 
 function* getPortfolio(action: PayloadAction<GetParamsType>) {
   try {
-    const data: {data: {listPortfolios: PortfolioType[]; total: number}} =
-      yield call(portfolioApi.get, action.payload)
-    yield put(portfolioAction.getSuccess({data: data.data}))
+    const data: {
+      code: number
+      data: {listPortfolios: PortfolioType[]; total: number}
+    } = yield call(portfolioApi.get, action.payload)
+    if (data.code === 0) {
+      yield put(portfolioAction.getSuccess({data: data.data}))
+    } else {
+      yield put(
+        snackBarActions.setStateSnackBar({content: 'error', type: 'error'})
+      )
+    }
   } catch (error) {
-    yield put(
-      snackBarActions.setStateSnackBar({content: 'error', type: 'error'})
-    )
+    console.log(error)
   }
 }
 

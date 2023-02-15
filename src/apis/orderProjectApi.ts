@@ -1,8 +1,7 @@
-import { GetParamsType } from "../types/getParams.type"
-import { OrderProjectType } from "../types/orderProject.type"
-import axiosClient from "./axiosClient"
-import { ORDER_PROJECT } from "./urlConfig"
-
+import {GetParamsType} from '../types/getParams.type'
+import {OrderProjectType} from '../types/orderProject.type'
+import axiosClient from './axiosClient'
+import {ORDER_PROJECT} from './urlConfig'
 
 export const orderProjectApi = {
   get: (params: GetParamsType) => {
