@@ -6,6 +6,7 @@ import IconNoteMenu from '../../asset/icons/icon_note_menu'
 
 import logoMenu from '../../asset/images/logo-menu.png'
 import {ROUTE} from '../../router/routes'
+import React, {useEffect} from 'react'
 
 const useStyles = makeStyles({
   container_menu: {

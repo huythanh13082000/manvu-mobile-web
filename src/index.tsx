@@ -8,7 +8,6 @@ import './index.scss'
 import BaseLayout from './layouts/base'
 import Router from './router'
 import CustomizedSnackbars from './components/snackbar'
-import {setTokenAxios} from './apis/axiosClient'
 import moment from 'moment'
 import 'moment/locale/ko'  // without this line it didn't work
 
@@ -16,7 +15,6 @@ const container = document.getElementById('root')!
 const root = createRoot(container)
 moment.locale('ko');  
 
-setTokenAxios()
 
 root.render(
   <React.StrictMode>

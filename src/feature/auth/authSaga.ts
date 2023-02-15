@@ -2,7 +2,6 @@ import {PayloadAction} from '@reduxjs/toolkit'
 import {NavigateFunction} from 'react-router-dom'
 import {call, put, takeEvery} from 'redux-saga/effects'
 import {authApi} from '../../apis/authApi'
-import {setTokenAxios} from '../../apis/axiosClient'
 import {snackBarActions} from '../../components/snackbar/snackbarSlice'
 import {ROUTE} from '../../router/routes'
 import {LoginType} from '../../types/login.type'
@@ -31,7 +30,6 @@ function* login(
   try {
     const data: LoginType = yield call(authApi.login, action.payload.data)
     setTokens(exportResults(data))
-    setTokenAxios()
     yield put(
       snackBarActions.setStateSnackBar({
         content: '잘못된 비밀번호 또는 계정',
