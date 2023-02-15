@@ -125,6 +125,7 @@ const CreateDevelopmentInquiry = () => {
           estimatedCost: orderProject.estimatedCost,
           estimatedTime: orderProject.estimatedTime,
           planFile: orderProject.planFile,
+          presenter: orderProject.presenter,
         })
       }
       getDetail()
@@ -159,7 +160,7 @@ const CreateDevelopmentInquiry = () => {
           />
           <div style={{width: '32px'}}></div>
 
-          <UploadFile file={data.planFile} />
+          <UploadFile file={data.planFile && JSON.parse(data.planFile)} />
         </div>
         <div style={{display: 'inherit'}}>
           <label htmlFor='textarea'>서비스의 주요 기능</label>
@@ -306,8 +307,17 @@ const CreateDevelopmentInquiry = () => {
             onChange={(e) => setData({...data, phone: e})}
             value={data.phone}
             placeholder='전화번호를 입력하세요 '
-            label='휴대폰번호'
+            label='휴대폰번호(응대문발송)'
             require
+            disabled
+          />
+        </div>
+        <div>
+          <InputBase
+            onChange={(e) => setData({...data, presenter: e})}
+            value={data.presenter}
+            placeholder='들어 오세요 '
+            label='추천인 또는 인썸니아를 알게 된 경로'
             disabled
           />
         </div>

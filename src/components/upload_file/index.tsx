@@ -9,45 +9,51 @@ const useStyles = makeStyles({
   container_upload_file: {
     width: '100%',
     position: 'relative',
-    '&>div': {
+    '&>div:nth:child(1)': {
       display: 'flex',
       flexFlow: 'column',
       '&>label': {
         margin: '1rem 0',
       },
     },
-    '&>a': {
-      color: '#374151',
-      '&>span': {
-        background: '#F3F4F6',
-        borderRadius: '4px',
-        display: 'flex',
-        width: '140px',
-        boxSizing: 'border-box',
-        alignItems: 'center',
-        padding: '8px 8px',
-        fontSize: '14px',
-        position: 'absolute',
-        top: '48px',
-        left: '3px',
-        '&>img': {
-          width: '18px',
-          height: '18px',
-        },
-        '&>div': {
-          WebkitLineClamp: 1,
-          WebkitBoxOrient: 'vertical',
-          overflow: 'hidden',
-          textOverflow: 'ellipsis',
-          lineHeight: '24px',
+    '&>div:nth-child(2)': {
+      display: 'flex',
+      position: 'absolute',
+      top: '48px',
+      left: '3px',
+      '&>a': {
+        color: '#374151',
+        textDecoration: 'none',
+        '&>span': {
+          background: '#F3F4F6',
+          borderRadius: '4px',
+          display: 'flex',
+          width: '140px',
+          boxSizing: 'border-box',
+          alignItems: 'center',
+          padding: '8px 8px',
+          fontSize: '14px',
+
+          '&>img': {
+            width: '18px',
+            height: '18px',
+          },
+          '&>div': {
+            WebkitLineClamp: 1,
+            WebkitBoxOrient: 'vertical',
+            overflow: 'hidden',
+            textOverflow: 'ellipsis',
+            lineHeight: '24px',
+          },
         },
       },
     },
   },
 })
 
-const UploadFile = (props: {file?: string}) => {
+const UploadFile = (props: {file: string[]}) => {
   const classes = useStyles()
+  console.log(12323, props.file)
   return (
     <div className={classes.container_upload_file}>
       <div>
@@ -75,15 +81,18 @@ const UploadFile = (props: {file?: string}) => {
           }
         />
       </div>
-      {props.file && (
-        <a href={`${BASE_URL}/${props.file}`} target='_blank' rel='noreferrer'>
-          <span>
-            <img src={props.file.includes('.pdf') ? pdf : excel} alt='' />
-            <div>{props.file}</div>
-            <img src={download} alt='' />
-          </span>
-        </a>
-      )}
+      <div>
+        {props.file &&
+          props.file.map((item) => (
+            <a href={`${BASE_URL}/${item}`} target='_blank' rel='noreferrer'>
+              <span>
+                <img src={item.includes('.pdf') ? pdf : excel} alt='' />
+                <div>{item}</div>
+                <img src={download} alt='' />
+              </span>
+            </a>
+          ))}
+      </div>
     </div>
   )
 }

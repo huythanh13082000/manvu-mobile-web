@@ -106,7 +106,7 @@ const Portfolio = () => {
     setPage(value)
   }
   useEffect(() => {
-    dispatch(portfolioAction.get({page, perPage: 10}))
+    dispatch(portfolioAction.get({page, perPage: 10, sort: 'DESC'}))
   }, [dispatch, page])
 
   const handleClick = (id: number) => {
@@ -213,7 +213,8 @@ const Portfolio = () => {
           <Pagination
             showFirstButton
             showLastButton
-            page={total && total / 10}
+            count={total && Math.ceil(total / 10)}
+            page={page}
             onChange={handleChangePagination}
           />
         </div>

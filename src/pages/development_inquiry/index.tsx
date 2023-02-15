@@ -29,7 +29,7 @@ import {
 import {getTimeAgo} from '../../utils'
 
 const useStyles = makeStyles({
-  container_portfolio: {
+  container_development_inquiry: {
     background: 'white',
     margin: '1rem',
     '&>div:nth-child(1)': {
@@ -37,6 +37,9 @@ const useStyles = makeStyles({
       minHeight: '80vh',
       background: 'white',
       '&>div:nth-child(3)': {
+        '& .MuiFormControlLabel-root': {
+          width: '30%',
+        },
         '& .MuiFormControlLabel-label': {
           fontSize: '14px',
           lineHeight: '20px',
@@ -46,62 +49,69 @@ const useStyles = makeStyles({
           padding: '0.3rem 1rem',
           border: '1px solid rgba(196, 196, 196, 0.5)',
           background: '#F3F4F6',
-          alignItems: 'center',
-          justifyContent: 'space-between',
-          '&>span': {
-            color: '#4D4D4D',
-            fontSize: '14px',
-            '&>span:nth-child(2)': {
-              display: 'inline-block',
-              fontWeight: 400,
-              fontSize: '14px',
-              lineHeight: '16px',
-              color: '#F22828',
-              background: 'rgba(242, 40, 40, 0.3)',
-              borderRadius: '16px',
-              padding: '4px 0',
-              marginLeft: '16px',
-              width: '63px',
-              textAlign: 'center',
-            },
-          },
-          '&>p': {
-            color: '#4D4D4D',
-            fontSize: '14px',
+          '&>div': {
+            display: 'flex',
+            justifyContent: 'space-between',
+            width: '100%',
+            alignItems: 'center',
             '&>span': {
               color: '#4D4D4D',
               fontSize: '14px',
-            },
-            '&>p': {
-              margin: '5px 0 0 0',
-              '&>a': {
-                textDecoration: 'none',
-                color: '#C4C4C4',
+              display: 'inline-block',
+              '&>span:nth-child(2)': {
+                display: 'inline-block',
                 fontWeight: 400,
                 fontSize: '14px',
-                '&>span': {
-                  display: 'flex',
-                  width: '132px',
-                  height: '32px',
-                  border: '1px solid #C4C4C4',
-                  borderRadius: '24px',
-                  alignItems: 'center',
-                  padding: '0 10px',
-                  '&>img': {
-                    width: '18px',
-                    height: '18px',
-                  },
-                  '&>div': {
-                    WebkitLineClamp: 1,
-                    WebkitBoxOrient: 'vertical',
-                    overflow: 'hidden',
-                    textOverflow: 'ellipsis',
-                    lineHeight: '24px',
+                lineHeight: '16px',
+                color: '#F22828',
+                background: 'rgba(242, 40, 40, 0.3)',
+                borderRadius: '16px',
+                padding: '4px 0',
+                marginLeft: '16px',
+                width: '63px',
+                textAlign: 'center',
+              },
+            },
+            '&>p': {
+              color: '#4D4D4D',
+              fontSize: '14px',
+              '&>span': {
+                color: '#4D4D4D',
+                fontSize: '14px',
+              },
+              '&>div': {
+                display: 'flex',
+                '&>p': {
+                  margin: '5px 5px 0 0',
+                  '&>a': {
+                    textDecoration: 'none',
+                    color: '#C4C4C4',
+                    fontWeight: 400,
+                    fontSize: '14px',
+                    '&>span': {
+                      display: 'flex',
+                      width: '132px',
+                      height: '32px',
+                      border: '1px solid #C4C4C4',
+                      borderRadius: '24px',
+                      alignItems: 'center',
+                      padding: '0 10px',
+                      '&>img': {
+                        width: '18px',
+                        height: '18px',
+                      },
+                      '&>div': {
+                        WebkitLineClamp: 1,
+                        WebkitBoxOrient: 'vertical',
+                        overflow: 'hidden',
+                        textOverflow: 'ellipsis',
+                        lineHeight: '24px',
+                      },
+                    },
                   },
                 },
               },
             },
-            // '&>span':{}
           },
         },
       },
@@ -208,10 +218,10 @@ const DevelopmentInquiry = () => {
   }
 
   useEffect(() => {
-    dispatch(orderProjectAction.get({page, perPage: 10}))
+    dispatch(orderProjectAction.get({page, perPage: 10, sort: 'DESC'}))
   }, [dispatch, page])
   return (
-    <div className={classes.container_portfolio}>
+    <div className={classes.container_development_inquiry}>
       <div>
         <div>제작문의 </div>
         <div>
@@ -320,58 +330,62 @@ const DevelopmentInquiry = () => {
                 checked={selectList.includes(Number(item.orderId))}
                 onClick={() => handleClick(Number(item.orderId))}
               />
-              <p>
-                <span
-                  onClick={() =>
-                    navigate(`/update_development_inquiry/${item.orderId}`)
-                  }
-                >
-                  {item.projectName}
-                </span>{' '}
-                - {item.position}
-                {item.planFile && (
-                  <p>
-                    <a
-                      href={`${BASE_URL}/${item.planFile}`}
-                      target='_blank'
-                      rel='noreferrer'
-                    >
-                      <span>
-                        <img
-                          src={
-                            item.planFile?.toString().includes('.pdf')
-                              ? pdf
-                              : excel
+              <div>
+                <p style={{width: '30%'}}>
+                  <span
+                    onClick={() =>
+                      navigate(`/update_development_inquiry/${item.orderId}`)
+                    }
+                  >
+                    {item.projectName}
+                  </span>{' '}
+                  - {item.position}
+                  <div>
+                    {item.planFile &&
+                      (JSON.parse(item.planFile) as string[]).map((item) => (
+                        <p>
+                          <a
+                            href={`${BASE_URL}/${item}`}
+                            target='_blank'
+                            rel='noreferrer'
+                          >
+                            <span>
+                              <img
+                                src={
+                                  item.toString().includes('.pdf') ? pdf : excel
+                                }
+                                alt=''
+                              />
+                              <div>{item.toString()}</div>
+                            </span>
+                          </a>
+                        </p>
+                      ))}
+                  </div>
+                </p>
+                <span>
+                  <span>{item.created_at && getTimeAgo(item.created_at)}</span>{' '}
+                  <span
+                    style={
+                      item.isDone
+                        ? {
+                            color: '#0065F2',
+                            background: 'rgba(0, 101, 242, 0.3)',
                           }
-                          alt=''
-                        />
-                        <div>{item.planFile?.toString()}</div>
-                      </span>
-                    </a>
-                  </p>
-                )}
-              </p>
-              <span>
-                <span>{item.created_at && getTimeAgo(item.created_at)}</span>{' '}
-                <span
-                  style={
-                    item.isDone
-                      ? {
-                          color: '#0065F2',
-                          background: 'rgba(0, 101, 242, 0.3)',
-                        }
-                      : {}
-                  }
-                >
-                  {item.isDone ? '미완료' : '완료'}
+                        : {}
+                    }
+                  >
+                    {item.isDone ? '미완료' : '완료'}
+                  </span>
                 </span>
-              </span>
+              </div>
             </div>
           ))}
         </div>
         <div>
           <Pagination
-            page={total && total / 10}
+            count={total && Math.ceil(total / 10)}
+            page={page}
             onChange={handleChangePagination}
             showFirstButton
             showLastButton
