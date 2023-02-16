@@ -301,6 +301,7 @@ const CreateDevelopmentInquiry = () => {
             label='이메일'
             require
             disabled
+            type='email'
           />
           <div style={{width: '32px'}}></div>
           <InputBase

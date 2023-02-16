@@ -1,4 +1,4 @@
-import { makeStyles } from '@material-ui/core'
+import {makeStyles} from '@material-ui/core'
 
 const useStyles = makeStyles({
   container_input_base: {
@@ -39,7 +39,7 @@ const InputBase = (props: {
   placeholder: string
   require?: boolean
   onChange: (event: any) => void
-  type?: 'text' | 'number' | 'password'
+  type?: 'text' | 'number' | 'password' | 'email'
   icon?: any
   style?: React.CSSProperties
   value?: string | number
