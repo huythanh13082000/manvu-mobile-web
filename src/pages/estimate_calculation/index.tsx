@@ -1,5 +1,5 @@
 import React, {useState} from 'react'
-import {makeStyles} from '@mui/styles'
+import {makeStyles} from '@material-ui/core'
 import AddIcon from '@material-ui/icons/Add'
 import MoreVertIcon from '@material-ui/icons/MoreVert'
 import FiberManualRecordIcon from '@material-ui/icons/FiberManualRecord'

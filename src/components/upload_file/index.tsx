@@ -1,4 +1,4 @@
-import {makeStyles} from '@mui/styles'
+import {makeStyles} from '@material-ui/core'
 import download from '../../asset/images/download.png'
 import excel from '../../asset/images/excel.png'
 import pdf from '../../asset/images/pdf.png'

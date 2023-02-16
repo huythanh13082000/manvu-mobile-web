@@ -9,15 +9,17 @@ import BaseLayout from './layouts/base'
 import Router from './router'
 import CustomizedSnackbars from './components/snackbar'
 import moment from 'moment'
-import 'moment/locale/ko'  // without this line it didn't work
+import 'moment/locale/ko' // without this line it didn't work
 
 const container = document.getElementById('root')!
 const root = createRoot(container)
-moment.locale('ko');  
+moment.locale('ko')
 
+// const them = createTheme()
 
 root.render(
   <React.StrictMode>
+    {/* <ThemeProvider theme={them}> */}
     <Provider store={store}>
       <BrowserRouter>
         <CustomizedSnackbars />
@@ -26,6 +28,7 @@ root.render(
         </BaseLayout>
       </BrowserRouter>
     </Provider>
+    {/* </ThemeProvider> */}
   </React.StrictMode>
 )
 

@@ -1,4 +1,4 @@
-import {makeStyles} from '@mui/styles'
+import {makeStyles} from '@material-ui/core'
 import React, {useState, useRef, useEffect} from 'react'
 import inboxOut from '../../asset/images/inbox-out.png'
 import CloseIcon from '@material-ui/icons/Close'

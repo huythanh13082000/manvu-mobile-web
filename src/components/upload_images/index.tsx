@@ -1,4 +1,4 @@
-import {makeStyles} from '@mui/styles'
+import {makeStyles} from '@material-ui/core'
 import React, {useRef, useState, useEffect} from 'react'
 import uploadImages from '../../asset/images/upload-images.png'
 import CancelIcon from '@material-ui/icons/Cancel'
