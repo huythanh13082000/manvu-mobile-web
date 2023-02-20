@@ -1,5 +1,4 @@
 import axios, {AxiosRequestConfig, AxiosResponse} from 'axios'
-import { Navigate } from 'react-router-dom'
 import {BASE_URL} from '../constants'
 
 const axiosClient = axios.create({

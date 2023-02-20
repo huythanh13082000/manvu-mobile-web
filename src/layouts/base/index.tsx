@@ -1,6 +1,6 @@
 import {makeStyles} from '@material-ui/styles'
 import React, {ReactNode} from 'react'
-import {useLocation} from 'react-router-dom'
+import {useLocation, useNavigate} from 'react-router-dom'
 import Menu from '../../components/menu'
 import {ROUTE} from '../../router/routes'
 interface Props {
