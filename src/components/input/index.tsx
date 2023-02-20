@@ -26,6 +26,10 @@ const useStyles = makeStyles({
       boxSizing: 'border-box',
       fontSize: '16px',
     },
+    '&>input::-webkit-outer-spin-button, input::-webkit-inner-spin-button': {
+      WebkitAppearance: 'none',
+      margin: 0,
+    },
     '&>span': {
       position: 'absolute',
       top: '54px',

@@ -1,6 +1,8 @@
 import {Button, makeStyles} from '@material-ui/core'
 import Dialog from '@material-ui/core/Dialog'
 import InputBase from '../../../components/input'
+import UploadFile from '../../../components/upload_file'
+import UploadFileDev from '../../../components/upload_file-dev'
 
 const useStyles = makeStyles({
   container_dialog_create: {
@@ -13,7 +15,7 @@ const useStyles = makeStyles({
       textAlign: 'center',
       color: '#13191D',
     },
-    '&>div:nth-child(3)': {
+    '&>div:last-child': {
       display: 'flex',
       justifyContent: 'center',
       margin: '1rem 0 0',
@@ -47,11 +49,42 @@ const DialogCreate = (props: {open: boolean; setOpen: () => void}) => {
         <p>새로 추가 </p>
         <InputBase
           onChange={() => console.log(1)}
-          label='그룹이름 입력창'
-          placeholder='그룹명을 입력해주세요'
+          label='Name Option'
+          placeholder='Name Option'
+        />
+        <InputBase
+          onChange={() => console.log(1)}
+          label='Schedule'
+          placeholder='Schedule'
+        />
+        <InputBase
+          onChange={() => console.log(1)}
+          label='Price'
+          placeholder='Price'
+          type='number'
+          icon={
+            <span
+              style={{
+                fontWeight: 500,
+                fontSize: '16px',
+                lineHeight: '24px',
+                color: '#000000',
+              }}
+            >
+              원
+            </span>
+          }
+        />
+        <UploadFileDev
+          label='이미지 업로드'
+          placeholder='파일 선택'
+          file={[]}
+          setFile={() => console.log(11)}
         />
         <div>
-          <Button variant='outlined' onClick={handleClose}>취소</Button>
+          <Button variant='outlined' onClick={handleClose}>
+            취소
+          </Button>
           <Button variant='contained' color='primary'>
             완료
           </Button>

@@ -1,97 +1,100 @@
-import React, {useState} from 'react'
 import {makeStyles} from '@material-ui/core'
-import AddIcon from '@material-ui/icons/Add'
-import MoreVertIcon from '@material-ui/icons/MoreVert'
-import FiberManualRecordIcon from '@material-ui/icons/FiberManualRecord'
-import DialogCreate from './dialog'
+import React, {useState} from 'react'
 import {useNavigate} from 'react-router-dom'
-import {ROUTE} from '../../router/routes'
-import Menu from '@material-ui/core/Menu/Menu'
-import MenuItem from '@material-ui/core/MenuItem/MenuItem'
-import ArrowUpwardIcon from '@material-ui/icons/ArrowUpward'
-import ArrowDownwardIcon from '@material-ui/icons/ArrowDownward'
+import DialogCreate from './dialog'
+import ChevronRightIcon from '@material-ui/icons/ChevronRight'
+import Button from '@material-ui/core/Button'
+import AddIcon from '@material-ui/icons/Add'
+import egeScan from '../../asset/images/eye-scan.png'
+import MoreVertIcon from '@material-ui/icons/MoreVert'
+import Menu from '@material-ui/core/Menu'
+import MenuItem from '@material-ui/core/MenuItem'
+import ArrowUpwardOutlinedIcon from '@material-ui/icons/ArrowUpwardOutlined'
+import ArrowDownwardOutlinedIcon from '@material-ui/icons/ArrowDownwardOutlined'
 import DeleteForeverOutlinedIcon from '@material-ui/icons/DeleteForeverOutlined'
-import EditOutlinedIcon from '@material-ui/icons/EditOutlined'
+import ColorizeIcon from '@material-ui/icons/Colorize'
 
 const useStyles = makeStyles({
   container_estimate_calculation: {
-    background: 'white',
-    width: '50%',
-    margin: '1rem auto',
-    borderRadius: '4px',
-    '&>div:nth-child(1)': {
-      padding: '1rem',
-      display: 'flex',
-      justifyContent: 'space-between',
-      '&>span:nth-child(1)': {
-        fontWeight: 500,
-        fontSize: '18px',
-        lineHeight: '24px',
-        color: '#13191D',
-      },
-      '&>span:nth-child(2)': {
-        width: '32px',
-        height: '32px',
-        background: '#0065F2',
-        borderRadius: '4px',
-        display: 'flex',
-        alignItems: 'center',
-        justifyContent: 'center',
-        cursor: 'pointer',
-        '&>svg': {
-          color: 'white',
-        },
-      },
+    padding: '1rem',
+    '& .MuiMenuItem-root': {
+      fontWeight: 500,
+      fontSize: '14px',
+      lineHeight: '20px',
+      color: '#4D4D4D',
+      fontFamily: 'Noto Sans KR',
+      fontStyle: 'normal',
     },
-    '&>div:nth-child(2)': {
-      padding: '1rem',
+    '&>div': {
+      display: 'flex',
+      '&>div': {
+        background: 'white',
+        borderRadius: '4px',
+      },
       '&>div:nth-child(1)': {
-        display: 'flex',
-        justifyContent: 'space-between',
-        '&>span:nth-child(1)': {
-          fontWeight: 500,
+        width: '20%',
+        marginRight: '1rem',
+        '&>p': {
+          padding: '16px',
+          display: 'flex',
+          alignItems: 'center',
+          justifyContent: 'space-between',
+          fontWeight: 700,
           fontSize: '18px',
-          lineHeight: '24px',
-          color: '#13191D',
-          display: 'flex',
-          alignItems: 'center',
-          '&>span': {
-            '&>svg': {
-              display: 'inherit',
-              margin: 0,
-              padding: 0,
-            },
-          },
+          lineHeight: '27px',
         },
-        '&>span:nth-child(2)': {
-          width: '32px',
-          height: '32px',
-          background: '#0065F2',
-          borderRadius: '4px',
-          display: 'flex',
-          alignItems: 'center',
-          justifyContent: 'center',
-          cursor: 'pointer',
-          '&>svg': {
-            color: 'white',
-          },
+        '&>p:hover': {
+          background: '#C8E4FA',
+          color: '#215DFC',
         },
       },
       '&>div:nth-child(2)': {
-        '&>ul': {
+        width: '60%',
+        boxShadow: '0px 0px 4px rgba(0, 0, 0, 0.25)',
+        '&>div': {
+          display: 'flex',
+          justifyContent: 'space-between',
+          alignItems: 'center',
+          padding: '0 1rem ',
+          background: '#F1F5F9',
+          '&>button': {
+            background: '#0065F2',
+            width: '85px',
+            height: '34px',
+            fontWeight: 500,
+            fontSize: '14px',
+            fontFamily: 'Pretendard',
+          },
+          '&>p': {
+            fontWeight: 700,
+            fontSize: '18px',
+            lineHeight: '27px',
+            color: '#13191D',
+          },
+        },
+        '&>p': {
+          display: 'flex',
+          alignItems: 'center',
+          padding: '0 1rem',
+          justifyContent: 'space-between',
           margin: 0,
-          padding: '0.5rem 1rem',
-          '&>li': {
-            display: 'flex',
-            '&>span:nth-child(1)': {
-              fontWeight: 400,
-              fontSize: '16px',
-              color: '#4D4D4D',
-              '&>svg': {
-                fontSize: 10,
-                color: '#4D4D4D',
-              },
-            },
+          borderBottom: '0.5px solid #D1D5DB',
+          '&>img': {
+            width: '24px',
+            height: '24px',
+          },
+          '&>p:nth-of-type(1)': {
+            fontWeight: 500,
+            fontSize: '16px',
+            lineHeight: '24px',
+            color: '#4B5563',
+            width: '60%',
+          },
+          '&>p:nth-of-type(2)': {
+            fontWeight: 500,
+            fontSize: '16px',
+            lineHeight: '24px',
+            color: '#000000',
           },
         },
       },
@@ -103,99 +106,76 @@ const EstimateCalculation = () => {
   const classes = useStyles()
   const navigate = useNavigate()
   const [open, setOpen] = useState(false)
-  const [anchorElGroup, setAnchorElGroup] = React.useState<null | HTMLElement>(
-    null
-  )
-  const [anchorElItem, setAnchorElItem] = React.useState<null | HTMLElement>(
-    null
-  )
+  const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null)
 
-  const handleClickMoreGroup = (event: React.MouseEvent<HTMLButtonElement>) => {
-    setAnchorElGroup(event.currentTarget)
+  const handleClick = (event: React.MouseEvent<HTMLButtonElement>) => {
+    setAnchorEl(event.currentTarget)
   }
 
-  const handleCloseGroup = () => {
-    setAnchorElGroup(null)
-  }
-
-  const handleClickMoreItem = (event: React.MouseEvent<HTMLButtonElement>) => {
-    setAnchorElItem(event.currentTarget)
-  }
-
-  const handleCloseItem = () => {
-    setAnchorElItem(null)
+  const handleClose = () => {
+    setAnchorEl(null)
   }
   return (
     <div className={classes.container_estimate_calculation}>
       <div>
-        <span>그룹</span>
-        <span onClick={() => setOpen(true)}>
-          <AddIcon />
-        </span>
-      </div>
-      <div>
         <div>
-          <span>
-            플랫폼 및 개발언어{' '}
-            <span onClick={handleClickMoreGroup}>
+          <p>
+            UI/UX 디자인 <ChevronRightIcon />
+          </p>
+          <p>
+            APP <ChevronRightIcon />
+          </p>
+          <p>
+            WEB <ChevronRightIcon />
+          </p>
+          <p>
+            관리자 페이지 <ChevronRightIcon />
+          </p>
+        </div>
+        <div>
+          <div>
+            <p>구현할 UI 페이지 분량</p>
+            <Button
+              variant='contained'
+              color='primary'
+              onClick={() => setOpen(true)}
+            >
+              <AddIcon />
+              추가
+            </Button>
+          </div>
+          <p>
+            <p>10 페이지 이하</p>
+            <p> 100,000원</p>
+            <img src={egeScan} alt='' />
+            <span onClick={handleClick}>
               <MoreVertIcon />
             </span>
             <Menu
               id='simple-menu'
-              anchorEl={anchorElGroup}
+              anchorEl={anchorEl}
               keepMounted
-              open={Boolean(anchorElGroup)}
-              onClose={handleCloseGroup}
+              open={Boolean(anchorEl)}
+              onClose={handleClose}
             >
-              <MenuItem onClick={handleCloseGroup}>
-                <ArrowUpwardIcon /> 위로이동
+              <MenuItem onClick={handleClose}>
+                <ArrowUpwardOutlinedIcon />
+                위로이동
               </MenuItem>
-              <MenuItem onClick={handleCloseGroup}>
-                <ArrowDownwardIcon /> 아래로 이동
+              <MenuItem onClick={handleClose}>
+                <ArrowDownwardOutlinedIcon />
+                아래로 이동
               </MenuItem>
-              <MenuItem onClick={handleCloseGroup}>
-                <DeleteForeverOutlinedIcon /> 삭제
+              <MenuItem onClick={handleClose}>
+                <DeleteForeverOutlinedIcon />
+                삭제
               </MenuItem>
-              <MenuItem onClick={handleCloseGroup}>
-                <EditOutlinedIcon /> 수정
+              <MenuItem onClick={handleClose}>
+                <ColorizeIcon />
+                수정
               </MenuItem>
             </Menu>
-          </span>
-          <span onClick={() => navigate(ROUTE.CREATE_ESTIMATE_CALCULATION)}>
-            <AddIcon />
-          </span>
-        </div>
-        <div>
-          <ul>
-            <li>
-              <span>
-                <FiberManualRecordIcon /> 알림기능 1기능
-              </span>
-              <span onClick={handleClickMoreItem}>
-                <MoreVertIcon />
-              </span>
-              <Menu
-                id='simple-menu'
-                anchorEl={anchorElItem}
-                keepMounted
-                open={Boolean(anchorElItem)}
-                onClose={handleCloseItem}
-              >
-                <MenuItem onClick={handleCloseItem}>
-                  <ArrowUpwardIcon /> 위로이동
-                </MenuItem>
-                <MenuItem onClick={handleCloseItem}>
-                  <ArrowDownwardIcon /> 아래로 이동
-                </MenuItem>
-                <MenuItem onClick={handleCloseItem}>
-                  <DeleteForeverOutlinedIcon /> 삭제
-                </MenuItem>
-                <MenuItem onClick={handleCloseItem}>
-                  <EditOutlinedIcon /> 수정
-                </MenuItem>
-              </Menu>
-            </li>
-          </ul>
+          </p>
         </div>
       </div>
       <DialogCreate open={open} setOpen={() => setOpen(false)} />

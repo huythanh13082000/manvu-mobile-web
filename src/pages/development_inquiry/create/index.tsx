@@ -80,6 +80,40 @@ const useStyles = makeStyles({
         lineHeight: '24px',
         margin: '32px 0',
       },
+      '&>div:nth-last-child(4)': {
+        width: '100%',
+        display: 'inherit',
+        padding: '0 2rem',
+        boxSizing: 'border-box',
+        borderRadius: '4px',
+        border: '1px solid #78BDF2',
+        margin: '1rem 0',
+        '&>p': {
+          fontWeight: 700,
+          fontSize: '20px',
+          lineHeight: '30px',
+          display: 'flex',
+          alignItems: 'center',
+          color: '#111827',
+          justifyContent: 'space-between',
+        },
+        '&>div': {
+          '&>p': {
+            fontWeight: 700,
+            fontSize: '18px',
+            lineHeight: '27px',
+            display: 'flex',
+            color: '#111827',
+            justifyContent: 'space-between',
+            '&>span': {
+              fontWeight: 500,
+              fontSize: '16px',
+              lineHeight: '24px',
+              color: '#4B5563',
+            },
+          },
+        },
+      },
     },
   },
 })
@@ -322,12 +356,46 @@ const CreateDevelopmentInquiry = () => {
             disabled
           />
         </div>
-        <div
-          style={{borderBottom: '1px dashed #000000', marginTop: '1.5rem'}}
-        ></div>
 
+        {/* <div> */}
         <div>
-          <InputBase
+          <p>견적</p>
+          <div>
+            <p>UI/UX 디자인</p>
+            <p>
+              <span>20페이지</span> <span>100,000원</span>
+            </p>
+          </div>
+
+          <div>
+            <p>UI/UX 디자인</p>
+            <p>
+              <span>20페이지</span> <span>100,000원</span>
+            </p>
+          </div>
+
+          <div>
+            <p>UI/UX 디자인</p>
+            <p>
+              <span>20페이지</span> <span>100,000원</span>
+            </p>
+            <p>
+              <span>20페이지</span> <span>100,000원</span>
+            </p>
+          </div>
+
+          <div>
+            <p>UI/UX 디자인</p>
+            <p>
+              <span>20페이지</span> <span>100,000원</span>
+            </p>
+          </div>
+
+          <p style={{borderTop: '1px dashed #000000', padding: '1rem 0'}}>
+            <span>총 금액</span> <span>450,000원</span>
+          </p>
+        </div>
+        {/* <InputBase
             onChange={(e) => setData({...data, estimatedCost: Number(e)})}
             value={data.estimatedCost}
             placeholder='예상 견적'
@@ -343,8 +411,8 @@ const CreateDevelopmentInquiry = () => {
             label='예상기간'
             require
             type='number'
-          />
-        </div>
+          /> */}
+        {/* </div> */}
 
         <FormControl>
           <p>확인처리 </p>
@@ -363,13 +431,13 @@ const CreateDevelopmentInquiry = () => {
           </RadioGroup>
         </FormControl>
         <div>
-          <span>
+          {/* <span>
             예상 견적:{' '}
             <span>{numberWithCommas(data.estimatedCost || 0)}원</span>
           </span>
           <span>
             예상기간: <span>{data.estimatedTime}개월</span>
-          </span>
+          </span> */}
         </div>
 
         <Button

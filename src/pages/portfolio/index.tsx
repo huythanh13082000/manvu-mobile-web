@@ -200,10 +200,10 @@ const Portfolio = () => {
                     {item.title}
                   </span>
                 </div>
-                <div>
+                {/* <div>
                   <ArrowUpwardIcon style={{marginRight: '1rem'}} />
                   <ArrowDownwardIcon />
-                </div>
+                </div> */}
               </div>
             ))}
           </div>
