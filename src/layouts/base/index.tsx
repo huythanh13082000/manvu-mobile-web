@@ -13,7 +13,7 @@ const useStyles = makeStyles({
     '&>div:nth-child(2)': {
       boxSizing: 'border-box',
       width: 'calc(100%)',
-      background: '#F3F4F6',
+      background: '#E5E7EB',
       minHeight: '100vh',
     },
   },

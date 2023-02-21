@@ -342,7 +342,7 @@ const DevelopmentInquiry = () => {
                   - {item.position}
                   <div>
                     {item.planFile &&
-                      (JSON.parse(item.planFile) as string[]).map((item) => (
+                      (item.planFile as string[]).map((item) => (
                         <p>
                           <a
                             href={`${BASE_URL}/${item}`}

@@ -3,6 +3,7 @@ import {NavigateFunction} from 'react-router-dom'
 import {call, put, takeEvery} from 'redux-saga/effects'
 import {portfolioApi} from '../../apis/portfolioApi'
 import {uploadApi} from '../../apis/uploadApi'
+import {loadingActions} from '../../components/loading/loadingSlice'
 import {snackBarActions} from '../../components/snackbar/snackbarSlice'
 import {GetParamsType} from '../../types/getParams.type'
 import {PortfolioType} from '../../types/portfolio.type'
@@ -12,6 +13,7 @@ function* createPortfolio(
   action: PayloadAction<{data: PortfolioType; history: NavigateFunction}>
 ) {
   try {
+    yield put(loadingActions.openLoading())
     const dataImage: {data: string} = yield call(
       uploadApi.uploadImage,
       action.payload.data.logo
@@ -28,11 +30,13 @@ function* createPortfolio(
       images: dataImages.data,
     })
     if (data.code === 0) {
+      yield put(loadingActions.loadingSuccess())
       yield put(
         snackBarActions.setStateSnackBar({content: 'success', type: 'success'})
       )
       action.payload.history(-1)
     } else {
+      yield put(loadingActions.loadingSuccess())
       yield put(
         snackBarActions.setStateSnackBar({content: 'error', type: 'error'})
       )

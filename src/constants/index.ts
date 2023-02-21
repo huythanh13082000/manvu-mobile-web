@@ -1,5 +1,3 @@
-
-
 export const HTTP_STATUS = {
   OK: 200,
   BAD_REQUEST: 400,
@@ -10,3 +8,13 @@ export const HTTP_STATUS = {
 }
 export const BASE_URL = 'http://3.34.144.245:3535/'
 
+export const LIST_TAG = [
+  'UI_PAGE',
+  'REGISTER_PAGE',
+  'LOGIN_PAGE',
+  'PROFILE_PAGE',
+  'HOME_PAGE',
+  'PAYMENT_PAGE',
+  'SETTING_PAGE',
+  'MESSAGE',
+]

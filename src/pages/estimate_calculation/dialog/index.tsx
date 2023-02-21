@@ -1,7 +1,6 @@
-import {Button, makeStyles} from '@material-ui/core'
+import { Button, makeStyles } from '@material-ui/core'
 import Dialog from '@material-ui/core/Dialog'
 import InputBase from '../../../components/input'
-import UploadFile from '../../../components/upload_file'
 import UploadFileDev from '../../../components/upload_file-dev'
 
 const useStyles = makeStyles({

@@ -1,6 +1,6 @@
 export interface OrderProjectType {
   projectName: string
-  planFile?: string
+  planFile?: string | string[]
   maximumBudget?: number
   governmentSupport: boolean
   description?: string
@@ -15,5 +15,5 @@ export interface OrderProjectType {
   estimatedTime?: number
   orderId?: number
   created_at?: string
-  presenter?:string
+  presenter?: string
 }

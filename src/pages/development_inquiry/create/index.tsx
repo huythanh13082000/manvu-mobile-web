@@ -194,7 +194,7 @@ const CreateDevelopmentInquiry = () => {
           />
           <div style={{width: '32px'}}></div>
 
-          <UploadFile file={data.planFile && JSON.parse(data.planFile)} />
+          <UploadFile file={data.planFile as string[]} />
         </div>
         <div style={{display: 'inherit'}}>
           <label htmlFor='textarea'>서비스의 주요 기능</label>

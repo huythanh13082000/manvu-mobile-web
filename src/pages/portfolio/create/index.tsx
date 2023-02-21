@@ -12,6 +12,7 @@ import UploadImages from '../../../components/upload_images'
 import {portfolioAction} from '../../../feature/portfolio/portfolioSlice'
 import {PortfolioType} from '../../../types/portfolio.type'
 import {exportResults} from '../../../utils'
+import Loading from '../../../components/loading'
 
 const useStyles = makeStyles({
   container_create_portfolio: {
