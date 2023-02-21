@@ -17,3 +17,7 @@ export const ORDER_PROJECT = '/order-project'
 //option
 
 export const OPTION = '/option'
+
+//tag
+
+export const TAG = '/tag'

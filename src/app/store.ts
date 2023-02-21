@@ -6,11 +6,13 @@ import {
   ThunkAction,
 } from '@reduxjs/toolkit'
 import createSagaMiddleware from 'redux-saga'
-import { loadingReducer } from '../components/loading/loadingSlice'
+import {loadingReducer} from '../components/loading/loadingSlice'
 import {snackBarReducer} from '../components/snackbar/snackbarSlice'
 import {authReducer} from '../feature/auth/authSlice'
+import {optionReducer} from '../feature/option/optionSlice'
 import {orderProjectReducer} from '../feature/order_project/orderProjectSlice'
 import {portfolioReducer} from '../feature/portfolio/portfolioSlice'
+import {tagReducer} from '../feature/tag/tagSlice'
 import rootSaga from './rootSaga'
 
 const rootReducer = combineReducers({
@@ -18,7 +20,9 @@ const rootReducer = combineReducers({
   snackBarReducer,
   portfolioReducer,
   orderProjectReducer,
-  loadingReducer
+  loadingReducer,
+  optionReducer,
+  tagReducer,
 })
 
 const sagaMiddleware = createSagaMiddleware()

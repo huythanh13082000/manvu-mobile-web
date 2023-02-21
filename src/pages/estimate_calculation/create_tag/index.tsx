@@ -36,29 +36,20 @@ const useStyles = makeStyles({
   },
 })
 
-const DialogCreate = (props: {
+const DialogCreateTag = (props: {
   open: boolean
   setOpen: () => void
   type: string
-  tag: string
 }) => {
   const classes = useStyles()
   const handleClose = () => {
     props.setOpen()
   }
-  const [data, setData] = useState<OptionType>({
-    nameOption: '',
-    price: 0,
-    schedule: 0,
-    image: '',
-  })
+  const [nameTag, setNameTag] = useState<string>('')
   const dispatch = useAppDispatch()
   const handleSubmit = () => {
-    dispatch(
-      optionAction.create({data: {...data, tag: props.tag, type: props.type}})
-    )
+    
   }
-  console.log(21231231, props.tag, props.type)
   return (
     <Dialog
       open={props.open}
@@ -67,46 +58,13 @@ const DialogCreate = (props: {
       aria-describedby='alert-dialog-description'
     >
       <div className={classes.container_dialog_create}>
-        <p>새로 추가 </p>
+        <p>CREATE TAG </p>
         <InputBase
-          onChange={(e) => setData({...data, nameOption: e})}
-          label='Name Option'
-          placeholder='Name Option'
+          onChange={(e) => setNameTag(e)}
+          label='Name tag'
+          placeholder='Name tag'
         />
-        <InputBase
-          onChange={(e) => setData({...data, schedule: Number(e)})}
-          label='Schedule'
-          placeholder='Schedule'
-        />
-        <InputBase
-          onChange={(e) => setData({...data, price: Number(e)})}
-          label='Price'
-          placeholder='Price'
-          type='number'
-          icon={
-            <span
-              style={{
-                fontWeight: 500,
-                fontSize: '16px',
-                lineHeight: '24px',
-                color: '#000000',
-              }}
-            >
-              원
-            </span>
-          }
-        />
-        <UploadFileDev
-          label='이미지 업로드'
-          placeholder='파일 선택'
-          file={[]}
-          setFile={() => console.log(11)}
-        />
-        <input
-          type='file'
-          name='upload-file'
-          onChange={(e: any) => setData({...data, image: e.target.files[0]})}
-        />
+
         <div>
           <Button variant='outlined' onClick={handleClose}>
             취소
@@ -124,4 +82,4 @@ const DialogCreate = (props: {
   )
 }
 
-export default DialogCreate
+export default DialogCreateTag

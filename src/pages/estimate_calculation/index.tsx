@@ -113,7 +113,7 @@ const EstimateCalculation = () => {
   const [type, setType] = useState<'UX_UI' | 'APP' | 'WEB' | 'ADMIN_PAGE'>(
     'UX_UI'
   )
-  const [tag, setTag] = useState<string>()
+  const [tag, setTag] = useState<string>('UI_PAGE')
   const [open, setOpen] = useState(false)
   const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null)
 
@@ -165,13 +165,16 @@ const EstimateCalculation = () => {
         </div>
         <div>
           {LIST_TAG.map((item) => (
-            <div>
+            <div key={item}>
               <div>
                 <p>{item}</p>
                 <Button
                   variant='contained'
                   color='primary'
-                  onClick={() => setOpen(true)}
+                  onClick={() => {
+                    setOpen(true)
+                    setTag(item)
+                  }}
                 >
                   <AddIcon />
                   추가
@@ -213,7 +216,12 @@ const EstimateCalculation = () => {
           ))}
         </div>
       </div>
-      <DialogCreate open={open} setOpen={() => setOpen(false)} />
+      <DialogCreate
+        open={open}
+        setOpen={() => setOpen(false)}
+        type={type}
+        tag={tag}
+      />
     </div>
   )
 }
