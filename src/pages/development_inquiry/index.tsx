@@ -213,7 +213,6 @@ const DevelopmentInquiry = () => {
       dispatch(
         snackBarActions.setStateSnackBar({content: 'success', type: 'success'})
       )
-      setSelectList([])
     }
   }
 

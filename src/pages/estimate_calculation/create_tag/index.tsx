@@ -3,9 +3,7 @@ import Dialog from '@material-ui/core/Dialog'
 import {useState} from 'react'
 import {useAppDispatch} from '../../../app/hooks'
 import InputBase from '../../../components/input'
-import UploadFileDev from '../../../components/upload_file-dev'
-import {optionAction} from '../../../feature/option/optionSlice'
-import {OptionType} from '../../../types/option.type'
+import {tagAction} from '../../../feature/tag/tagSlice'
 
 const useStyles = makeStyles({
   container_dialog_create: {
@@ -48,8 +46,14 @@ const DialogCreateTag = (props: {
   const [nameTag, setNameTag] = useState<string>('')
   const dispatch = useAppDispatch()
   const handleSubmit = () => {
-    
+    dispatch(
+      tagAction.create({
+        data: {name: nameTag, type: props.type},
+        setOpen: handleClose,
+      })
+    )
   }
+
   return (
     <Dialog
       open={props.open}
@@ -73,6 +77,7 @@ const DialogCreateTag = (props: {
             variant='contained'
             color='primary'
             onClick={() => handleSubmit()}
+            disabled={!nameTag || !props.type ? true : false}
           >
             완료
           </Button>

@@ -1,6 +1,6 @@
 import {Button, makeStyles} from '@material-ui/core'
 import Dialog from '@material-ui/core/Dialog'
-import {useState} from 'react'
+import {useEffect, useState} from 'react'
 import {useAppDispatch} from '../../../app/hooks'
 import InputBase from '../../../components/input'
 import UploadFileDev from '../../../components/upload_file-dev'
@@ -41,6 +41,7 @@ const DialogCreate = (props: {
   setOpen: () => void
   type: string
   tag: string
+  data?: OptionType
 }) => {
   const classes = useStyles()
   const handleClose = () => {
@@ -54,11 +55,34 @@ const DialogCreate = (props: {
   })
   const dispatch = useAppDispatch()
   const handleSubmit = () => {
-    dispatch(
-      optionAction.create({data: {...data, tag: props.tag, type: props.type}})
-    )
+    if (props.data?.id) {
+      dispatch(
+        optionAction.update({
+          data: {...data},
+          setOpen: handleClose,
+        })
+      )
+    } else
+      dispatch(
+        optionAction.create({
+          data: {...data, tag: props.tag, type: props.type},
+          setOpen: handleClose,
+        })
+      )
   }
-  console.log(21231231, props.tag, props.type)
+  useEffect(() => {
+    if (props.data) {
+      setData({...props.data})
+    } else {
+      setData({
+        nameOption: '',
+        price: 0,
+        schedule: 0,
+        image: '',
+      })
+    }
+  }, [props.data])
+  console.log(props.data)
   return (
     <Dialog
       open={props.open}
@@ -72,17 +96,21 @@ const DialogCreate = (props: {
           onChange={(e) => setData({...data, nameOption: e})}
           label='Name Option'
           placeholder='Name Option'
+          value={data.nameOption}
         />
         <InputBase
           onChange={(e) => setData({...data, schedule: Number(e)})}
           label='Schedule'
           placeholder='Schedule'
+          type='number'
+          value={data.schedule}
         />
         <InputBase
           onChange={(e) => setData({...data, price: Number(e)})}
           label='Price'
           placeholder='Price'
           type='number'
+          value={data.price}
           icon={
             <span
               style={{
@@ -99,14 +127,15 @@ const DialogCreate = (props: {
         <UploadFileDev
           label='이미지 업로드'
           placeholder='파일 선택'
-          file={[]}
-          setFile={() => console.log(11)}
+          // file={[]}
+          file={data.image as string}
+          setFile={(e) => setData({...data, image: e})}
         />
-        <input
+        {/* <input
           type='file'
           name='upload-file'
           onChange={(e: any) => setData({...data, image: e.target.files[0]})}
-        />
+        /> */}
         <div>
           <Button variant='outlined' onClick={handleClose}>
             취소
@@ -115,6 +144,9 @@ const DialogCreate = (props: {
             variant='contained'
             color='primary'
             onClick={() => handleSubmit()}
+            disabled={
+              !data.price || !data.nameOption || !data.schedule ? true : false
+            }
           >
             완료
           </Button>

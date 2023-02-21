@@ -131,41 +131,55 @@ const UploadFileDev = (props: {
   label?: string
   placeholder?: string
   setFile: (e: any) => void
-  file?: File[]
+  // file?: File[]
+  file: string | File
 }) => {
   const classes = useStyles()
   const refInput = useRef<HTMLInputElement>(null)
-  const handleChange = (e: any) => {
-    const data = [...e.target.files]
-    props.file &&
-      props.setFile([
-        ...props.file,
-        ...data.filter(
-          (item) => item.type.includes('csv') || item.type.includes('pdf')
-        ),
-      ])
-  }
-  const deleteFile = (e: number) => {
-    if (props.file)
-      props.setFile([...props.file?.filter((item) => item.lastModified !== e)])
+  // const handleChange = (e: any) => {
+  //   const data = [...e.target.files]
+  //   props.file &&
+  //     props.setFile([
+  //       ...props.file,
+  //       ...data.filter(
+  //         (item) => item.type.includes('csv') || item.type.includes('pdf')
+  //       ),
+  //     ])
+  // }
+  // const deleteFile = (e: number) => {
+  //   if (props.file)
+  //     props.setFile([...props.file?.filter((item) => item.lastModified !== e)])
+  // }
+  const handleChangeNew = (e: any) => {
+    props.setFile(e.target.files[0])
   }
   return (
     <div className={classes.container_upload_file}>
       <label htmlFor={props.label}>{props.label}</label>
       <br />
-      <input id={props.label} placeholder={props.placeholder} />
+      <input
+        id={props.label}
+        placeholder={props.placeholder}
+        value={
+          typeof props.file === 'string'
+            ? props.file
+            : props.file === null
+            ? ''
+            : props.file.name
+        }
+      />
       <input
         ref={refInput}
         type='file'
-        onChange={handleChange}
+        onChange={handleChangeNew}
         hidden
         name='upload-file'
-        multiple
+        // multiple
       />
       <span onClick={() => refInput.current && refInput.current.click()}>
         업로드
       </span>
-      <div>
+      {/* <div>
         {props.file?.map((item) => (
           <span key={item.lastModified}>
             <img src={item.name.includes('csv') ? excel : pdf} alt='' />
@@ -175,7 +189,7 @@ const UploadFileDev = (props: {
             </div>
           </span>
         ))}
-      </div>
+      </div> */}
     </div>
   )
 }

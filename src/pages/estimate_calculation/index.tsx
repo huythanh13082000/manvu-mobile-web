@@ -1,19 +1,26 @@
 import {makeStyles} from '@material-ui/core'
-import React, {useState} from 'react'
-import {useNavigate} from 'react-router-dom'
-import DialogCreate from './dialog'
-import ChevronRightIcon from '@material-ui/icons/ChevronRight'
 import Button from '@material-ui/core/Button'
-import AddIcon from '@material-ui/icons/Add'
-import egeScan from '../../asset/images/eye-scan.png'
-import MoreVertIcon from '@material-ui/icons/MoreVert'
 import Menu from '@material-ui/core/Menu'
 import MenuItem from '@material-ui/core/MenuItem'
-import ArrowUpwardOutlinedIcon from '@material-ui/icons/ArrowUpwardOutlined'
+import AddIcon from '@material-ui/icons/Add'
 import ArrowDownwardOutlinedIcon from '@material-ui/icons/ArrowDownwardOutlined'
-import DeleteForeverOutlinedIcon from '@material-ui/icons/DeleteForeverOutlined'
+import ArrowUpwardOutlinedIcon from '@material-ui/icons/ArrowUpwardOutlined'
+import ChevronRightIcon from '@material-ui/icons/ChevronRight'
 import ColorizeIcon from '@material-ui/icons/Colorize'
-import {LIST_TAG} from '../../constants'
+import DeleteForeverOutlinedIcon from '@material-ui/icons/DeleteForeverOutlined'
+import MoreVertIcon from '@material-ui/icons/MoreVert'
+import React, {useEffect, useState} from 'react'
+import {optionApi} from '../../apis/optionApi'
+import {useAppDispatch, useAppSelector} from '../../app/hooks'
+import egeScan from '../../asset/images/eye-scan.png'
+import {snackBarActions} from '../../components/snackbar/snackbarSlice'
+import {optionAction, selectListOption} from '../../feature/option/optionSlice'
+import {selectListTag, tagAction} from '../../feature/tag/tagSlice'
+import {OptionType} from '../../types/option.type'
+import {numberWithCommas} from '../../utils'
+import DialogCreateTag from './create_tag'
+import DialogCreate from './dialog'
+import DialogImg from './dialog_img'
 
 const useStyles = makeStyles({
   container_estimate_calculation: {
@@ -109,13 +116,21 @@ const useStyles = makeStyles({
 
 const EstimateCalculation = () => {
   const classes = useStyles()
-  const navigate = useNavigate()
+  const dispatch = useAppDispatch()
   const [type, setType] = useState<'UX_UI' | 'APP' | 'WEB' | 'ADMIN_PAGE'>(
     'UX_UI'
   )
   const [tag, setTag] = useState<string>('UI_PAGE')
   const [open, setOpen] = useState(false)
+  const [openCreateTag, setOpenCreateTag] = useState(false)
+  const [openImg, setOpenImg] = useState(false)
   const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null)
+  const [page, setPage] = useState<number>(1)
+  const listTag = useAppSelector(selectListTag)
+  const listOption = useAppSelector(selectListOption)
+  const [img, setImg] = useState<string>('')
+  const [idOption, setIdOption] = useState<number>()
+  const [option, setOption] = useState<OptionType>()
 
   const handleClick = (event: React.MouseEvent<HTMLButtonElement>) => {
     setAnchorEl(event.currentTarget)
@@ -123,6 +138,32 @@ const EstimateCalculation = () => {
 
   const handleClose = () => {
     setAnchorEl(null)
+  }
+  useEffect(() => {
+    !openCreateTag && dispatch(tagAction.get({page: page, type: type}))
+  }, [dispatch, page, type, openCreateTag])
+
+  useEffect(() => {
+    !open && dispatch(optionAction.get({page: page, perPage: 100, type: type}))
+  }, [dispatch, page, type, open])
+  const handleDelele = async (id: number) => {
+    const res: any = await optionApi.delete([id])
+    if (res.success) {
+      dispatch(
+        snackBarActions.setStateSnackBar({
+          content: 'delete success',
+          type: 'success',
+        })
+      )
+      dispatch(optionAction.get({page, perPage: 100, type: type}))
+    } else {
+      dispatch(
+        snackBarActions.setStateSnackBar({
+          content: 'delete error',
+          type: 'error',
+        })
+      )
+    }
   }
   return (
     <div className={classes.container_estimate_calculation}>
@@ -164,64 +205,114 @@ const EstimateCalculation = () => {
           </p>
         </div>
         <div>
-          {LIST_TAG.map((item) => (
-            <div key={item}>
+          {listTag.map((item) => (
+            <div key={item.id}>
               <div>
-                <p>{item}</p>
+                <p>{item.name}</p>
                 <Button
                   variant='contained'
                   color='primary'
                   onClick={() => {
+                    setOption(undefined)
                     setOpen(true)
-                    setTag(item)
+                    setTag(item.name)
                   }}
                 >
                   <AddIcon />
                   추가
                 </Button>
               </div>
-              <p>
-                <p>10 페이지 이하</p>
-                <p> 100,000원</p>
-                <img src={egeScan} alt='' />
-                <span onClick={handleClick}>
-                  <MoreVertIcon />
-                </span>
-                <Menu
-                  id='simple-menu'
-                  anchorEl={anchorEl}
-                  keepMounted
-                  open={Boolean(anchorEl)}
-                  onClose={handleClose}
-                >
-                  <MenuItem onClick={handleClose}>
-                    <ArrowUpwardOutlinedIcon />
-                    위로이동
-                  </MenuItem>
-                  <MenuItem onClick={handleClose}>
-                    <ArrowDownwardOutlinedIcon />
-                    아래로 이동
-                  </MenuItem>
-                  <MenuItem onClick={handleClose}>
-                    <DeleteForeverOutlinedIcon />
-                    삭제
-                  </MenuItem>
-                  <MenuItem onClick={handleClose}>
-                    <ColorizeIcon />
-                    수정
-                  </MenuItem>
-                </Menu>
-              </p>
+              {listOption.map(
+                (itemOption) =>
+                  itemOption.tag === item.name && (
+                    <p>
+                      <p>{itemOption.nameOption}</p>
+                      <p> {numberWithCommas(itemOption.price)}원</p>
+                      <img
+                        src={egeScan}
+                        alt=''
+                        onClick={() => {
+                          setImg(itemOption.image as string)
+                          setOpenImg(true)
+                        }}
+                      />
+                      <span
+                        onClick={(event: any) => {
+                          setIdOption(Number(itemOption.id))
+                          handleClick(event)
+                          setOption(itemOption)
+                        }}
+                      >
+                        <MoreVertIcon />
+                      </span>
+                      <Menu
+                        id='simple-menu'
+                        anchorEl={anchorEl}
+                        keepMounted
+                        open={Boolean(anchorEl)}
+                        onClose={handleClose}
+                      >
+                        <MenuItem onClick={handleClose}>
+                          <ArrowUpwardOutlinedIcon />
+                          위로이동
+                        </MenuItem>
+                        <MenuItem onClick={handleClose}>
+                          <ArrowDownwardOutlinedIcon />
+                          아래로 이동
+                        </MenuItem>
+                        <MenuItem
+                          onClick={() => {
+                            handleDelele(Number(idOption))
+                            handleClose()
+                          }}
+                        >
+                          <DeleteForeverOutlinedIcon />
+                          삭제
+                        </MenuItem>
+                        <MenuItem
+                          onClick={() => {
+                            handleClose()
+                            setOpen(true)
+                          }}
+                        >
+                          <ColorizeIcon />
+                          수정
+                        </MenuItem>
+                      </Menu>
+                    </p>
+                  )
+              )}
             </div>
           ))}
+          <Button
+            variant='contained'
+            style={{
+              width: '100%',
+              fontFamily: 'Pretendard',
+              fontStyle: 'normal',
+              fontWeight: 700,
+              fontSize: '18px',
+            }}
+            onClick={() => setOpenCreateTag(true)}
+          >
+            Add tag
+          </Button>
         </div>
       </div>
+
       <DialogCreate
         open={open}
         setOpen={() => setOpen(false)}
         type={type}
         tag={tag}
+        data={option}
       />
+      <DialogCreateTag
+        open={openCreateTag}
+        setOpen={() => setOpenCreateTag(false)}
+        type={type}
+      />
+      <DialogImg open={openImg} setOpen={() => setOpenImg(false)} img={img} />
     </div>
   )
 }

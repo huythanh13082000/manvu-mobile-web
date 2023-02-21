@@ -3,4 +3,5 @@ export interface GetParamsType {
   sort?: 'ASC' | 'DESC'
   perPage?: number
   keyword?: string
+  type?: string
 }
