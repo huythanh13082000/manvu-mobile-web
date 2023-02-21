@@ -82,7 +82,6 @@ const DialogCreate = (props: {
       })
     }
   }, [props.data])
-  console.log(props.data)
   return (
     <Dialog
       open={props.open}

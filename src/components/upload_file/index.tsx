@@ -53,7 +53,6 @@ const useStyles = makeStyles({
 
 const UploadFile = (props: {file: string[]}) => {
   const classes = useStyles()
-  console.log(12323, props.file)
   return (
     <div className={classes.container_upload_file}>
       <div>

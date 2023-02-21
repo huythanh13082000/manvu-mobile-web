@@ -207,7 +207,6 @@ const DevelopmentInquiry = () => {
 
   const handleDelele = async () => {
     const res: any = await orderProjectApi.delete(selectList)
-    console.log(res)
     if (res.success) {
       dispatch(orderProjectAction.get({page, perPage: 10}))
       dispatch(

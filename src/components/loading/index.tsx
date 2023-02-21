@@ -18,7 +18,6 @@ const useStyles = makeStyles({
 const Loading = () => {
   const loading = useAppSelector(SelectLoading)
   const classes = useStyles()
-  console.log(213213, loading)
   return (
     <>{loading ? <div className={classes.loader_container}></div> : <></>}</>
   )
