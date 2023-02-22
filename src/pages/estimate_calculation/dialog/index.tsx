@@ -72,7 +72,11 @@ const DialogCreate = (props: {
   }
   useEffect(() => {
     if (props.data) {
-      setData({...props.data})
+      setData({
+        ...props.data,
+        price: Number(props.data.price),
+        schedule: Number(props.data.schedule),
+      })
     } else {
       setData({
         nameOption: '',
@@ -82,6 +86,8 @@ const DialogCreate = (props: {
       })
     }
   }, [props.data])
+
+  console.log(213213123, props.data)
   return (
     <Dialog
       open={props.open}

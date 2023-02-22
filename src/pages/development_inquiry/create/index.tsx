@@ -15,9 +15,10 @@ import {orderProjectApi} from '../../../apis/orderProjectApi'
 import {useAppDispatch} from '../../../app/hooks'
 import InputBase from '../../../components/input'
 import UploadFile from '../../../components/upload_file'
+import {LIST_TYPE} from '../../../constants'
 import {orderProjectAction} from '../../../feature/order_project/orderProjectSlice'
 import {OrderProjectType} from '../../../types/orderProject.type'
-import {exportResults, numberWithCommas} from '../../../utils'
+import {exportResults, numberWithCommas, sum} from '../../../utils'
 
 const useStyles = makeStyles({
   container_development_inquiry: {
@@ -137,6 +138,7 @@ const CreateDevelopmentInquiry = () => {
     phone: '',
     platform: 'NOTHING',
     description: '',
+    options: [],
   })
 
   useEffect(() => {
@@ -157,9 +159,9 @@ const CreateDevelopmentInquiry = () => {
           description: orderProject.description,
           isDone: orderProject.isDone,
           estimatedCost: orderProject.estimatedCost,
-          estimatedTime: orderProject.estimatedTime,
           planFile: orderProject.planFile,
           presenter: orderProject.presenter,
+          options: orderProject.options,
         })
       }
       getDetail()
@@ -356,45 +358,33 @@ const CreateDevelopmentInquiry = () => {
             disabled
           />
         </div>
-
-        {/* <div> */}
-        <div>
-          <p>견적</p>
+        {data.options ? (
           <div>
-            <p>UI/UX 디자인</p>
-            <p>
-              <span>20페이지</span> <span>100,000원</span>
+            <p>견적</p>
+            {LIST_TYPE.map((item) => (
+              <div key={item}>
+                <p>{item}</p>
+                {data.options &&
+                  data.options.map(
+                    (option) =>
+                      option.type === item && (
+                        <p key={option.nameOption}>
+                          <span>{option.nameOption}</span>{' '}
+                          <span>{numberWithCommas(option.price)}원</span>
+                        </p>
+                      )
+                  )}
+              </div>
+            ))}
+
+            <p style={{borderTop: '1px dashed #000000', padding: '1rem 0'}}>
+              <span>총 금액</span>{' '}
+              <span>{numberWithCommas(Number(data.estimatedCost))}원</span>
             </p>
           </div>
-
-          <div>
-            <p>UI/UX 디자인</p>
-            <p>
-              <span>20페이지</span> <span>100,000원</span>
-            </p>
-          </div>
-
-          <div>
-            <p>UI/UX 디자인</p>
-            <p>
-              <span>20페이지</span> <span>100,000원</span>
-            </p>
-            <p>
-              <span>20페이지</span> <span>100,000원</span>
-            </p>
-          </div>
-
-          <div>
-            <p>UI/UX 디자인</p>
-            <p>
-              <span>20페이지</span> <span>100,000원</span>
-            </p>
-          </div>
-
-          <p style={{borderTop: '1px dashed #000000', padding: '1rem 0'}}>
-            <span>총 금액</span> <span>450,000원</span>
-          </p>
-        </div>
+        ) : (
+          <div style={{border: 'none'}}></div>
+        )}
         {/* <InputBase
             onChange={(e) => setData({...data, estimatedCost: Number(e)})}
             value={data.estimatedCost}

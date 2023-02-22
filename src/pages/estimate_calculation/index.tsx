@@ -225,7 +225,7 @@ const EstimateCalculation = () => {
               {listOption.map(
                 (itemOption) =>
                   itemOption.tag === item.name && (
-                    <p>
+                    <p key={itemOption.id}>
                       <p>{itemOption.nameOption}</p>
                       <p> {numberWithCommas(itemOption.price)}원</p>
                       <img

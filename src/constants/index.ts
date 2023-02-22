@@ -18,3 +18,4 @@ export const LIST_TAG = [
   'SETTING_PAGE',
   'MESSAGE',
 ]
+export const LIST_TYPE = ['UX_UI', 'APP', 'WEB', 'ADMIN_PAGE']
