@@ -7,16 +7,20 @@ import IconNoteMenu from '../../asset/icons/icon_note_menu'
 import logoMenu from '../../asset/images/logo-menu.png'
 import {ROUTE} from '../../router/routes'
 import React, {useEffect} from 'react'
+import ExitToAppIcon from '@material-ui/icons/ExitToApp'
 
 const useStyles = makeStyles({
   container_menu: {
     background: '#FFFFFF',
     border: '1px solid rgba(196, 196, 196, 0.5)',
+    borderBottom: 'none',
     boxSizing: 'border-box',
     width: '300px',
     padding: '0 1rem',
     height: '100vh',
+    position: 'relative',
     '&>div:nth-child(1)': {
+      boxSizing: 'border-box',
       display: 'flex',
       padding: '0 32px',
       alignItem: 'center',
@@ -50,6 +54,21 @@ const useStyles = makeStyles({
     '&>div:nth-child(1):hover': {
       background: 'white',
     },
+    '&>span': {
+      background: '#F3F4F6',
+      borderRadius: '4px',
+      fontWeight: 500,
+      fontSize: '14px',
+      lineHeight: '20px',
+      width: '245px',
+      height: '44px',
+      display: 'flex',
+      alignItems: 'center',
+      color: '#111827',
+      paddingLeft: '1rem',
+      position: 'absolute',
+      bottom: '1rem',
+    },
   },
 })
 
@@ -57,6 +76,12 @@ const Menu = () => {
   const classes = useStyles()
   const navigate = useNavigate()
   const location = useLocation()
+  const handleLogOut = () => {
+    if (window.confirm('로그아웃하시겠습니까?')) {
+      localStorage.clear()
+      navigate(ROUTE.LOGIN)
+    }
+  }
   return (
     <div className={classes.container_menu}>
       <div>
@@ -115,6 +140,9 @@ const Menu = () => {
         />
         <p>제작문의</p>
       </div>
+      <span onClick={handleLogOut}>
+        <ExitToAppIcon /> Logout
+      </span>
     </div>
   )
 }

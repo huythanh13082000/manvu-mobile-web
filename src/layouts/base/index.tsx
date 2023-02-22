@@ -9,7 +9,9 @@ interface Props {
 const useStyles = makeStyles({
   container_base_layout: {
     display: 'flex',
-    '&>div:nth-child(1)': {},
+    '&>div:nth-child(1)': {
+      maxHeight: '100vh',
+    },
     '&>div:nth-child(2)': {
       boxSizing: 'border-box',
       width: 'calc(100%)',
@@ -18,6 +20,7 @@ const useStyles = makeStyles({
     },
   },
 })
+
 const BaseLayout: React.FC<Props> = ({children}) => {
   const classes = useStyles()
   const location = useLocation()

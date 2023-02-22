@@ -34,9 +34,12 @@ const useStyles = makeStyles({
     margin: '1rem',
     '&>div:nth-child(1)': {
       width: '100%',
-      minHeight: '80vh',
+      maxHeight: '100vh',
       background: 'white',
+      overflow: 'auto',
       '&>div:nth-child(3)': {
+        height: '80vh',
+        overflow: 'auto',
         '& .MuiFormControlLabel-root': {
           width: '30%',
         },
@@ -49,6 +52,7 @@ const useStyles = makeStyles({
           padding: '0.3rem 1rem',
           border: '1px solid rgba(196, 196, 196, 0.5)',
           background: '#F3F4F6',
+
           '&>div': {
             display: 'flex',
             justifyContent: 'space-between',
@@ -326,20 +330,21 @@ const DevelopmentInquiry = () => {
             <div style={item.isDone ? {} : {background: 'white'}}>
               <FormControlLabel
                 control={<GreenCheckbox name='checkedG' />}
-                label={item.companyName}
-                checked={selectList.includes(Number(item.orderId))}
-                onClick={() => handleClick(Number(item.orderId))}
-              />
-              <div>
-                <p style={{width: '30%'}}>
+                label={
                   <span
                     onClick={() =>
                       navigate(`/update_development_inquiry/${item.orderId}`)
                     }
                   >
-                    {item.projectName}
-                  </span>{' '}
-                  - {item.position}
+                    {item.companyName}
+                  </span>
+                }
+                checked={selectList.includes(Number(item.orderId))}
+                onClick={() => handleClick(Number(item.orderId))}
+              />
+              <div>
+                <p style={{width: '30%'}}>
+                  <span>{item.projectName}</span> - {item.position}
                   <div>
                     {item.planFile &&
                       (item.planFile as string[]).map((item) => (

@@ -22,8 +22,12 @@ axiosClient.interceptors.request.use(
 axiosClient.interceptors.response.use(
   function (response: AxiosResponse) {
     if (response.data.code === 401) {
-      localStorage.clear()
-      alert('da het han dang nhap')
+      if (
+        window.confirm('로그인 세션이 만료되었습니다. 다시 로그인하십시오.')
+      ) {
+        localStorage.clear()
+        window.location.reload()
+      }
     } else return response.data
   },
   function (error) {

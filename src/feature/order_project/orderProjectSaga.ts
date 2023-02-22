@@ -13,7 +13,6 @@ export function* getOrderProject(action: PayloadAction<GetParamsType>) {
       code: number
       data: {listOrder: OrderProjectType[]; total: number}
     } = yield call(orderProjectApi.get, action.payload)
-    console.log(3343434, data)
     if (data.code === 0) {
       yield put(orderProjectAction.getSuccess({data: data.data}))
     } else {
@@ -35,7 +34,6 @@ function* updateOrderProject(
     } = yield call(orderProjectApi.update, {
       ...action.payload.data,
     })
-    console.log(data)
     if (data.code === 0) {
       yield put(
         snackBarActions.setStateSnackBar({content: 'success', type: 'success'})
