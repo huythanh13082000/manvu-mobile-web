@@ -381,7 +381,7 @@ const DevelopmentInquiry = () => {
                         : {}
                     }
                   >
-                    {item.isDone ? '미완료' : '완료'}
+                    {item.isDone ? '완료 ' : '미완료'}
                   </span>
                 </span>
               </div>
