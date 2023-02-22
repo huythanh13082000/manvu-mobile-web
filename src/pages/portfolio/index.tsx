@@ -119,7 +119,7 @@ const Portfolio = () => {
   const handleDelele = async () => {
     const res: any = await portfolioApi.delete(selectList)
     if (res.success) {
-      dispatch(portfolioAction.get({page, perPage: 10}))
+      dispatch(portfolioAction.get({page, perPage: 10, sort: 'DESC'}))
       dispatch(
         snackBarActions.setStateSnackBar({content: 'success', type: 'success'})
       )

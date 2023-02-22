@@ -214,10 +214,11 @@ const DevelopmentInquiry = () => {
   const handleDelele = async () => {
     const res: any = await orderProjectApi.delete(selectList)
     if (res.success) {
-      dispatch(orderProjectAction.get({page, perPage: 10}))
+      dispatch(orderProjectAction.get({page, perPage: 10, sort: 'DESC'}))
       dispatch(
         snackBarActions.setStateSnackBar({content: 'success', type: 'success'})
       )
+      setSelectList([])
     }
   }
 
