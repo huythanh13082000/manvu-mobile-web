@@ -2,7 +2,7 @@ export interface OrderProjectType {
   projectName: string
   planFile?: string | string[]
   maximumBudget?: number
-  governmentSupport: boolean
+  governmentSupport: string
   description?: string
   customerName: string
   companyName: string

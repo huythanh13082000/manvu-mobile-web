@@ -130,7 +130,7 @@ const CreateDevelopmentInquiry = () => {
   }
   const [data, setData] = useState<OrderProjectType>({
     projectName: '',
-    governmentSupport: false,
+    governmentSupport: '',
     customerName: '',
     companyName: '',
     position: '',
@@ -233,6 +233,7 @@ const CreateDevelopmentInquiry = () => {
             placeholder='예: 예비창업패키지 사업비'
             label='정부지원사업 집행 여부'
             disabled
+            value={data.governmentSupport}
           />
         </div>
         <FormControl>
