@@ -1,6 +1,6 @@
 import {Button, makeStyles} from '@material-ui/core'
 import Dialog from '@material-ui/core/Dialog'
-import {useState} from 'react'
+import {useEffect, useState} from 'react'
 import {useAppDispatch} from '../../../app/hooks'
 import InputBase from '../../../components/input'
 import {tagAction} from '../../../feature/tag/tagSlice'
@@ -38,6 +38,7 @@ const DialogCreateTag = (props: {
   open: boolean
   setOpen: () => void
   type: string
+  tag: {nameTag: string; id?: number}
 }) => {
   const classes = useStyles()
   const handleClose = () => {
@@ -46,13 +47,23 @@ const DialogCreateTag = (props: {
   const [nameTag, setNameTag] = useState<string>('')
   const dispatch = useAppDispatch()
   const handleSubmit = () => {
-    dispatch(
-      tagAction.create({
-        data: {name: nameTag, type: props.type},
-        setOpen: handleClose,
-      })
-    )
+    !props.tag
+      ? dispatch(
+          tagAction.create({
+            data: {name: nameTag, type: props.type},
+            setOpen: handleClose,
+          })
+        )
+      : dispatch(
+          tagAction.update({
+            data: {name: nameTag, type: props.type, id: props.tag.id},
+            setOpen: handleClose,
+          })
+        )
   }
+  useEffect(() => {
+    setNameTag(props.tag.nameTag)
+  }, [props.tag])
 
   return (
     <Dialog
@@ -67,6 +78,7 @@ const DialogCreateTag = (props: {
           onChange={(e) => setNameTag(e)}
           label='Name tag'
           placeholder='Name tag'
+          value={nameTag}
         />
 
         <div>

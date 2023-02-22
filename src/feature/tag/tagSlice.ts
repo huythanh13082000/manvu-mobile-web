@@ -24,6 +24,10 @@ const tagSlice = createSlice({
       state,
       action: PayloadAction<{data: TagType; setOpen: Function}>
     ) => {},
+    update: (
+      state,
+      action: PayloadAction<{data: TagType; setOpen: Function}>
+    ) => {},
     get: (state, action: PayloadAction<GetParamsType>) => {
       state.loading = true
     },

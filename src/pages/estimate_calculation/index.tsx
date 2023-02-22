@@ -11,6 +11,7 @@ import DeleteForeverOutlinedIcon from '@material-ui/icons/DeleteForeverOutlined'
 import MoreVertIcon from '@material-ui/icons/MoreVert'
 import React, {useEffect, useState} from 'react'
 import {optionApi} from '../../apis/optionApi'
+import {tagApi} from '../../apis/tagApi'
 import {useAppDispatch, useAppSelector} from '../../app/hooks'
 import egeScan from '../../asset/images/eye-scan.png'
 import {snackBarActions} from '../../components/snackbar/snackbarSlice'
@@ -68,13 +69,17 @@ const useStyles = makeStyles({
             alignItems: 'center',
             padding: '0 1rem ',
             background: '#F1F5F9',
-            '&>button': {
-              background: '#0065F2',
-              width: '85px',
-              height: '34px',
-              fontWeight: 500,
-              fontSize: '14px',
-              fontFamily: 'Pretendard',
+            '&>div': {
+              display: 'flex',
+              alignItems: 'center',
+              '&>button': {
+                background: '#0065F2',
+                width: '85px',
+                height: '34px',
+                fontWeight: 500,
+                fontSize: '14px',
+                fontFamily: 'Pretendard',
+              },
             },
             '&>p': {
               fontWeight: 700,
@@ -130,6 +135,7 @@ const EstimateCalculation = () => {
   const listOption = useAppSelector(selectListOption)
   const [img, setImg] = useState<string>('')
   const [idOption, setIdOption] = useState<number>()
+  const [idTag, setIdTag] = useState<number>()
   const [option, setOption] = useState<OptionType>()
 
   const handleClick = (event: React.MouseEvent<HTMLButtonElement>) => {
@@ -139,6 +145,15 @@ const EstimateCalculation = () => {
   const handleClose = () => {
     setAnchorEl(null)
   }
+
+  const handleCloseTag = () => {
+    setAnchorElTag(null)
+  }
+  const [anchorElTag, setAnchorElTag] = useState<HTMLButtonElement | null>(null)
+  const handleClickPopupTag = (event: React.MouseEvent<HTMLButtonElement>) => {
+    setAnchorElTag(event.currentTarget)
+  }
+
   useEffect(() => {
     !openCreateTag && dispatch(tagAction.get({page: page, type: type}))
   }, [dispatch, page, type, openCreateTag])
@@ -156,6 +171,25 @@ const EstimateCalculation = () => {
         })
       )
       dispatch(optionAction.get({page, perPage: 100, type: type}))
+    } else {
+      dispatch(
+        snackBarActions.setStateSnackBar({
+          content: 'delete error',
+          type: 'error',
+        })
+      )
+    }
+  }
+  const handleDeleleTag = async (id: number) => {
+    const res: any = await tagApi.delete([id])
+    if (res.success) {
+      dispatch(
+        snackBarActions.setStateSnackBar({
+          content: 'delete success',
+          type: 'success',
+        })
+      )
+      dispatch(tagAction.get({page, perPage: 100, type: type}))
     } else {
       dispatch(
         snackBarActions.setStateSnackBar({
@@ -209,18 +243,63 @@ const EstimateCalculation = () => {
             <div key={item.id}>
               <div>
                 <p>{item.name}</p>
-                <Button
-                  variant='contained'
-                  color='primary'
-                  onClick={() => {
-                    setOption(undefined)
-                    setOpen(true)
-                    setTag(item.name)
-                  }}
-                >
-                  <AddIcon />
-                  추가
-                </Button>
+                <div>
+                  <Button
+                    variant='contained'
+                    color='primary'
+                    onClick={() => {
+                      setOption(undefined)
+                      setOpen(true)
+                      setTag(item.name)
+                    }}
+                  >
+                    <AddIcon />
+                    추가
+                  </Button>
+                  <span
+                    onClick={(event: any) => {
+                      handleClickPopupTag(event)
+                      setIdTag(item.id)
+                      setTag(item.name)
+                    }}
+                  >
+                    <MoreVertIcon />
+                  </span>
+                  <Menu
+                    id='simple-menu'
+                    anchorEl={anchorElTag}
+                    keepMounted
+                    open={Boolean(anchorElTag)}
+                    onClose={handleCloseTag}
+                  >
+                    <MenuItem onClick={handleCloseTag}>
+                      <ArrowUpwardOutlinedIcon />
+                      위로이동
+                    </MenuItem>
+                    <MenuItem onClick={handleCloseTag}>
+                      <ArrowDownwardOutlinedIcon />
+                      아래로 이동
+                    </MenuItem>
+                    <MenuItem
+                      onClick={() => {
+                        handleDeleleTag(Number(idTag))
+                        handleCloseTag()
+                      }}
+                    >
+                      <DeleteForeverOutlinedIcon />
+                      삭제
+                    </MenuItem>
+                    <MenuItem
+                      onClick={() => {
+                        setOpenCreateTag(true)
+                        handleCloseTag()
+                      }}
+                    >
+                      <ColorizeIcon />
+                      수정
+                    </MenuItem>
+                  </Menu>
+                </div>
               </div>
               {listOption.map(
                 (itemOption) =>
@@ -311,6 +390,7 @@ const EstimateCalculation = () => {
         open={openCreateTag}
         setOpen={() => setOpenCreateTag(false)}
         type={type}
+        tag={{nameTag: tag, id: idTag}}
       />
       <DialogImg open={openImg} setOpen={() => setOpenImg(false)} img={img} />
     </div>

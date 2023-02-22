@@ -3,7 +3,6 @@ import moment from 'moment'
 export const sum = (data: any[]) => {
   let sum = 0
   data.forEach((item) => (sum = sum + Number(item.price)))
-  console.log(sum)
   return sum
 }
 

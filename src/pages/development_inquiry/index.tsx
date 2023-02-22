@@ -183,6 +183,7 @@ const DevelopmentInquiry = () => {
   const [page, setPage] = useState<number>(1)
   const [selectList, setSelectList] = useState<number[]>([])
   const [anchorEl, setAnchorEl] = useState<HTMLButtonElement | null>(null)
+
   const [checkboxStatus, setCheckboxStatus] = useState<number>(1)
 
   const handleClose = () => {
@@ -191,6 +192,7 @@ const DevelopmentInquiry = () => {
   const handleClickPopup = (event: React.MouseEvent<HTMLButtonElement>) => {
     setAnchorEl(event.currentTarget)
   }
+
   const handleClick = (id: number) => {
     if (selectList.includes(id)) {
       setSelectList([...selectList.filter((item) => item !== id)])

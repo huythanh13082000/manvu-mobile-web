@@ -30,6 +30,28 @@ function* createTag(action: PayloadAction<{data: TagType; setOpen: Function}>) {
     )
   }
 }
+function* updateTag(action: PayloadAction<{data: TagType; setOpen: Function}>) {
+  try {
+    const data: {
+      code: number
+    } = yield call(tagApi.update, {
+      ...action.payload.data,
+    })
+    if (data.code === 0) {
+      yield action.payload.setOpen()
+      yield put(
+        snackBarActions.setStateSnackBar({content: 'success', type: 'success'})
+      )
+    } else {
+      yield put(
+        snackBarActions.setStateSnackBar({content: 'err', type: 'error'})
+      )
+    }
+  } catch (error) {
+    console.log(error)
+  }
+}
+
 function* getTag(action: PayloadAction<GetParamsType>) {
   try {
     const data: {
@@ -51,4 +73,5 @@ function* getTag(action: PayloadAction<GetParamsType>) {
 export function* tagSaga() {
   yield takeEvery(tagAction.create.type, createTag)
   yield takeEvery(tagAction.get.type, getTag)
+  yield takeEvery(tagAction.update.type, updateTag)
 }
