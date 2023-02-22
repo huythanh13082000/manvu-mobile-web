@@ -43,6 +43,7 @@ const useStyles = makeStyles({
         width: '20%',
         marginRight: '1rem',
         background: 'white',
+        maxHeight: '260px',
         '&>p': {
           padding: '16px',
           display: 'flex',
@@ -51,6 +52,7 @@ const useStyles = makeStyles({
           fontWeight: 700,
           fontSize: '18px',
           lineHeight: '27px',
+          margin: '5px 0',
         },
         '&>p:hover': {
           background: '#C8E4FA',
@@ -69,6 +71,7 @@ const useStyles = makeStyles({
             alignItems: 'center',
             padding: '0 1rem ',
             background: '#F1F5F9',
+
             '&>div': {
               display: 'flex',
               alignItems: 'center',
@@ -372,7 +375,11 @@ const EstimateCalculation = () => {
               fontWeight: 700,
               fontSize: '18px',
             }}
-            onClick={() => setOpenCreateTag(true)}
+            onClick={() => {
+              setTag('')
+              setOpenCreateTag(true)
+              setIdTag(undefined)
+            }}
           >
             Add tag
           </Button>
