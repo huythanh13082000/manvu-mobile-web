@@ -44,7 +44,6 @@ const DialogCreateTag = (props: {
   const handleClose = () => {
     props.setOpen()
   }
-  console.log('tag', props.tag)
   const [nameTag, setNameTag] = useState<string>('')
   const dispatch = useAppDispatch()
   const handleSubmit = () => {
