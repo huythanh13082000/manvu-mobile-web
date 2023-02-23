@@ -11,7 +11,8 @@ const useStyles = makeStyles({
     position: 'fixed',
     background: `white url("${loading}") center no-repeat`,
     opacity: '0.5',
-    zIndex: 1,
+    zIndex: 10000,
+    top: 0,
   },
 })
 

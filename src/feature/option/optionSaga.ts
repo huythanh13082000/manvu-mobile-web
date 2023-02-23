@@ -2,6 +2,7 @@ import {PayloadAction} from '@reduxjs/toolkit'
 import {call, put, takeEvery} from 'redux-saga/effects'
 import {optionApi} from '../../apis/optionApi'
 import {uploadApi} from '../../apis/uploadApi'
+import {loadingActions} from '../../components/loading/loadingSlice'
 import {snackBarActions} from '../../components/snackbar/snackbarSlice'
 import {GetParamsType} from '../../types/getParams.type'
 import {OptionType} from '../../types/option.type'
@@ -25,10 +26,12 @@ function* createOption(
     })
     if (data.code === 0) {
       yield action.payload.setOpen()
+      yield put(loadingActions.loadingSuccess())
       yield put(
         snackBarActions.setStateSnackBar({content: 'success', type: 'success'})
       )
     } else {
+      yield put(loadingActions.loadingSuccess())
       yield put(
         snackBarActions.setStateSnackBar({content: 'err', type: 'error'})
       )
@@ -54,11 +57,13 @@ function* updateOption(
       image: dataImage.data,
     })
     if (data.code === 0) {
+      yield put(loadingActions.loadingSuccess())
       yield action.payload.setOpen()
       yield put(
         snackBarActions.setStateSnackBar({content: 'success', type: 'success'})
       )
     } else {
+      yield put(loadingActions.loadingSuccess())
       yield put(
         snackBarActions.setStateSnackBar({content: 'err', type: 'error'})
       )

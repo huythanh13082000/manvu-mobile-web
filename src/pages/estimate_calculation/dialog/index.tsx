@@ -3,6 +3,7 @@ import Dialog from '@material-ui/core/Dialog'
 import {useEffect, useState} from 'react'
 import {useAppDispatch} from '../../../app/hooks'
 import InputBase from '../../../components/input'
+import {loadingActions} from '../../../components/loading/loadingSlice'
 import UploadFileDev from '../../../components/upload_file-dev'
 import {optionAction} from '../../../feature/option/optionSlice'
 import {OptionType} from '../../../types/option.type'
@@ -55,6 +56,7 @@ const DialogCreate = (props: {
   })
   const dispatch = useAppDispatch()
   const handleSubmit = () => {
+    dispatch(loadingActions.openLoading())
     if (props.data?.id) {
       dispatch(
         optionAction.update({
