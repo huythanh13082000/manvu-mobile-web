@@ -1,7 +1,7 @@
-import { GetParamsType } from '../types/getParams.type'
-import { TagType } from '../types/tag.type'
+import {GetParamsType} from '../types/getParams.type'
+import {TagType} from '../types/tag.type'
 import axiosClient from './axiosClient'
-import { TAG } from './urlConfig'
+import {TAG} from './urlConfig'
 
 export const tagApi = {
   create: (body: TagType) => {
@@ -18,5 +18,10 @@ export const tagApi = {
   },
   delete: async (ids: number[]) => {
     return await axiosClient.delete(TAG, {data: {ids}})
+  },
+  up_down: async (payload: {id: number; type: 'UP' | 'DOWN'}) => {
+    return await axiosClient.put(`${TAG}/up-down/${payload.id}`, {
+      type: payload.type,
+    })
   },
 }

@@ -159,11 +159,15 @@ const EstimateCalculation = () => {
   }
 
   useEffect(() => {
-    !openCreateTag && dispatch(tagAction.get({page: page, type: type}))
+    !openCreateTag &&
+      dispatch(tagAction.get({page: page, type: type, sort: 'DESC'}))
   }, [dispatch, page, type, openCreateTag])
 
   useEffect(() => {
-    !open && dispatch(optionAction.get({page: page, perPage: 100, type: type}))
+    !open &&
+      dispatch(
+        optionAction.get({page: page, perPage: 100, type: type, sort: 'DESC'})
+      )
   }, [dispatch, page, type, open])
   const handleDelele = async (id: number) => {
     const res: any = await optionApi.delete([id])
@@ -174,7 +178,7 @@ const EstimateCalculation = () => {
           type: 'success',
         })
       )
-      dispatch(optionAction.get({page, perPage: 100, type: type}))
+      dispatch(optionAction.get({page, perPage: 100, type: type, sort: 'DESC'}))
     } else {
       dispatch(
         snackBarActions.setStateSnackBar({
@@ -193,11 +197,57 @@ const EstimateCalculation = () => {
           type: 'success',
         })
       )
-      dispatch(tagAction.get({page, perPage: 100, type: type}))
+      dispatch(tagAction.get({page, perPage: 100, type: type, sort: 'DESC'}))
     } else {
       dispatch(
         snackBarActions.setStateSnackBar({
           content: 'delete error',
+          type: 'error',
+        })
+      )
+    }
+  }
+  const handleUpDown = async (typeSort: 'UP' | 'DOWN') => {
+    const res: any = await tagApi.up_down({
+      id: Number(idTag),
+      type: typeSort,
+    })
+    if (res.code === 0) {
+      handleCloseTag()
+      dispatch(tagAction.get({page, perPage: 100, type: type, sort: 'DESC'}))
+      dispatch(
+        snackBarActions.setStateSnackBar({
+          content: 'sort success',
+          type: 'success',
+        })
+      )
+    } else {
+      dispatch(
+        snackBarActions.setStateSnackBar({
+          content: 'sort error',
+          type: 'error',
+        })
+      )
+    }
+  }
+  const handleUpDownOption = async (typeSort: 'UP' | 'DOWN') => {
+    const res: any = await optionApi.up_down({
+      id: Number(idOption),
+      type: typeSort,
+    })
+    if (res.code === 0) {
+      handleClose()
+      dispatch(optionAction.get({page, perPage: 100, type: type, sort: 'DESC'}))
+      dispatch(
+        snackBarActions.setStateSnackBar({
+          content: 'sort success',
+          type: 'success',
+        })
+      )
+    } else {
+      dispatch(
+        snackBarActions.setStateSnackBar({
+          content: 'sort error',
           type: 'error',
         })
       )
@@ -276,11 +326,11 @@ const EstimateCalculation = () => {
                     open={Boolean(anchorElTag)}
                     onClose={handleCloseTag}
                   >
-                    <MenuItem onClick={handleCloseTag}>
+                    <MenuItem onClick={() => handleUpDown('UP')}>
                       <ArrowUpwardOutlinedIcon />
                       위로이동
                     </MenuItem>
-                    <MenuItem onClick={handleCloseTag}>
+                    <MenuItem onClick={() => handleUpDown('DOWN')}>
                       <ArrowDownwardOutlinedIcon />
                       아래로 이동
                     </MenuItem>
@@ -335,11 +385,11 @@ const EstimateCalculation = () => {
                         open={Boolean(anchorEl)}
                         onClose={handleClose}
                       >
-                        <MenuItem onClick={handleClose}>
+                        <MenuItem onClick={() => handleUpDownOption('UP')}>
                           <ArrowUpwardOutlinedIcon />
                           위로이동
                         </MenuItem>
-                        <MenuItem onClick={handleClose}>
+                        <MenuItem onClick={() => handleUpDownOption('DOWN')}>
                           <ArrowDownwardOutlinedIcon />
                           아래로 이동
                         </MenuItem>

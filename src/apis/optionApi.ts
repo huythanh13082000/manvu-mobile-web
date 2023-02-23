@@ -19,4 +19,9 @@ export const optionApi = {
   delete: async (ids: number[]) => {
     return await axiosClient.delete(OPTION, {data: {ids}})
   },
+  up_down: async (payload: {id: number; type: 'UP' | 'DOWN'}) => {
+    return await axiosClient.put(`${OPTION}/up-down/${payload.id}`, {
+      type: payload.type,
+    })
+  },
 }
