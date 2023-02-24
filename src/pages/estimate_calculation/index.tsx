@@ -360,15 +360,17 @@ const EstimateCalculation = () => {
                   itemOption.tag === item.name && (
                     <p key={itemOption.id}>
                       <p>{itemOption.nameOption}</p>
-                      <p> {numberWithCommas(itemOption.price)}원</p>
-                      <img
-                        src={egeScan}
-                        alt=''
-                        onClick={() => {
-                          setImg(itemOption.image as string)
-                          setOpenImg(true)
-                        }}
-                      />
+                      <p> {numberWithCommas(Number(itemOption.price))}원</p>
+                      {itemOption.image && (
+                        <img
+                          src={egeScan}
+                          alt=''
+                          onClick={() => {
+                            setImg(itemOption.image as string)
+                            setOpenImg(true)
+                          }}
+                        />
+                      )}
                       <span
                         onClick={(event: any) => {
                           setIdOption(Number(itemOption.id))

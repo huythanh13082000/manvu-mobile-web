@@ -3,7 +3,7 @@ export interface OptionType {
   image: string | File | FormData
   type?: string
   tag?: string
-  price: number
+  price: number | string
   schedule: number
-  id?:number
+  id?: number
 }

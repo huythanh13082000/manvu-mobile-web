@@ -7,6 +7,7 @@ import {loadingActions} from '../../../components/loading/loadingSlice'
 import UploadFileDev from '../../../components/upload_file-dev'
 import {optionAction} from '../../../feature/option/optionSlice'
 import {OptionType} from '../../../types/option.type'
+import {numberWithCommas} from '../../../utils'
 
 const useStyles = makeStyles({
   container_dialog_create: {
@@ -60,14 +61,22 @@ const DialogCreate = (props: {
     if (props.data?.id) {
       dispatch(
         optionAction.update({
-          data: {...data},
+          data: {
+            ...data,
+            price: Number(data.price.toString().replaceAll(',', '')),
+          },
           setOpen: handleClose,
         })
       )
     } else
       dispatch(
         optionAction.create({
-          data: {...data, tag: props.tag, type: props.type},
+          data: {
+            ...data,
+            tag: props.tag,
+            type: props.type,
+            price: Number(data.price.toString().replaceAll(',', '')),
+          },
           setOpen: handleClose,
         })
       )
@@ -76,18 +85,19 @@ const DialogCreate = (props: {
     if (props.data) {
       setData({
         ...props.data,
-        price: Number(props.data.price),
+        price: numberWithCommas(Number(props.data.price)),
         schedule: Number(props.data.schedule),
       })
     } else {
       setData({
         nameOption: '',
-        price: 0,
+        price: '',
         schedule: 0,
         image: '',
       })
     }
   }, [props.data])
+  console.log(data.price)
 
   return (
     <Dialog
@@ -105,17 +115,23 @@ const DialogCreate = (props: {
           value={data.nameOption}
         />
         <InputBase
-          onChange={(e) => setData({...data, schedule: Number(e)})}
+          onChange={(e) => {
+            setData({...data, schedule: Number(e)})
+          }}
           label='Schedule'
           placeholder='Schedule'
           type='number'
           value={data.schedule}
         />
         <InputBase
-          onChange={(e) => setData({...data, price: Number(e)})}
+          onChange={(e) => {
+            const a = e.replaceAll(',', '')
+            if (!isNaN(a)) {
+              setData({...data, price: numberWithCommas(a)})
+            }
+          }}
           label='Price'
           placeholder='Price'
-          type='number'
           value={data.price}
           icon={
             <span
