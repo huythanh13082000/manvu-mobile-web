@@ -291,6 +291,24 @@ const EstimateCalculation = () => {
           >
             관리자 페이지 <ChevronRightIcon />
           </p>
+          <Button
+            variant='contained'
+            style={{
+              width: '100%',
+              fontFamily: 'Pretendard',
+              fontStyle: 'normal',
+              fontWeight: 700,
+              fontSize: '18px',
+              marginTop: '1rem',
+            }}
+            onClick={() => {
+              // setTag('')
+              // setOpenCreateTag(true)
+              // setIdTag(undefined)
+            }}
+          >
+            Add tag
+          </Button>
         </div>
         <div>
           {listTag.map((item) => (
