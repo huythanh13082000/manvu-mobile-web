@@ -114,7 +114,7 @@ const useStyles = makeStyles({
               fontSize: '16px',
               lineHeight: '24px',
               color: '#000000',
-              width: '10%',
+              width: '20%',
             },
           },
         },
