@@ -17,9 +17,11 @@ import egeScan from '../../asset/images/eye-scan.png'
 import {snackBarActions} from '../../components/snackbar/snackbarSlice'
 import {optionAction, selectListOption} from '../../feature/option/optionSlice'
 import {selectListTag, tagAction} from '../../feature/tag/tagSlice'
+import {selectListType, typeAction} from '../../feature/type/typeSlice'
 import {OptionType} from '../../types/option.type'
 import {numberWithCommas} from '../../utils'
 import DialogCreateTag from './create_tag'
+import DialogCreateType from './create_type'
 import DialogCreate from './dialog'
 import DialogImg from './dialog_img'
 
@@ -42,21 +44,23 @@ const useStyles = makeStyles({
       '&>div:nth-child(1)': {
         width: '20%',
         marginRight: '1rem',
-        background: 'white',
-        maxHeight: '260px',
-        '&>p': {
-          padding: '16px',
-          display: 'flex',
-          alignItems: 'center',
-          justifyContent: 'space-between',
-          fontWeight: 700,
-          fontSize: '18px',
-          lineHeight: '27px',
-          margin: '5px 0',
-        },
-        '&>p:hover': {
-          background: '#C8E4FA',
-          color: '#215DFC',
+        '&>div': {
+          background: 'white',
+          minHeight: '260px',
+          '&>p': {
+            padding: '16px',
+            display: 'flex',
+            alignItems: 'center',
+            justifyContent: 'space-between',
+            fontWeight: 700,
+            fontSize: '18px',
+            lineHeight: '27px',
+            margin: '5px 0',
+          },
+          '&>p:hover': {
+            background: '#C8E4FA',
+            color: '#215DFC',
+          },
         },
       },
       '&>div:nth-child(2)': {
@@ -126,16 +130,16 @@ const useStyles = makeStyles({
 const EstimateCalculation = () => {
   const classes = useStyles()
   const dispatch = useAppDispatch()
-  const [type, setType] = useState<'UX_UI' | 'APP' | 'WEB' | 'ADMIN_PAGE'>(
-    'UX_UI'
-  )
+  const [type, setType] = useState<string>('UX_UI')
   const [tag, setTag] = useState<string>('UI_PAGE')
   const [open, setOpen] = useState(false)
   const [openCreateTag, setOpenCreateTag] = useState(false)
+  const [openCreateType, setOpenCreateType] = useState(false)
   const [openImg, setOpenImg] = useState(false)
   const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null)
   const [page, setPage] = useState<number>(1)
   const listTag = useAppSelector(selectListTag)
+  const listType = useAppSelector(selectListType)
   const listOption = useAppSelector(selectListOption)
   const [img, setImg] = useState<string>('')
   const [idOption, setIdOption] = useState<number>()
@@ -169,6 +173,10 @@ const EstimateCalculation = () => {
         optionAction.get({page: page, perPage: 100, type: type, sort: 'DESC'})
       )
   }, [dispatch, page, type, open])
+
+  useEffect(() => {
+    !openCreateType && dispatch(typeAction.get({page: page}))
+  }, [dispatch, openCreateType, page])
   const handleDelele = async (id: number) => {
     const res: any = await optionApi.delete([id])
     if (res.success) {
@@ -253,44 +261,25 @@ const EstimateCalculation = () => {
       )
     }
   }
+  console.log('listType', listType)
   return (
     <div className={classes.container_estimate_calculation}>
       <div>
         <div>
-          <p
-            style={
-              type === 'UX_UI' ? {background: '#C8E4FA', color: '#215DFC'} : {}
-            }
-            onClick={() => setType('UX_UI')}
-          >
-            UI/UX 디자인 <ChevronRightIcon />
-          </p>
-          <p
-            style={
-              type === 'APP' ? {background: '#C8E4FA', color: '#215DFC'} : {}
-            }
-            onClick={() => setType('APP')}
-          >
-            APP <ChevronRightIcon />
-          </p>
-          <p
-            style={
-              type === 'WEB' ? {background: '#C8E4FA', color: '#215DFC'} : {}
-            }
-            onClick={() => setType('WEB')}
-          >
-            WEB <ChevronRightIcon />
-          </p>
-          <p
-            style={
-              type === 'ADMIN_PAGE'
-                ? {background: '#C8E4FA', color: '#215DFC'}
-                : {}
-            }
-            onClick={() => setType('ADMIN_PAGE')}
-          >
-            관리자 페이지 <ChevronRightIcon />
-          </p>
+          <div>
+            {listType.map((item) => (
+              <p
+                style={
+                  type === item.name
+                    ? {background: '#C8E4FA', color: '#215DFC'}
+                    : {}
+                }
+                onClick={() => setType(item.name)}
+              >
+                {item.name} <ChevronRightIcon />
+              </p>
+            ))}
+          </div>
           <Button
             variant='contained'
             style={{
@@ -302,12 +291,10 @@ const EstimateCalculation = () => {
               marginTop: '1rem',
             }}
             onClick={() => {
-              // setTag('')
-              // setOpenCreateTag(true)
-              // setIdTag(undefined)
+              setOpenCreateType(true)
             }}
           >
-            Add tag
+            Add type
           </Button>
         </div>
         <div>
@@ -469,6 +456,11 @@ const EstimateCalculation = () => {
         setOpen={() => setOpenCreateTag(false)}
         type={type}
         tag={{nameTag: tag, id: idTag}}
+      />
+      <DialogCreateType
+        open={openCreateType}
+        setOpen={() => setOpenCreateType(false)}
+        // type={'dâsd'}
       />
       <DialogImg open={openImg} setOpen={() => setOpenImg(false)} img={img} />
     </div>

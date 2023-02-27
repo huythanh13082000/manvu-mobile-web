@@ -13,6 +13,7 @@ import {optionReducer} from '../feature/option/optionSlice'
 import {orderProjectReducer} from '../feature/order_project/orderProjectSlice'
 import {portfolioReducer} from '../feature/portfolio/portfolioSlice'
 import {tagReducer} from '../feature/tag/tagSlice'
+import {typeReducer} from '../feature/type/typeSlice'
 import rootSaga from './rootSaga'
 
 const rootReducer = combineReducers({
@@ -23,6 +24,7 @@ const rootReducer = combineReducers({
   loadingReducer,
   optionReducer,
   tagReducer,
+  typeReducer,
 })
 
 const sagaMiddleware = createSagaMiddleware()

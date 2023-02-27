@@ -4,6 +4,7 @@ import {optionSaga} from '../feature/option/optionSaga'
 import orderProjectSaga from '../feature/order_project/orderProjectSaga'
 import portfolioSaga from '../feature/portfolio/portfolioSaga'
 import {tagSaga} from '../feature/tag/tagSaga'
+import { typeSaga } from '../feature/type/typeSaga'
 export default function* rootSaga() {
   yield all([
     authSaga(),
@@ -11,5 +12,6 @@ export default function* rootSaga() {
     orderProjectSaga(),
     optionSaga(),
     tagSaga(),
+    typeSaga(),
   ])
 }
