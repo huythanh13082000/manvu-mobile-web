@@ -12,6 +12,7 @@ import MoreVertIcon from '@material-ui/icons/MoreVert'
 import React, {useEffect, useState} from 'react'
 import {optionApi} from '../../apis/optionApi'
 import {tagApi} from '../../apis/tagApi'
+import {typeApi} from '../../apis/typeApi'
 import {useAppDispatch, useAppSelector} from '../../app/hooks'
 import egeScan from '../../asset/images/eye-scan.png'
 import {snackBarActions} from '../../components/snackbar/snackbarSlice'
@@ -145,6 +146,7 @@ const EstimateCalculation = () => {
   const [img, setImg] = useState<string>('')
   const [idOption, setIdOption] = useState<number>()
   const [idTag, setIdTag] = useState<number>()
+  const [idType, setIdType] = useState<number>()
   const [option, setOption] = useState<OptionType>()
 
   const handleClick = (event: React.MouseEvent<HTMLButtonElement>) => {
@@ -158,9 +160,19 @@ const EstimateCalculation = () => {
   const handleCloseTag = () => {
     setAnchorElTag(null)
   }
+  const handleCloseType = () => {
+    setAnchorElType(null)
+  }
   const [anchorElTag, setAnchorElTag] = useState<HTMLButtonElement | null>(null)
   const handleClickPopupTag = (event: React.MouseEvent<HTMLButtonElement>) => {
     setAnchorElTag(event.currentTarget)
+  }
+
+  const [anchorElType, setAnchorElType] = useState<HTMLButtonElement | null>(
+    null
+  )
+  const handleClickPopupType = (event: React.MouseEvent<HTMLButtonElement>) => {
+    setAnchorElType(event.currentTarget)
   }
 
   useEffect(() => {
@@ -209,6 +221,26 @@ const EstimateCalculation = () => {
         })
       )
       dispatch(tagAction.get({page, perPage: 50, type: type, sort: 'DESC'}))
+    } else {
+      dispatch(
+        snackBarActions.setStateSnackBar({
+          content: 'delete error',
+          type: 'error',
+        })
+      )
+    }
+  }
+
+  const handleDeleleType = async (id: number) => {
+    const res: any = await typeApi.delete([id])
+    if (res.success) {
+      dispatch(
+        snackBarActions.setStateSnackBar({
+          content: 'delete success',
+          type: 'success',
+        })
+      )
+      dispatch(typeAction.get({page, perPage: 50}))
     } else {
       dispatch(
         snackBarActions.setStateSnackBar({
@@ -279,7 +311,44 @@ const EstimateCalculation = () => {
                 }
                 onClick={() => setType(item.name)}
               >
-                {item.name} <ChevronRightIcon />
+                {item.name}{' '}
+                <span
+                  onClick={(event: any) => {
+                    // setIdOption(Number(itemOption.id))
+                    // handleClick(event)
+                    // setOption(itemOption)
+                    setIdType(Number(item.id))
+                    handleClickPopupType(event)
+                  }}
+                >
+                  <MoreVertIcon />
+                </span>
+                <Menu
+                  id='simple-menu2'
+                  anchorEl={anchorElType}
+                  keepMounted
+                  open={Boolean(anchorElType)}
+                  onClose={handleCloseType}
+                >
+                  <MenuItem
+                    onClick={() => {
+                      handleDeleleType(Number(idType))
+                      handleCloseType()
+                    }}
+                  >
+                    <DeleteForeverOutlinedIcon />
+                    삭제
+                  </MenuItem>
+                  <MenuItem
+                    onClick={() => {
+                      handleCloseType()
+                      setOpen(true)
+                    }}
+                  >
+                    <ColorizeIcon />
+                    수정
+                  </MenuItem>
+                </Menu>
               </p>
             ))}
           </div>

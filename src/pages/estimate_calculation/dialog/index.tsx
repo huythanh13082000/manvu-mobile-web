@@ -52,7 +52,7 @@ const DialogCreate = (props: {
   const [data, setData] = useState<OptionType>({
     nameOption: '',
     price: 0,
-    schedule: 0,
+    // schedule: 0,
     image: '',
   })
   const dispatch = useAppDispatch()
@@ -86,13 +86,13 @@ const DialogCreate = (props: {
       setData({
         ...props.data,
         price: numberWithCommas(Number(props.data.price)),
-        schedule: Number(props.data.schedule),
+        // schedule: Number(props.data.schedule),
       })
     } else {
       setData({
         nameOption: '',
         price: '',
-        schedule: 0,
+        // schedule: 0,
         image: '',
       })
     }
@@ -114,7 +114,7 @@ const DialogCreate = (props: {
           placeholder='Name Option'
           value={data.nameOption}
         />
-        <InputBase
+        {/* <InputBase
           onChange={(e) => {
             setData({...data, schedule: Number(e)})
           }}
@@ -122,7 +122,7 @@ const DialogCreate = (props: {
           placeholder='Schedule'
           type='number'
           value={data.schedule}
-        />
+        /> */}
         <InputBase
           onChange={(e) => {
             const a = e.replaceAll(',', '')
@@ -167,7 +167,7 @@ const DialogCreate = (props: {
             color='primary'
             onClick={() => handleSubmit()}
             disabled={
-              !data.price || !data.nameOption || !data.schedule ? true : false
+              !data.price || !data.nameOption ? true : false
             }
           >
             완료

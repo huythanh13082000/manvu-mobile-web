@@ -4,6 +4,6 @@ export interface OptionType {
   type?: string
   tag?: string
   price: number | string
-  schedule: number
+  schedule?: number
   id?: number
 }
