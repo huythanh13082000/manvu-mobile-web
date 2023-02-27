@@ -36,6 +36,7 @@ const useStyles = makeStyles({
       fontFamily: 'Noto Sans KR',
       fontStyle: 'normal',
     },
+
     '&>div': {
       display: 'flex',
       '&>div': {
@@ -164,13 +165,15 @@ const EstimateCalculation = () => {
 
   useEffect(() => {
     !openCreateTag &&
-      dispatch(tagAction.get({page: page, type: type, sort: 'DESC'}))
+      dispatch(
+        tagAction.get({page: page, type: type, sort: 'DESC', perPage: 50})
+      )
   }, [dispatch, page, type, openCreateTag])
 
   useEffect(() => {
     !open &&
       dispatch(
-        optionAction.get({page: page, perPage: 100, type: type, sort: 'DESC'})
+        optionAction.get({page: page, perPage: 150, type: type, sort: 'DESC'})
       )
   }, [dispatch, page, type, open])
 
@@ -186,7 +189,7 @@ const EstimateCalculation = () => {
           type: 'success',
         })
       )
-      dispatch(optionAction.get({page, perPage: 100, type: type, sort: 'DESC'}))
+      dispatch(optionAction.get({page, perPage: 150, type: type, sort: 'DESC'}))
     } else {
       dispatch(
         snackBarActions.setStateSnackBar({
@@ -205,7 +208,7 @@ const EstimateCalculation = () => {
           type: 'success',
         })
       )
-      dispatch(tagAction.get({page, perPage: 100, type: type, sort: 'DESC'}))
+      dispatch(tagAction.get({page, perPage: 50, type: type, sort: 'DESC'}))
     } else {
       dispatch(
         snackBarActions.setStateSnackBar({
@@ -222,7 +225,7 @@ const EstimateCalculation = () => {
     })
     if (res.code === 0) {
       handleCloseTag()
-      dispatch(tagAction.get({page, perPage: 100, type: type, sort: 'DESC'}))
+      dispatch(tagAction.get({page, perPage: 50, type: type, sort: 'DESC'}))
       dispatch(
         snackBarActions.setStateSnackBar({
           content: 'sort success',
@@ -245,7 +248,7 @@ const EstimateCalculation = () => {
     })
     if (res.code === 0) {
       handleClose()
-      dispatch(optionAction.get({page, perPage: 100, type: type, sort: 'DESC'}))
+      dispatch(optionAction.get({page, perPage: 150, type: type, sort: 'DESC'}))
       dispatch(
         snackBarActions.setStateSnackBar({
           content: 'sort success',
@@ -460,7 +463,6 @@ const EstimateCalculation = () => {
       <DialogCreateType
         open={openCreateType}
         setOpen={() => setOpenCreateType(false)}
-        // type={'dâsd'}
       />
       <DialogImg open={openImg} setOpen={() => setOpenImg(false)} img={img} />
     </div>
