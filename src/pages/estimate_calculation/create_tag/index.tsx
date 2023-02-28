@@ -73,7 +73,7 @@ const DialogCreateTag = (props: {
       aria-describedby='alert-dialog-description'
     >
       <div className={classes.container_dialog_create}>
-        <p>CREATE TAG </p>
+        <p>TAG </p>
         <InputBase
           onChange={(e) => setNameTag(e)}
           label='Name tag'

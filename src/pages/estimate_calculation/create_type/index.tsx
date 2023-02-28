@@ -73,7 +73,7 @@ const DialogCreateType = (props: {
       aria-describedby='alert-dialog-description'
     >
       <div className={classes.container_dialog_create}>
-        <p>CREATE TYPE </p>
+        <p>TYPE </p>
         <InputBase
           onChange={(e) => setNameType(e)}
           label='Name type'
