@@ -34,7 +34,11 @@ const useStyles = makeStyles({
   },
 })
 
-const DialogCreateType = (props: {open: boolean; setOpen: () => void}) => {
+const DialogCreateType = (props: {
+  open: boolean
+  setOpen: () => void
+  type?: {id?: number; name: string}
+}) => {
   const classes = useStyles()
   const handleClose = () => {
     props.setOpen()
@@ -42,16 +46,23 @@ const DialogCreateType = (props: {open: boolean; setOpen: () => void}) => {
   const [nameType, setNameType] = useState<string>('')
   const dispatch = useAppDispatch()
   const handleSubmit = () => {
-    dispatch(
-      typeAction.create({
-        data: {name: nameType},
-        setOpen: handleClose,
-      })
-    )
+    props.type && props.type.id
+      ? dispatch(
+          typeAction.update({
+            data: {name: nameType, id: props.type.id},
+            setOpen: handleClose,
+          })
+        )
+      : dispatch(
+          typeAction.create({
+            data: {name: nameType},
+            setOpen: handleClose,
+          })
+        )
   }
-  // useEffect(() => {
-  //   setNameType(props.type.nameType)
-  // }, [props.type])
+  useEffect(() => {
+    props.type && setNameType(props.type?.name)
+  }, [props.type])
 
   return (
     <Dialog

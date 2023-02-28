@@ -296,7 +296,6 @@ const EstimateCalculation = () => {
       )
     }
   }
-  console.log('listType', listType)
   return (
     <div className={classes.container_estimate_calculation}>
       <div>
@@ -342,7 +341,7 @@ const EstimateCalculation = () => {
                   <MenuItem
                     onClick={() => {
                       handleCloseType()
-                      setOpen(true)
+                      setOpenCreateType(true)
                     }}
                   >
                     <ColorizeIcon />
@@ -532,6 +531,7 @@ const EstimateCalculation = () => {
       <DialogCreateType
         open={openCreateType}
         setOpen={() => setOpenCreateType(false)}
+        type={{name: type, id: idType}}
       />
       <DialogImg open={openImg} setOpen={() => setOpenImg(false)} img={img} />
     </div>

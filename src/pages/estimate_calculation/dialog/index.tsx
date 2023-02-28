@@ -97,7 +97,6 @@ const DialogCreate = (props: {
       })
     }
   }, [props.data])
-  console.log(data.price)
 
   return (
     <Dialog
