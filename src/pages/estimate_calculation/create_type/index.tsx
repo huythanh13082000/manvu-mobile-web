@@ -61,9 +61,10 @@ const DialogCreateType = (props: {
         )
   }
   useEffect(() => {
-    props.type && setNameType(props.type?.name)
+    props.type && props.type.id
+      ? setNameType(props.type?.name)
+      : setNameType('')
   }, [props.type])
-
   return (
     <Dialog
       open={props.open}

@@ -133,7 +133,7 @@ const EstimateCalculation = () => {
   const classes = useStyles()
   const dispatch = useAppDispatch()
   const [type, setType] = useState<string>('UX_UI')
-  const [tag, setTag] = useState<string>('UI_PAGE')
+  const [tag, setTag] = useState<string>('')
   const [open, setOpen] = useState(false)
   const [openCreateTag, setOpenCreateTag] = useState(false)
   const [openCreateType, setOpenCreateType] = useState(false)
@@ -362,6 +362,7 @@ const EstimateCalculation = () => {
               marginTop: '1rem',
             }}
             onClick={() => {
+              setIdType(undefined)
               setOpenCreateType(true)
             }}
           >
