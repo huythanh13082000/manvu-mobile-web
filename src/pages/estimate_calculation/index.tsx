@@ -1,26 +1,25 @@
-import {makeStyles} from '@material-ui/core'
+import { makeStyles } from '@material-ui/core'
 import Button from '@material-ui/core/Button'
 import Menu from '@material-ui/core/Menu'
 import MenuItem from '@material-ui/core/MenuItem'
 import AddIcon from '@material-ui/icons/Add'
 import ArrowDownwardOutlinedIcon from '@material-ui/icons/ArrowDownwardOutlined'
 import ArrowUpwardOutlinedIcon from '@material-ui/icons/ArrowUpwardOutlined'
-import ChevronRightIcon from '@material-ui/icons/ChevronRight'
 import ColorizeIcon from '@material-ui/icons/Colorize'
 import DeleteForeverOutlinedIcon from '@material-ui/icons/DeleteForeverOutlined'
 import MoreVertIcon from '@material-ui/icons/MoreVert'
-import React, {useEffect, useState} from 'react'
-import {optionApi} from '../../apis/optionApi'
-import {tagApi} from '../../apis/tagApi'
-import {typeApi} from '../../apis/typeApi'
-import {useAppDispatch, useAppSelector} from '../../app/hooks'
+import React, { useEffect, useState } from 'react'
+import { optionApi } from '../../apis/optionApi'
+import { tagApi } from '../../apis/tagApi'
+import { typeApi } from '../../apis/typeApi'
+import { useAppDispatch, useAppSelector } from '../../app/hooks'
 import egeScan from '../../asset/images/eye-scan.png'
-import {snackBarActions} from '../../components/snackbar/snackbarSlice'
-import {optionAction, selectListOption} from '../../feature/option/optionSlice'
-import {selectListTag, tagAction} from '../../feature/tag/tagSlice'
-import {selectListType, typeAction} from '../../feature/type/typeSlice'
-import {OptionType} from '../../types/option.type'
-import {numberWithCommas} from '../../utils'
+import { snackBarActions } from '../../components/snackbar/snackbarSlice'
+import { optionAction, selectListOption } from '../../feature/option/optionSlice'
+import { selectListTag, tagAction } from '../../feature/tag/tagSlice'
+import { selectListType, typeAction } from '../../feature/type/typeSlice'
+import { OptionType } from '../../types/option.type'
+import { numberWithCommas } from '../../utils'
 import DialogCreateTag from './create_tag'
 import DialogCreateType from './create_type'
 import DialogCreate from './dialog'
@@ -132,7 +131,7 @@ const useStyles = makeStyles({
 const EstimateCalculation = () => {
   const classes = useStyles()
   const dispatch = useAppDispatch()
-  const [type, setType] = useState<string>('UX_UI')
+  const [type, setType] = useState<string>('UI/UX')
   const [tag, setTag] = useState<string>('')
   const [open, setOpen] = useState(false)
   const [openCreateTag, setOpenCreateTag] = useState(false)
@@ -273,6 +272,31 @@ const EstimateCalculation = () => {
       )
     }
   }
+
+  const handleUpDownType = async (typeSort: 'UP' | 'DOWN') => {
+    const res: any = await typeApi.up_down({
+      id: Number(idType),
+      type: typeSort,
+    })
+    if (res.code === 0) {
+      handleCloseType()
+      dispatch(typeAction.get({page, perPage: 50, sort: 'DESC'}))
+      dispatch(
+        snackBarActions.setStateSnackBar({
+          content: 'sort success',
+          type: 'success',
+        })
+      )
+    } else {
+      dispatch(
+        snackBarActions.setStateSnackBar({
+          content: 'sort error',
+          type: 'error',
+        })
+      )
+    }
+  }
+
   const handleUpDownOption = async (typeSort: 'UP' | 'DOWN') => {
     const res: any = await optionApi.up_down({
       id: Number(idOption),
@@ -308,48 +332,55 @@ const EstimateCalculation = () => {
                     ? {background: '#C8E4FA', color: '#215DFC'}
                     : {}
                 }
-                onClick={() => setType(item.name)}
+                onClick={() => {
+                  setType(item.name)
+                }}
               >
                 {item.name}{' '}
                 <span
                   onClick={(event: any) => {
-                    // setIdOption(Number(itemOption.id))
-                    // handleClick(event)
-                    // setOption(itemOption)
                     setIdType(Number(item.id))
                     handleClickPopupType(event)
                   }}
                 >
                   <MoreVertIcon />
                 </span>
-                <Menu
-                  id='simple-menu2'
-                  anchorEl={anchorElType}
-                  keepMounted
-                  open={Boolean(anchorElType)}
-                  onClose={handleCloseType}
-                >
-                  <MenuItem
-                    onClick={() => {
-                      handleDeleleType(Number(idType))
-                      handleCloseType()
-                    }}
-                  >
-                    <DeleteForeverOutlinedIcon />
-                    삭제
-                  </MenuItem>
-                  <MenuItem
-                    onClick={() => {
-                      handleCloseType()
-                      setOpenCreateType(true)
-                    }}
-                  >
-                    <ColorizeIcon />
-                    수정
-                  </MenuItem>
-                </Menu>
               </p>
             ))}
+            <Menu
+              id='simple-menu2'
+              anchorEl={anchorElType}
+              keepMounted
+              open={Boolean(anchorElType)}
+              onClose={handleCloseType}
+            >
+              <MenuItem onClick={() => handleUpDownType('UP')}>
+                <ArrowUpwardOutlinedIcon />
+                위로이동
+              </MenuItem>
+              <MenuItem onClick={() => handleUpDownType('DOWN')}>
+                <ArrowDownwardOutlinedIcon />
+                아래로 이동
+              </MenuItem>
+              <MenuItem
+                onClick={() => {
+                  handleDeleleType(Number(idType))
+                  handleCloseType()
+                }}
+              >
+                <DeleteForeverOutlinedIcon />
+                삭제
+              </MenuItem>
+              <MenuItem
+                onClick={() => {
+                  handleCloseType()
+                  setOpenCreateType(true)
+                }}
+              >
+                <ColorizeIcon />
+                수정
+              </MenuItem>
+            </Menu>
           </div>
           <Button
             variant='contained'
@@ -396,40 +427,6 @@ const EstimateCalculation = () => {
                   >
                     <MoreVertIcon />
                   </span>
-                  <Menu
-                    id='simple-menu'
-                    anchorEl={anchorElTag}
-                    keepMounted
-                    open={Boolean(anchorElTag)}
-                    onClose={handleCloseTag}
-                  >
-                    <MenuItem onClick={() => handleUpDown('UP')}>
-                      <ArrowUpwardOutlinedIcon />
-                      위로이동
-                    </MenuItem>
-                    <MenuItem onClick={() => handleUpDown('DOWN')}>
-                      <ArrowDownwardOutlinedIcon />
-                      아래로 이동
-                    </MenuItem>
-                    <MenuItem
-                      onClick={() => {
-                        handleDeleleTag(Number(idTag))
-                        handleCloseTag()
-                      }}
-                    >
-                      <DeleteForeverOutlinedIcon />
-                      삭제
-                    </MenuItem>
-                    <MenuItem
-                      onClick={() => {
-                        setOpenCreateTag(true)
-                        handleCloseTag()
-                      }}
-                    >
-                      <ColorizeIcon />
-                      수정
-                    </MenuItem>
-                  </Menu>
                 </div>
               </div>
               {listOption.map(
@@ -457,45 +454,79 @@ const EstimateCalculation = () => {
                       >
                         <MoreVertIcon />
                       </span>
-                      <Menu
-                        id='simple-menu'
-                        anchorEl={anchorEl}
-                        keepMounted
-                        open={Boolean(anchorEl)}
-                        onClose={handleClose}
-                      >
-                        <MenuItem onClick={() => handleUpDownOption('UP')}>
-                          <ArrowUpwardOutlinedIcon />
-                          위로이동
-                        </MenuItem>
-                        <MenuItem onClick={() => handleUpDownOption('DOWN')}>
-                          <ArrowDownwardOutlinedIcon />
-                          아래로 이동
-                        </MenuItem>
-                        <MenuItem
-                          onClick={() => {
-                            handleDelele(Number(idOption))
-                            handleClose()
-                          }}
-                        >
-                          <DeleteForeverOutlinedIcon />
-                          삭제
-                        </MenuItem>
-                        <MenuItem
-                          onClick={() => {
-                            handleClose()
-                            setOpen(true)
-                          }}
-                        >
-                          <ColorizeIcon />
-                          수정
-                        </MenuItem>
-                      </Menu>
                     </p>
                   )
               )}
             </div>
           ))}
+          <Menu
+            id='simple-menu'
+            anchorEl={anchorEl}
+            keepMounted
+            open={Boolean(anchorEl)}
+            onClose={handleClose}
+          >
+            <MenuItem onClick={() => handleUpDownOption('UP')}>
+              <ArrowUpwardOutlinedIcon />
+              위로이동
+            </MenuItem>
+            <MenuItem onClick={() => handleUpDownOption('DOWN')}>
+              <ArrowDownwardOutlinedIcon />
+              아래로 이동
+            </MenuItem>
+            <MenuItem
+              onClick={() => {
+                handleDelele(Number(idOption))
+                handleClose()
+              }}
+            >
+              <DeleteForeverOutlinedIcon />
+              삭제
+            </MenuItem>
+            <MenuItem
+              onClick={() => {
+                handleClose()
+                setOpen(true)
+              }}
+            >
+              <ColorizeIcon />
+              수정
+            </MenuItem>
+          </Menu>
+          <Menu
+            id='simple-menu'
+            anchorEl={anchorElTag}
+            keepMounted
+            open={Boolean(anchorElTag)}
+            onClose={handleCloseTag}
+          >
+            <MenuItem onClick={() => handleUpDown('UP')}>
+              <ArrowUpwardOutlinedIcon />
+              위로이동
+            </MenuItem>
+            <MenuItem onClick={() => handleUpDown('DOWN')}>
+              <ArrowDownwardOutlinedIcon />
+              아래로 이동
+            </MenuItem>
+            <MenuItem
+              onClick={() => {
+                handleDeleleTag(Number(idTag))
+                handleCloseTag()
+              }}
+            >
+              <DeleteForeverOutlinedIcon />
+              삭제
+            </MenuItem>
+            <MenuItem
+              onClick={() => {
+                setOpenCreateTag(true)
+                handleCloseTag()
+              }}
+            >
+              <ColorizeIcon />
+              수정
+            </MenuItem>
+          </Menu>
           <Button
             variant='contained'
             style={{

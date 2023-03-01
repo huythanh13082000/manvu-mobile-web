@@ -20,9 +20,9 @@ export const typeApi = {
   delete: async (ids: number[]) => {
     return await axiosClient.delete(TYPE, {data: {ids}})
   },
-  // up_down: async (payload: {id: number; type: 'UP' | 'DOWN'}) => {
-  //   return await axiosClient.put(`${TYPE}/up-down/${payload.id}`, {
-  //     type: payload.type,
-  //   })
-  // },
+  up_down: async (payload: {id: number; type: 'UP' | 'DOWN'}) => {
+    return await axiosClient.put(`${TYPE}/up-down/${payload.id}`, {
+      type: payload.type,
+    })
+  },
 }
