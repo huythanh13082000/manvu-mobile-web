@@ -11,10 +11,28 @@ import moment from 'moment'
 import 'moment/locale/ko'
 import Loading from './components/loading'
 import BaseLayout from './layouts/base'
+import {createTheme, ThemeProvider} from '@mui/material/styles'
 
 const container = document.getElementById('root')!
 const root = createRoot(container)
 moment.locale('ko')
+const theme = createTheme({
+  typography: {
+    fontFamily: ['Noto Sans KR'].join(','),
+  },
+  components: {
+    MuiButton: {
+      styleOverrides: {
+        // Name of the slot
+        root: {
+          height: '48px',
+          fontSize: '16px',
+          fontWeight: 700,
+        },
+      },
+    },
+  },
+})
 
 root.render(
   <React.StrictMode>
@@ -22,9 +40,11 @@ root.render(
       <BrowserRouter>
         <Loading />
         <CustomizedSnackbars />
-        <BaseLayout>
-          <Router />
-        </BaseLayout>
+        <ThemeProvider theme={theme}>
+          <BaseLayout>
+            <Router />
+          </BaseLayout>
+        </ThemeProvider>
       </BrowserRouter>
     </Provider>
   </React.StrictMode>

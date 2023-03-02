@@ -1,3 +1,4 @@
+import Login from '../pages/Login'
 import MyRouteProp from './MyRouteProp'
 
 export const ROUTE = {
@@ -8,7 +9,7 @@ export const ROUTE = {
 const routes: Array<MyRouteProp> = [
   {
     path: ROUTE.LOGIN,
-    element: <>Login</>,
+    element: <Login />,
   },
 ]
 export default routes
