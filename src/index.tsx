@@ -41,6 +41,11 @@ const theme = createTheme({
         },
       },
     },
+    MuiDialog: {
+      styleOverrides: {
+        root: {},
+      },
+    },
   },
 })
 

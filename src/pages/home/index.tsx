@@ -4,6 +4,7 @@ import HeaderSearch from '../../components/header/headerSearch'
 import Box from '@mui/material/Box/Box'
 import Tabs from '@mui/material/Tabs/Tabs'
 import Tab from '@mui/material/Tab/Tab'
+import Filter from '../../components/filter'
 
 const useStyles = makeStyles({
   home_container: {},
@@ -39,6 +40,9 @@ const Home = () => {
           <Tab label='서비스' {...a11yProps(4)} />
           <Tab label='기자단' {...a11yProps(5)} />
         </Tabs>
+      </Box>
+      <Box bgcolor={'#F6F6F6'} padding='1rem'>
+        <Filter />
       </Box>
     </div>
   )
