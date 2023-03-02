@@ -125,7 +125,7 @@ const Filter = () => {
                   <Grid item xs={6}>
                     <FormControlLabel
                       value='createdAt'
-                      control={<Radio style={{padding: '0.3rem 0.5rem'}} />}
+                      control={<Radio />}
                       label='최신순'
                       // onClick={() => setColumsfilter('createdAt')}
                     />
@@ -133,7 +133,7 @@ const Filter = () => {
                   <Grid item xs={6}>
                     <FormControlLabel
                       value='view'
-                      control={<Radio style={{padding: '0.3rem 0.5rem'}} />}
+                      control={<Radio />}
                       label='인기순'
                       // onClick={() => setColumsfilter('view')}
                     />
@@ -141,7 +141,7 @@ const Filter = () => {
                   <Grid item xs={6}>
                     <FormControlLabel
                       value='contentRegistrationDateTo'
-                      control={<Radio style={{padding: '0.3rem 0.5rem'}} />}
+                      control={<Radio />}
                       label='신청마감순'
                       // onClick={() =>
                       //   setColumsfilter('contentRegistrationDateTo')
@@ -151,7 +151,7 @@ const Filter = () => {
                   <Grid item xs={6}>
                     <FormControlLabel
                       value='numberOfRecruit'
-                      control={<Radio style={{padding: '0.3rem 0.5rem'}} />}
+                      control={<Radio />}
                       label='모집인원순'
                       // onClick={() => setColumsfilter('numberOfRecruit')}
                     />
@@ -159,7 +159,7 @@ const Filter = () => {
                   <Grid item xs={6}>
                     <FormControlLabel
                       value='distance'
-                      control={<Radio style={{padding: '0.3rem 0.5rem'}} />}
+                      control={<Radio />}
                       label='거리순'
                       // onClick={() => setColumsfilter('distance')}
                     />
@@ -181,7 +181,7 @@ const Filter = () => {
                   <Grid item xs={6}>
                     <FormControlLabel
                       value='All'
-                      control={<Radio style={{padding: '0.3rem 0.5rem'}} />}
+                      control={<Radio />}
                       label='미디어 전체'
                       // onClick={() =>
                       //   setMedias([
@@ -198,7 +198,7 @@ const Filter = () => {
                   <Grid item xs={6}>
                     <FormControlLabel
                       value='facebook'
-                      control={<Radio style={{padding: '0.3rem 0.5rem'}} />}
+                      control={<Radio />}
                       label='페이스북'
                       // onClick={() => setMedias(['facebook'])}
                     />
@@ -206,7 +206,7 @@ const Filter = () => {
                   <Grid item xs={6}>
                     <FormControlLabel
                       value='instagram'
-                      control={<Radio style={{padding: '0.3rem 0.5rem'}} />}
+                      control={<Radio />}
                       label='인스타그램'
                       // onClick={() => setMedias(['instagram'])}
                     />
@@ -214,7 +214,7 @@ const Filter = () => {
                   <Grid item xs={6}>
                     <FormControlLabel
                       value='youtube'
-                      control={<Radio style={{padding: '0.3rem 0.5rem'}} />}
+                      control={<Radio />}
                       label='유튜브'
                       // onClick={() => setMedias(['youtube'])}
                     />
@@ -222,7 +222,7 @@ const Filter = () => {
                   <Grid item xs={6}>
                     <FormControlLabel
                       value='blog_naver'
-                      control={<Radio style={{padding: '0.3rem 0.5rem'}} />}
+                      control={<Radio />}
                       label='블로그'
                       // onClick={() => setMedias(['blog_naver'])}
                     />
@@ -230,7 +230,7 @@ const Filter = () => {
                   <Grid item xs={6}>
                     <FormControlLabel
                       value='twitter'
-                      control={<Radio style={{padding: '0.3rem 0.5rem'}} />}
+                      control={<Radio />}
                       label='트위터'
                       // onClick={() => setMedias(['twitter'])}
                     />
@@ -238,7 +238,7 @@ const Filter = () => {
                   <Grid item xs={6}>
                     <FormControlLabel
                       value='tiktok'
-                      control={<Radio style={{padding: '0.3rem 0.5rem'}} />}
+                      control={<Radio />}
                       label='틱톡'
                       // onClick={() => setMedias(['tiktok'])}
                     />

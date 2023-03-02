@@ -46,6 +46,13 @@ const theme = createTheme({
         root: {},
       },
     },
+    MuiRadio: {
+      styleOverrides: {
+        root: {
+          padding: '0.3rem 0.5rem',
+        },
+      },
+    },
   },
 })
 
