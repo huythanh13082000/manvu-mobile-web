@@ -5,7 +5,7 @@ import {Provider} from 'react-redux'
 import {store} from './app/store'
 import reportWebVitals from './reportWebVitals'
 import './index.scss'
-import BaseLayout from './layouts/base'
+// import BaseLayout from './layouts/base'
 import Router from './router'
 import CustomizedSnackbars from './components/snackbar'
 import moment from 'moment'
@@ -26,9 +26,9 @@ root.render(
       <BrowserRouter>
           <Loading />
         <CustomizedSnackbars />
-        <BaseLayout>
+        {/* <BaseLayout> */}
           <Router />
-        </BaseLayout>
+        {/* </BaseLayout> */}
       </BrowserRouter>
     </Provider>
     {/* </ThemeProvider> */}
