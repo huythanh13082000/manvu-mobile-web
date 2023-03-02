@@ -14,6 +14,8 @@ import kakaoTalk from '../../asset/images/kakaotalk_login.png'
 import google from '../../asset/images/google_login.png'
 import facebook from '../../asset/images/facebook_login.png'
 import apple from '../../asset/images/apple_login.png'
+import {useNavigate} from 'react-router-dom'
+import {ROUTE} from '../../router/routes'
 
 const useStyles = makeStyles({
   login_container: {
@@ -74,10 +76,11 @@ const useStyles = makeStyles({
 
 const Login = () => {
   const classes = useStyles()
+  const navigate = useNavigate()
   return (
     <div className={classes.login_container}>
       <div>
-        <span>
+        <span onClick={() => navigate(ROUTE.HOME)}>
           <CloseIcon />
         </span>
       </div>

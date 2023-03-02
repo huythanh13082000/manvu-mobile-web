@@ -31,6 +31,16 @@ const theme = createTheme({
         },
       },
     },
+    MuiTab: {
+      styleOverrides: {
+        root: {
+          fontWeight: 500,
+          fontSize: '16px',
+          fontStyle: 'normal',
+          color: '#000000',
+        },
+      },
+    },
   },
 })
 
