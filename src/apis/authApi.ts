@@ -1,12 +1,30 @@
-import {LoginType} from '../types/login.type'
+
+import { LoginPayload } from '../types/loginPayload.type'
+import { User } from '../types/user.type'
 import axiosClient from './axiosClient'
-import {LOGIN} from './urlConfig'
+import {
+  FORGOT_PASSWORD_SEND_MAIL_API,
+  SIGNIN_SNS_API,
+  SIGNUP_MEMBER_API,
+  SIGN_IN_API,
+  USER_API,
+} from './urlConfig'
 
 export const authApi = {
-  login: (params: {
-    user_email: string
-    user_password: string
-  }): Promise<LoginType> => {
-    return axiosClient.post(LOGIN, params)
+  post(data: LoginPayload): Promise<User> {
+    return axiosClient.post(SIGN_IN_API, data)
   },
+  signUpMember(data: any) {
+    return axiosClient.post(SIGNUP_MEMBER_API, data)
+  },
+  getUser() {
+    return axiosClient.get(USER_API)
+  },
+  forgotPassWordSendMail(params: {email: string}): Promise<number> {
+    return axiosClient.post(FORGOT_PASSWORD_SEND_MAIL_API, params)
+  },
+  signInSns(params: {loginType: number; snsLoginId: string}) {
+    return axiosClient.post(SIGNIN_SNS_API, params)
+  },
+
 }

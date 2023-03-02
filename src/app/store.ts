@@ -8,11 +8,9 @@ import {
 import createSagaMiddleware from 'redux-saga'
 import {loadingReducer} from '../components/loading/loadingSlice'
 import {snackBarReducer} from '../components/snackbar/snackbarSlice'
-import {authReducer} from '../feature/auth/authSlice'
 import rootSaga from './rootSaga'
 
 const rootReducer = combineReducers({
-  authReducer,
   snackBarReducer,
   loadingReducer,
 })
