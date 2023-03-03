@@ -5,9 +5,15 @@ import Box from '@mui/material/Box/Box'
 import Tabs from '@mui/material/Tabs/Tabs'
 import Tab from '@mui/material/Tab/Tab'
 import Filter from '../../components/filter'
+import CardBase from '../../components/card_base'
 
 const useStyles = makeStyles({
-  home_container: {},
+  home_container: {
+    '&>div:last-child': {
+      padding: '0.5rem',
+      display: 'flex',
+    },
+  },
 })
 
 function a11yProps(index: number) {
@@ -44,6 +50,10 @@ const Home = () => {
       <Box bgcolor={'#F6F6F6'} padding='1rem'>
         <Filter />
       </Box>
+      <div>
+        <CardBase />
+        <CardBase />
+      </div>
     </div>
   )
 }

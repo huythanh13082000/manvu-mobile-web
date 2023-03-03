@@ -1,3 +1,10 @@
+import iconNaver from '../asset/icons/icon_naver.png'
+import iconFacebook from '../asset/icons/icon_facebook.png'
+import iconTiktok from '../asset/icons/icon_tiktok.png'
+import icontwitter from '../asset/icons/icon_twitter.png'
+import iconYoutube from '../asset/icons/icon_youtube.png'
+import iconInstagram from '../asset/icons/icon_instagram.png'
+
 export const HTTP_STATUS = {
   OK: 200,
   BAD_REQUEST: 400,
@@ -74,4 +81,16 @@ export const USER_ROLE_IDS = {
   ADVITISER_STARTER: 6,
   ADVITISER_PRO: 7,
   ADVITISER_GLOBAL: 8,
+}
+
+export const MEDIA_IMAGE_URL = {
+  blog_naver: iconNaver,
+  tiktok: iconTiktok,
+  youtube: iconYoutube,
+  instagram: iconInstagram,
+  twitter: icontwitter,
+  facebook: iconFacebook,
+}
+export const COLOR = {
+  border: '#E1E1E1',
 }

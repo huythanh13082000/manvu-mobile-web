@@ -53,6 +53,23 @@ const theme = createTheme({
         },
       },
     },
+    MuiAppBar: {
+      styleOverrides: {
+        root: {
+          color: '#000000',
+          background: 'none',
+        },
+      },
+    },
+    MuiToolbar: {
+      styleOverrides: {
+        root: {
+          justifyContent: 'space-between',
+          fontWeight: 700,
+          fontSize: '18px',
+        },
+      },
+    },
   },
 })
 
