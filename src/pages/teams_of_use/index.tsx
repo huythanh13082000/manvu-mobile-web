@@ -4,6 +4,7 @@ import FormControlLabel from '@mui/material/FormControlLabel'
 import {makeStyles} from '@mui/styles'
 import {useNavigate} from 'react-router-dom'
 import {TERMS_OF_USE} from '../../constants/termsOfUse'
+import {ROUTE} from '../../router/routes'
 
 const useStyles = makeStyles({
   term_of_use_container: {
@@ -87,7 +88,7 @@ const TermOfUse = () => {
       </div>
       <div>
         <Button onClick={() => navigate(-1)}>취소</Button>
-        <Button >가입하기</Button>
+        <Button onClick={() => navigate(ROUTE.REGISTER)}>가입하기</Button>
       </div>
     </div>
   )
