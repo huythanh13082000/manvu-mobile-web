@@ -1,9 +1,9 @@
-import MuiAlert, { AlertProps } from '@mui/material/Alert'
+import MuiAlert, {AlertProps} from '@mui/material/Alert'
 import Snackbar from '@mui/material/Snackbar'
 import Stack from '@mui/material/Stack'
 import * as React from 'react'
-import { useAppSelector } from '../../app/hooks'
-import { selectSnackBar } from './snackbarSlice'
+import {useAppSelector} from '../../app/hooks'
+import {selectSnackBar} from './snackbarSlice'
 
 const Alert = React.forwardRef<HTMLDivElement, AlertProps>(function Alert(
   props,
@@ -30,16 +30,19 @@ export default function CustomizedSnackbars() {
   }, [snackbar])
 
   return (
-    <Stack spacing={2} sx={{width: '100%'}}>
-      <Snackbar open={open} autoHideDuration={6000} onClose={handleClose}>
-        <Alert
-          onClose={handleClose}
-          severity={snackbar.type}
-          sx={{width: '100%'}}
-        >
-          {snackbar.content}
-        </Alert>
-      </Snackbar>
-    </Stack>
+    <Snackbar
+      open={open}
+      autoHideDuration={6000}
+      onClose={handleClose}
+      anchorOrigin={{vertical: 'top', horizontal: 'right'}}
+    >
+      <Alert
+        onClose={handleClose}
+        severity={snackbar.type}
+        sx={{width: '100%'}}
+      >
+        {snackbar.content}
+      </Alert>
+    </Snackbar>
   )
 }

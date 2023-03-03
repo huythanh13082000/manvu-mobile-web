@@ -122,7 +122,7 @@ const Login = () => {
         <CardLoginSns iconUrl={facebook} text='페이스북으로 로그인' />
         <CardLoginSns iconUrl={apple} text='Apple로 로그인' />
 
-        <span>회원가입</span>
+        <span onClick={() => navigate(ROUTE.TERMS_OF_USE)}>회원가입</span>
       </div>
     </div>
   )

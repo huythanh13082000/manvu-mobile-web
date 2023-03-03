@@ -23,7 +23,6 @@ const theme = createTheme({
   components: {
     MuiButton: {
       styleOverrides: {
-        // Name of the slot
         root: {
           height: '48px',
           fontSize: '16px',
@@ -39,11 +38,6 @@ const theme = createTheme({
           fontStyle: 'normal',
           color: '#000000',
         },
-      },
-    },
-    MuiDialog: {
-      styleOverrides: {
-        root: {},
       },
     },
     MuiRadio: {
@@ -67,6 +61,14 @@ const theme = createTheme({
           justifyContent: 'space-between',
           fontWeight: 700,
           fontSize: '18px',
+        },
+      },
+    },
+    MuiTypography: {
+      styleOverrides: {
+        root: {
+          fontSize: '14px',
+          color: '#222222',
         },
       },
     },
