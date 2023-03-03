@@ -1,4 +1,4 @@
-import React, {useState} from 'react'
+import React, {useState, useEffect} from 'react'
 import Button from '@mui/material/Button'
 import AppBarCustom from '../../components/appbar'
 import iconShare from '../../asset/icons/icon_share.png'
@@ -14,6 +14,19 @@ import {makeStyles} from '@mui/styles'
 import {MEDIA_IMAGE_URL} from '../../constants'
 import Copy from '../../components/copy'
 import NaverMap from './naverMap'
+import {useAppDispatch, useAppSelector} from '../../app/hooks'
+import {
+  campaignDetailAction,
+  selectcampaignDetail,
+  selectListCampaignRelated,
+  selectOffsetListCampaignRelated,
+} from '../../feature/campaign_detail/campaignDetail.slice'
+import {useNavigate, useParams} from 'react-router-dom'
+import {selectUser} from '../../feature/user/user.slice'
+import {selectTabCampaignDetail} from '../../feature/tab/tab.slice'
+import {snackBarActions} from '../../components/snackbar/snackbarSlice'
+import {FILE_API} from '../../apis/urlConfig'
+import { cardActions } from '../../feature/card/card.slice'
 
 const useStyles = makeStyles({
   campaign_detail_container: {
@@ -260,11 +273,140 @@ const CampaignDetail = () => {
   const classes = useStyles()
   const [indexImage, setIndexImage] = useState<number>(0)
   const [heartActive, setHeartActive] = useState(false)
+  const [value, setValue] = React.useState(0)
+  const [valueTabApp, setValueTabApp] = useState(0)
+  const [titleTabApp, setTitleTabApp] = useState('최근순')
+  const campaignDetail = useAppSelector(selectcampaignDetail)
+  const [lng, setLng] = useState<number>(0)
+  const [lat, setLat] = useState<number>(0)
+  const p1Ref = React.useRef<HTMLInputElement>(null)
+  const p2Ref = React.useRef<HTMLInputElement>(null)
+  const p3Ref = React.useRef<HTMLInputElement>(null)
+  const p4Ref = React.useRef<HTMLInputElement>(null)
+  const p5Ref = React.useRef<HTMLInputElement>(null)
+  const offsetCampaignDetail = useAppSelector(selectOffsetListCampaignRelated)
+  const [offset, setOffset] = useState<number>(offsetCampaignDetail)
+  const ListCampaignRelated = useAppSelector(selectListCampaignRelated)
+  const navigate = useNavigate()
+  const [loadMore, setLoadMore] = useState(false)
+  const [blog_naver, setBlog_naver] = useState('')
+  const [instagram, setInstagram] = useState('')
+  const [youtube, setYoutube] = useState('')
+  const [facebook, setFacebook] = useState('')
+  const [tiktok, setTiktok] = useState('')
+  const [twitter, setTwitter] = useState('')
+  const user = useAppSelector(selectUser)
+  const [open, setOpen] = useState(false)
+  const [openDialogAddress, setOpenDialogAddress] = useState(false)
+  const [openDialogCopy, setOpenDialogCopy] = useState(false)
+
+  useEffect(() => {
+    if (campaignDetail?.latitude && campaignDetail?.longitude) {
+      setLat(Number(campaignDetail?.latitude))
+      setLng(Number(campaignDetail?.longitude))
+    }
+    user.profile?.snsLinks &&
+      user.profile?.snsLinks?.forEach((item: any) => {
+        switch (Object.keys(item)[0]) {
+          case 'instagram':
+            setInstagram(item.instagram)
+            break
+          case 'blog_naver':
+            setBlog_naver(item.blog_naver)
+            break
+          case 'youtube':
+            setYoutube(item.youtube)
+            break
+          case 'facebook':
+            setFacebook(item.facebook)
+            break
+          case 'tiktok':
+            setTiktok(item.tiktok)
+            break
+          case 'twitter':
+            setTwitter(item.twitter)
+            break
+          default:
+            break
+        }
+      })
+  }, [campaignDetail, user.profile?.snsLinks])
+
+  let {id} = useParams()
+  const dispatch = useAppDispatch()
+  const handleChangeTabApp = (
+    event: React.SyntheticEvent,
+    newValue: number
+  ) => {
+    setValueTabApp(newValue)
+  }
+
+  const joinRequest = (id: number) => {
+    if (campaignDetail?.joinRequest) {
+      dispatch(campaignDetailAction.deleteRequest(id))
+    } else {
+      dispatch(campaignDetailAction.createRequest(id))
+    }
+  }
+
+  const activeTabCampaignDetail = useAppSelector(selectTabCampaignDetail)
+  const styleTab = {
+    fontFamily: 'Noto Sans KR',
+    fontStyle: 'normal',
+    fontWeight: 600,
+    fontSize: '15px',
+    lineHeight: '22px',
+    color: '#4D4D4D',
+  }
+  useEffect(() => {
+    window.scrollTo(0, 0)
+    console.log(111)
+    dispatch(campaignDetailAction.getCampaignDetail(Number(id)))
+  }, [dispatch, id])
+  useEffect(() => {
+    setValue(activeTabCampaignDetail)
+  }, [activeTabCampaignDetail, dispatch])
+
+  useEffect(() => {
+    campaignDetail?.interactive && setHeartActive(true)
+  }, [campaignDetail?.interactive])
+  useEffect(() => {
+    dispatch(
+      campaignDetailAction.getlistCampaignRelated({
+        tabId: campaignDetail?.tabId,
+        offset: offset,
+        limit: 30,
+      })
+    )
+  }, [dispatch, offset, campaignDetail])
+
+  const copyToClipboard = async () => {
+    const img: any = document.getElementById('img12')
+    const data = await fetch(img.src)
+    const blob = await data.blob()
+    try {
+      await navigator.clipboard.write([new ClipboardItem({[blob.type]: blob})])
+      dispatch(
+        snackBarActions.setStateSnackBar({
+          content: '복사 되었습니다.',
+          type: 'success',
+        })
+      )
+    } catch (error) {
+      dispatch(
+        snackBarActions.setStateSnackBar({
+          content: 'error',
+          type: 'error',
+        })
+      )
+    }
+  }
+  console.log(111, campaignDetail)
   return (
     <div className={classes.campaign_detail_container}>
       <AppBarCustom title='[송파]준준테라피' iconRightUrl={iconShare} />
       <div>
-        <img src={listImage[indexImage]} alt='' />
+        <img src={FILE_API + campaignDetail?.images[indexImage]} alt='' />
         <span
           onClick={() => {
             if (indexImage !== 0) {
@@ -276,7 +418,10 @@ const CampaignDetail = () => {
         </span>
         <span
           onClick={() => {
-            if (indexImage !== listImage.length - 1) {
+            if (
+              campaignDetail &&
+              indexImage !== campaignDetail.images.length - 1
+            ) {
               setIndexImage(indexImage + 1)
             }
           }}
@@ -286,7 +431,47 @@ const CampaignDetail = () => {
         <img
           src={heartActive ? heartRed : heart}
           alt=''
-          onClick={() => setHeartActive(!heartActive)}
+          onClick={() => {
+            if (heartActive) {
+              setHeartActive(false)
+              if (
+                user.profile?.roles &&
+                user.profile?.roles[0] &&
+                user.profile?.roles[0].name === 'member' &&
+                campaignDetail?.id
+              )
+                dispatch(
+                  cardActions.postMemberCampaignUnLike(campaignDetail?.id)
+                )
+              else if (
+                user.profile?.roles &&
+                user.profile?.roles[0] &&
+                user.profile?.roles[0].name === 'advertiser' &&
+                campaignDetail?.id
+              )
+                dispatch(
+                  cardActions.postAdvertiserCampaignUnLike(campaignDetail?.id)
+                )
+            } else {
+              setHeartActive(true)
+              if (
+                user.profile?.roles &&
+                user.profile?.roles[0] &&
+                user.profile?.roles[0].name === 'member' &&
+                campaignDetail?.id
+              )
+                dispatch(cardActions.postMemberCampaignLike(campaignDetail?.id))
+              else if (
+                user.profile?.roles &&
+                user.profile?.roles[0] &&
+                user.profile?.roles[0].name === 'advertiser' &&
+                campaignDetail?.id
+              )
+                dispatch(
+                  cardActions.postAdvertiserCampaignLike(campaignDetail?.id)
+                )
+            }
+          }}
         />
       </div>
       <div>

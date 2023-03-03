@@ -8,11 +8,27 @@ import {
 import createSagaMiddleware from 'redux-saga'
 import {loadingReducer} from '../components/loading/loadingSlice'
 import {snackBarReducer} from '../components/snackbar/snackbarSlice'
+import {campaignReducer} from '../feature/campaign/campaign.slice'
+import {campaignDetailReducer} from '../feature/campaign_detail/campaignDetail.slice'
+import {cardReducer} from '../feature/card/card.slice'
+import {createCampaignReducer} from '../feature/create_campaign/createCampaign.slice'
+import {myCampaignReducer} from '../feature/my_campaign/myCampaign.slice'
+import {myCampaignAdvertiserReducer} from '../feature/my_campaign_advertiser/myCampaignAdvertiser.slice'
+import {tabReducer} from '../feature/tab/tab.slice'
+import userReducer from '../feature/user/user.slice'
 import rootSaga from './rootSaga'
 
 const rootReducer = combineReducers({
   snackBarReducer,
   loadingReducer,
+  campaignReducer,
+  myCampaignReducer,
+  myCampaignAdvertiserReducer,
+  createCampaignReducer,
+  campaignDetailReducer,
+  userReducer,
+  tabReducer,
+  cardReducer,
 })
 
 const sagaMiddleware = createSagaMiddleware()

@@ -1,4 +1,4 @@
-import React, {useState} from 'react'
+import React, {useState, useEffect} from 'react'
 import {makeStyles} from '@mui/styles'
 import heartRed from '../../asset/icons/heart_red.png'
 import heart from '../../asset/icons/heart.png'
@@ -7,11 +7,17 @@ import user from '../../asset/icons/icon_user.png'
 import {COLOR, MEDIA_IMAGE_URL} from '../../constants'
 import {useNavigate} from 'react-router-dom'
 import {ROUTE} from '../../router/routes'
+import {Campaign} from '../../types/campaign.type'
+import {FILE_API} from '../../apis/urlConfig'
+import {numberWithCommas, timeSpace} from '../../utils'
+import {useAppSelector} from '../../app/hooks'
+import {selectListHashTag} from '../../feature/create_campaign/createCampaign.slice'
 
 const useStyles = makeStyles({
   card_base_container: {
     width: '50%',
-    margin: '0.5rem',
+    padding: '0.5rem',
+    boxSizing: 'border-box',
     '&>div': {
       position: 'relative',
       '&>img:nth-child(1)': {
@@ -140,18 +146,26 @@ const useStyles = makeStyles({
   },
 })
 
-const CardBase = () => {
+const CardBase = (props: {data: Campaign}) => {
   const classes = useStyles()
   const navigate = useNavigate()
+  const listHashTag = useAppSelector(selectListHashTag)
   const [heartActive, setHeartActive] = useState(false)
+  useEffect(() => {
+    props.data.interactive ? setHeartActive(true) : setHeartActive(false)
+  }, [props.data.interactive])
   return (
     <div
       className={classes.card_base_container}
-      onClick={() => navigate(ROUTE.CAMPAIGN_DETAIL)}
+      onClick={() => navigate('/campaign_detail/' + props.data.id)}
     >
       <div>
         <img
-          src='https://i.ytimg.com/vi/HDd0PDNGFoM/hqdefault.jpg?sqp=-oaymwE1CKgBEF5IVPKriqkDKAgBFQAAiEIYAXABwAEG8AEB-AH-CYAC0AWKAgwIABABGGUgZShlMA8=&rs=AOn4CLBNHi5gDlUbC0TKgTM4yJm5_arfNA'
+          src={
+            props.data?.images?.length === 0
+              ? '/img/Sell-Your-Product.png'
+              : `${FILE_API}${props.data?.images && props.data?.images[0]}`
+          }
           alt=''
         />
         <img
@@ -162,31 +176,43 @@ const CardBase = () => {
       </div>
       <div>
         <div>
-          <img src={MEDIA_IMAGE_URL.blog_naver} alt='' />
-          <span>배송형</span>
+          <img src={MEDIA_IMAGE_URL[`${props.data.media}`]} alt='' />
+          {props.data.applications.text && (
+            <span style={{color: props.data.applications.color}}>
+              {props.data.applications.text}
+            </span>
+          )}
         </div>
-        <span>3일남음</span>
+        <span>
+          {props.data.campaignRegistrationDateTo &&
+            timeSpace(props.data.campaignRegistrationDateTo)}
+          일남음
+        </span>
       </div>
-      <p>[루치펠로] 맞집, 치약&가글 6종 세트입니다.</p>
-      <p>치약&가능 6종 세트입니다.</p>
+      <p> {props.data.name}</p>
+      <p>{props.data.shortDescription}</p>
       <div>
         <span>p</span>
-        <span>50,000P</span>
+        <span>{numberWithCommas(props.data.point)}P</span>
       </div>
       <div>
-        <span>배송형</span>
-        <span>포인트</span>
-        <span>배송형</span>
+        {listHashTag?.map((item) => {
+          if (props.data?.tags.includes(item.id))
+            return <span>{item.text}</span>
+          else return null
+        })}
       </div>
       <div>
         <span>
           <img src={userJoin} alt='' />
-          신청 225
+          신청{' '}
+          {Number(props.data.numberOfParticipants) +
+            Number(props.data.members.length)}
         </span>
         <span>
           &nbsp;/&nbsp;
           <img src={user} alt='' />
-          모집4
+          모집{props.data.numberOfRecruit}
         </span>
       </div>
     </div>

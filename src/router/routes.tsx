@@ -10,7 +10,7 @@ import MyRouteProp from './MyRouteProp'
 export const ROUTE = {
   HOME: '/',
   LOGIN: '/login',
-  CAMPAIGN_DETAIL: '/campaign_detail',
+  CAMPAIGN_DETAIL: '/campaign_detail/:id',
   TERMS_OF_USE: '/terms_of_use',
   REGISTER: '/register',
   RESISTER_MEMBER: '/register_member',

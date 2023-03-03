@@ -83,7 +83,7 @@ export const USER_ROLE_IDS = {
   ADVITISER_GLOBAL: 8,
 }
 
-export const MEDIA_IMAGE_URL = {
+export const MEDIA_IMAGE_URL: any = {
   blog_naver: iconNaver,
   tiktok: iconTiktok,
   youtube: iconYoutube,
