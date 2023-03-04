@@ -1,15 +1,18 @@
 import {useEffect} from 'react'
 import {Campaign} from '../../types/campaign.type'
 
-const NaverMap = (props: {data?: Campaign}) => {
+const NaverMap = (props: {data: Campaign}) => {
   useEffect(() => {
     if (!naver.maps) window.location.reload()
     const map = new naver.maps.Map('map', {
-      center: new naver.maps.LatLng(37.516892, 127.0206944),
+      center: new naver.maps.LatLng(props.data.latitude, props.data.longitude),
       zoom: 18,
     })
     const otherMarkers = new naver.maps.Marker({
-      position: new naver.maps.LatLng(37.516892, 127.0206944),
+      position: new naver.maps.LatLng(
+        props.data.latitude,
+        props.data.longitude
+      ),
       map,
     })
   }, [props])

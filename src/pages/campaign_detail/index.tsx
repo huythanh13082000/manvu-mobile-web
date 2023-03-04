@@ -1,5 +1,6 @@
 import React, {useState, useEffect} from 'react'
 import Button from '@mui/material/Button'
+import Grid from '@mui/material/Grid'
 import AppBarCustom from '../../components/appbar'
 import iconShare from '../../asset/icons/icon_share.png'
 import heart from '../../asset/icons/heart.png'
@@ -8,6 +9,7 @@ import hanld from '../../asset/icons/hand.png'
 import team from '../../asset/icons/team.png'
 import mapPoint from '../../asset/icons/map_point.png'
 import ChevronLeftIcon from '@mui/icons-material/ChevronLeft'
+import InfoIcon from '@mui/icons-material/Info'
 import ChevronRightIcon from '@mui/icons-material/ChevronRight'
 import Brightness1Icon from '@mui/icons-material/Brightness1'
 import {makeStyles} from '@mui/styles'
@@ -26,7 +28,9 @@ import {selectUser} from '../../feature/user/user.slice'
 import {selectTabCampaignDetail} from '../../feature/tab/tab.slice'
 import {snackBarActions} from '../../components/snackbar/snackbarSlice'
 import {FILE_API} from '../../apis/urlConfig'
-import { cardActions } from '../../feature/card/card.slice'
+import {cardActions} from '../../feature/card/card.slice'
+import {selectListHashTag} from '../../feature/create_campaign/createCampaign.slice'
+import {getDate, numberWithCommas, timeSpace} from '../../utils'
 
 const useStyles = makeStyles({
   campaign_detail_container: {
@@ -163,10 +167,14 @@ const useStyles = makeStyles({
         fontSize: '14px',
       },
       '&>div': {
-        fontWeight: 400,
-        fontSize: '14px',
-        color: '#252B32',
-        margin: '10px 0 0 16px',
+        '&>pre': {
+          fontWeight: 400,
+          fontSize: '14px',
+          marginLeft: '1rem',
+          color: '#252B32',
+          fontFamily: 'Noto Sans KR',
+          whiteSpace: 'break-spaces',
+        },
       },
     },
     '&>div:nth-of-type(5)': {
@@ -176,10 +184,13 @@ const useStyles = makeStyles({
         fontSize: '14px',
       },
       '&>div': {
-        fontWeight: 400,
-        fontSize: '14px',
-        color: '#252B32',
-        margin: '10px 0 0 16px',
+        '&>pre': {
+          fontWeight: 400,
+          fontSize: '14px',
+          marginLeft: '1rem',
+          color: '#252B32',
+          fontFamily: 'Noto Sans KR',
+        },
       },
     },
     '&>div:nth-of-type(6)': {
@@ -209,9 +220,14 @@ const useStyles = makeStyles({
         },
       },
       '&>span': {
-        fontWeight: 400,
-        fontSize: '14px',
-        marginLeft: '1rem',
+        '&>pre': {
+          fontWeight: 400,
+          fontSize: '14px',
+          marginLeft: '1rem',
+          fontFamily: 'Noto Sans KR',
+          whiteSpace: 'break-spaces',
+          color: '#252B32',
+        },
       },
     },
     '&>div:nth-of-type(8)': {
@@ -224,9 +240,14 @@ const useStyles = makeStyles({
         },
       },
       '&>div:nth-of-type(2)': {
-        fontWeight: 400,
-        fontSize: '14px',
-        marginLeft: '1rem',
+        '&>pre': {
+          fontWeight: 400,
+          fontSize: '14px',
+          marginLeft: '1rem',
+          fontFamily: 'Noto Sans KR',
+          whiteSpace: 'break-spaces',
+          color: '#252B32',
+        },
       },
     },
     '&>div:nth-of-type(9)': {
@@ -239,9 +260,14 @@ const useStyles = makeStyles({
         },
       },
       '&>div:nth-of-type(2)': {
-        fontWeight: 400,
-        fontSize: '14px',
-        marginLeft: '1rem',
+        '&>pre': {
+          fontWeight: 400,
+          fontSize: '14px',
+          marginLeft: '1rem',
+          fontFamily: 'Noto Sans KR',
+          whiteSpace: 'break-spaces',
+          color: '#252B32',
+        },
       },
     },
     '&>div:nth-of-type(10)': {
@@ -402,184 +428,345 @@ const CampaignDetail = () => {
     }
   }
   console.log(111, campaignDetail)
+  const listHashTag = useAppSelector(selectListHashTag)
   return (
-    <div className={classes.campaign_detail_container}>
-      <AppBarCustom title='[송파]준준테라피' iconRightUrl={iconShare} />
-      <div>
-        <img src={FILE_API + campaignDetail?.images[indexImage]} alt='' />
-        <span
-          onClick={() => {
-            if (indexImage !== 0) {
-              setIndexImage(indexImage - 1)
-            }
-          }}
-        >
-          <ChevronLeftIcon />
-        </span>
-        <span
-          onClick={() => {
-            if (
-              campaignDetail &&
-              indexImage !== campaignDetail.images.length - 1
-            ) {
-              setIndexImage(indexImage + 1)
-            }
-          }}
-        >
-          <ChevronRightIcon />
-        </span>
-        <img
-          src={heartActive ? heartRed : heart}
-          alt=''
-          onClick={() => {
-            if (heartActive) {
-              setHeartActive(false)
-              if (
-                user.profile?.roles &&
-                user.profile?.roles[0] &&
-                user.profile?.roles[0].name === 'member' &&
-                campaignDetail?.id
-              )
-                dispatch(
-                  cardActions.postMemberCampaignUnLike(campaignDetail?.id)
-                )
-              else if (
-                user.profile?.roles &&
-                user.profile?.roles[0] &&
-                user.profile?.roles[0].name === 'advertiser' &&
-                campaignDetail?.id
-              )
-                dispatch(
-                  cardActions.postAdvertiserCampaignUnLike(campaignDetail?.id)
-                )
-            } else {
-              setHeartActive(true)
-              if (
-                user.profile?.roles &&
-                user.profile?.roles[0] &&
-                user.profile?.roles[0].name === 'member' &&
-                campaignDetail?.id
-              )
-                dispatch(cardActions.postMemberCampaignLike(campaignDetail?.id))
-              else if (
-                user.profile?.roles &&
-                user.profile?.roles[0] &&
-                user.profile?.roles[0].name === 'advertiser' &&
-                campaignDetail?.id
-              )
-                dispatch(
-                  cardActions.postAdvertiserCampaignLike(campaignDetail?.id)
-                )
-            }
-          }}
-        />
-      </div>
-      <div>
-        <img src={MEDIA_IMAGE_URL.blog_naver} alt='' />
-        <p>[송파]준준테라피 가락본점 [송파]준준테라피 가락본점</p>
-        <div>
-          <span>서비스 경험</span>
-          <span>서비스 경험</span>
-        </div>
-        <div>
+    <>
+      {' '}
+      {campaignDetail && campaignDetail.id.toString().includes(id || '') && (
+        <div className={classes.campaign_detail_container}>
+          <AppBarCustom title='[송파]준준테라피' iconRightUrl={iconShare} />
           <div>
-            <span>
-              <img src={hanld} alt='' />
-              신청자: 14
+            <img src={FILE_API + campaignDetail?.images[indexImage]} alt='' />
+            <span
+              onClick={() => {
+                if (indexImage !== 0) {
+                  setIndexImage(indexImage - 1)
+                }
+              }}
+            >
+              <ChevronLeftIcon />
             </span>
-            <span>
-              <img src={team} alt='' />
-              모집: 10
+            <span
+              onClick={() => {
+                if (
+                  campaignDetail &&
+                  indexImage !== campaignDetail.images.length - 1
+                ) {
+                  setIndexImage(indexImage + 1)
+                }
+              }}
+            >
+              <ChevronRightIcon />
             </span>
+            <img
+              src={heartActive ? heartRed : heart}
+              alt=''
+              onClick={() => {
+                if (heartActive) {
+                  setHeartActive(false)
+                  if (
+                    user.profile?.roles &&
+                    user.profile?.roles[0] &&
+                    user.profile?.roles[0].name === 'member' &&
+                    campaignDetail?.id
+                  )
+                    dispatch(
+                      cardActions.postMemberCampaignUnLike(campaignDetail?.id)
+                    )
+                  else if (
+                    user.profile?.roles &&
+                    user.profile?.roles[0] &&
+                    user.profile?.roles[0].name === 'advertiser' &&
+                    campaignDetail?.id
+                  )
+                    dispatch(
+                      cardActions.postAdvertiserCampaignUnLike(
+                        campaignDetail?.id
+                      )
+                    )
+                } else {
+                  setHeartActive(true)
+                  if (
+                    user.profile?.roles &&
+                    user.profile?.roles[0] &&
+                    user.profile?.roles[0].name === 'member' &&
+                    campaignDetail?.id
+                  )
+                    dispatch(
+                      cardActions.postMemberCampaignLike(campaignDetail?.id)
+                    )
+                  else if (
+                    user.profile?.roles &&
+                    user.profile?.roles[0] &&
+                    user.profile?.roles[0].name === 'advertiser' &&
+                    campaignDetail?.id
+                  )
+                    dispatch(
+                      cardActions.postAdvertiserCampaignLike(campaignDetail?.id)
+                    )
+                }
+              }}
+            />
+          </div>
+          <div>
+            <img src={MEDIA_IMAGE_URL[`${campaignDetail?.media}`]} alt='' />
+            <p>{campaignDetail?.name}</p>
             <div>
-              <Brightness1Icon /> 18일 남음
+              {listHashTag?.map((item) => {
+                if (campaignDetail?.tags.includes(item.id))
+                  return <span>{item.text}</span>
+                else return null
+              })}
+            </div>
+            <div>
+              <div>
+                <span>
+                  <img src={hanld} alt='' />
+                  신청자:{' '}
+                  {Number(campaignDetail?.members.length) +
+                    Number(campaignDetail?.numberOfParticipants)}
+                </span>
+                <span>
+                  <img src={team} alt='' />
+                  모집: {campaignDetail?.numberOfRecruit}
+                </span>
+                <div>
+                  <Brightness1Icon />{' '}
+                  {campaignDetail &&
+                    campaignDetail.campaignRegistrationDateTo &&
+                    timeSpace(campaignDetail.campaignRegistrationDateTo)}
+                  일 남음
+                </div>
+              </div>
+              <div>
+                <Brightness1Icon />
+                {campaignDetail && numberWithCommas(campaignDetail.point)}P
+              </div>
             </div>
           </div>
           <div>
-            <Brightness1Icon />
-            50,000P
+            <div>
+              <span>캠페인 신청기간</span>{' '}
+              <span>
+                {' '}
+                {getDate(campaignDetail?.campaignRegistrationDateFrom || '') +
+                  '~' +
+                  getDate(campaignDetail?.campaignRegistrationDateTo || '')}
+              </span>
+            </div>
+            <ul>
+              <li>
+                <span>
+                  <Brightness1Icon />
+                  인플루언서 발표
+                </span>
+                <span>
+                  {' '}
+                  {getDate(campaignDetail?.announcementToMemberDate || '')}
+                </span>
+              </li>
+              <li>
+                <span>
+                  <Brightness1Icon />
+                  인플루언서 발표
+                </span>
+                <span>
+                  {' '}
+                  {getDate(campaignDetail?.contentRegistrationDateFrom || '') +
+                    '~' +
+                    getDate(campaignDetail?.contentRegistrationDateTo || '')}
+                </span>
+              </li>
+              <li>
+                <span>
+                  <Brightness1Icon />
+                  인플루언서 발표
+                </span>
+                <span>
+                  {getDate(campaignDetail?.announcementFinalDate || '')}
+                </span>
+              </li>
+            </ul>
           </div>
-        </div>
-      </div>
-      <div>
-        <div>
-          <span>캠페인 신청기간</span> <span>11.11 ~ 11.23</span>
-        </div>
-        <ul>
-          <li>
-            <span>
-              <Brightness1Icon />
-              인플루언서 발표
-            </span>
-            <span>11.25</span>
-          </li>
-          <li>
-            <span>
-              <Brightness1Icon />
-              인플루언서 발표
-            </span>
-            <span>11.25</span>
-          </li>
-          <li>
-            <span>
-              <Brightness1Icon />
-              인플루언서 발표
-            </span>
-            <span>11.25</span>
-          </li>
-        </ul>
-      </div>
-      <div>
-        <span>캠페인 신청기간</span>
-        <div>
-          월요일~금요일
-          근무시간(9:00~18:00)ㅇㄴㄹㄴㅇㄹㅇㄹㄴㅇㄹㅇㄹㅇㄴㄹㅇㄹㄴㅇㄹㄴㅇㄹㄴㅇㄹㅇㄴㄹㄴㅇㄹㄴㄹㅇㄴㄹ
-        </div>
-      </div>
+          <div>
+            <span>캠페인 신청기간</span>
+            <div>
+              <pre>{campaignDetail?.offers}</pre>
+            </div>
+          </div>
 
-      <div>
-        <span>방문 및 예약안내</span>
-        <div>
-          부산맛집,부산여행,부산추천,부산커플추ㅀㅇㅀㄹㅇㅎㅇㅀㅇㅀㅇㅀㅇㅀㅀㅇㅀㅇㅎㅇㄹ천ㄹㅇㅎㄹㅇㅎㄹㅇㅎㅇㅀㅇㅀㅇㅀㅇㅀㅇㅀㅇㅀㅇㅀㅇㅀㄹㅇㅎㅇㅀㅇㅀㅇㅀㅇㄹ
-        </div>
-      </div>
-      <div>
-        <div>
           <div>
-            <img src={mapPoint} alt='' />
+            <span>방문 및 예약안내</span>
             <div>
-              서울 송파구 문정동 229-5 3번출구 (마곡 사이언스타워) 4층 후문
+              <pre>{campaignDetail?.content}</pre>
             </div>
           </div>
-          <Copy text='복사' copy='thanh' />
+          <div>
+            {campaignDetail?.longitude && campaignDetail?.latitude ? (
+              <>
+                <div>
+                  <div>
+                    <img src={mapPoint} alt='' />
+                    <div>{campaignDetail?.adddress}</div>
+                  </div>
+                  <Copy text='복사' copy={campaignDetail?.adddress || ''} />
+                </div>
+                <NaverMap data={campaignDetail} />
+              </>
+            ) : null}
+          </div>
+          <div>
+            <div>
+              <span>작업 키워드</span>
+              <Copy text='키워드 복사' copy={campaignDetail?.keywords || ''} />
+            </div>
+            <span>
+              <pre className='pd-p9'>{campaignDetail?.keywords}</pre>
+            </span>
+          </div>
+          <div>
+            <div>
+              <span>캠페인 미션</span>
+            </div>
+            <div>
+              <pre>{campaignDetail?.mission}</pre>
+            </div>
+          </div>
+          <div>
+            <div>
+              <span>추가 안내사항</span>
+            </div>
+            <div>
+              <pre>{campaignDetail?.notes}</pre>
+            </div>
+          </div>
+          <div>
+            <Grid item xs={12} container>
+              {campaignDetail &&
+              campaignDetail.joinRequest &&
+              campaignDetail.joinRequest.status === 1 ? (
+                <Button
+                  variant='contained'
+                  style={{
+                    width: '100%',
+                    backgroundColor: 'white',
+                    color: campaignDetail?.joinRequest
+                      ? '#44B400B2'
+                      : '#171A1F',
+                    border: campaignDetail?.joinRequest
+                      ? '1px solid #44B400B2'
+                      : '1px solid #A2A5AA',
+                  }}
+                  className='pd-button'
+                >
+                  선정 취소하기
+                </Button>
+              ) : null}
+            </Grid>
+            {campaignDetail &&
+            campaignDetail.joinRequest &&
+            campaignDetail.joinRequest.status === 1 ? null : (
+              <Grid item xs={12} marginTop='1rem'>
+                {user.profile &&
+                user.profile?.roles &&
+                user.profile?.roles[0] &&
+                user.profile?.roles[0].name === 'member' ? (
+                  <Button
+                    variant='contained'
+                    style={{
+                      width: '100%',
+                      backgroundColor: 'white',
+                      color: campaignDetail?.joinRequest
+                        ? '#FF2B2B'
+                        : '#171A1F',
+                      border: campaignDetail?.joinRequest
+                        ? '1px solid #FF2B2BB2'
+                        : '1px solid #A2A5AA',
+                    }}
+                    className='pd-button'
+                    onClick={() => {
+                      const sns: any = {
+                        facebook,
+                        blog_naver,
+                        instagram,
+                        tiktok,
+                        twitter,
+                      }
+                      if (campaignDetail?.tabId !== 2) {
+                        campaignDetail &&
+                        campaignDetail.media &&
+                        sns[`${campaignDetail.media}`]
+                          ? campaignDetail?.id &&
+                            joinRequest(campaignDetail?.id)
+                          : setOpen(true)
+                      } else {
+                        campaignDetail.media &&
+                        sns[`${campaignDetail.media}`] &&
+                        user.profile &&
+                        user.profile?.addressList &&
+                        user.profile?.addressList.length > 0
+                          ? campaignDetail?.id &&
+                            joinRequest(campaignDetail?.id)
+                          : campaignDetail.media &&
+                            !sns[`${campaignDetail.media}`]
+                          ? setOpen(true)
+                          : setOpenDialogAddress(true)
+                      }
+                    }}
+                  >
+                    {campaignDetail?.joinRequest ? '신청취소하기' : '신청하기'}
+                  </Button>
+                ) : null}
+              </Grid>
+            )}
+            <Grid>
+              {campaignDetail?.joinRequest &&
+              campaignDetail.joinRequest.status === 0 ? (
+                <p className='pd-p10'>
+                  <InfoIcon style={{fontSize: '35px', borderRadius: '10px'}} />
+                  {campaignDetail?.joinRequest
+                    ? '캠페인에 신청하셨습니다.선정 발표까지 기다려주세요..'
+                    : ''}
+                </p>
+              ) : null}
+              {campaignDetail?.joinRequest &&
+              campaignDetail.joinRequest.status === 1 ? (
+                <p
+                  className='pd-p10'
+                  style={{
+                    backgroundColor: '#1BB650',
+                    color: 'white',
+                    borderRadius: '10px',
+                  }}
+                >
+                  <InfoIcon style={{fontSize: '35px'}} />
+                  {campaignDetail?.joinRequest
+                    ? '캠페인에 선정 되셨습니다.'
+                    : ''}
+                </p>
+              ) : null}
+            </Grid>
+            {!localStorage.getItem('token') ? (
+              <Button
+                variant='contained'
+                style={{
+                  width: '100%',
+                  border: '1px solid #A2A5AA',
+                  backgroundColor: 'white',
+                  color: '#171A1F',
+                }}
+                className='pd-button'
+                onClick={() => navigate('/login')}
+              >
+                신청하기
+              </Button>
+            ) : null}
+            {/* </Grid> */}
+            {/* <Button>신청은 로그인이 필요합니다.</Button> */}
+          </div>
         </div>
-        <NaverMap />
-      </div>
-      <div>
-        <div>
-          <span>작업 키워드</span>
-          <Copy text='키워드 복사' copy='thanh' />
-        </div>
-        <span>부산맛집,부산여행,부산추천,부산커플추천</span>
-      </div>
-      <div>
-        <div>
-          <span>캠페인 미션</span>
-        </div>
-        <div>
-          ㄴㅇㄹㄴㅇㄹㅇㄴㅇㄹㄴㅇㄹ천ㅇㄴㄹㄴㅇㄹㅇㄹㅇㄹㅇㄹㄴㅇㄹㄴㅇㄹㄹㄹㅇㄹㄴㅇㄹㅇㄴㄹㄴㅇㄹㄴㅇㄹㄴㅇㄹㄴㅇㄹㅇㄴㄹㅇㄹㄴㅇㄹㄴㅇㄹㄴㅇㄹㄴㅇㄹㄴㅇㄹㄴㅇㄹㄴㅇㄹㄴㅇㄹㄴ
-        </div>
-      </div>
-      <div>
-        <div>
-          <span>추가 안내사항</span>
-        </div>
-        <div>부산맛집,부산여행,부산추천,부산커플추천</div>
-      </div>
-      <div>
-        <Button>신청은 로그인이 필요합니다.</Button>
-      </div>
-    </div>
+      )}
+    </>
   )
 }
 

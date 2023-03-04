@@ -1,5 +1,5 @@
 import {Categories} from './categories.type'
-import { UserMember } from './userMember.type';
+import {UserMember} from './userMember.type'
 
 export interface Campaign {
   tags: number[]
@@ -80,5 +80,5 @@ export interface Campaign {
 
   distance?: number
   addressDetail?: string
-  contactPhone?:string
+  contactPhone?: string
 }

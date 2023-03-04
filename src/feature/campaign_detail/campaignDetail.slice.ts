@@ -1,7 +1,7 @@
 import {createSlice, PayloadAction} from '@reduxjs/toolkit'
 import {RootState} from '../../app/store'
-import { Campaign } from '../../types/campaign.type'
-import { Categories } from '../../types/categories.type'
+import {Campaign} from '../../types/campaign.type'
+import {Categories} from '../../types/categories.type'
 import {mereListById} from '../../utils'
 
 interface CampaignDetail {
@@ -101,6 +101,9 @@ const campaignDetailSlice = createSlice({
     },
     setCheck(state) {
       state.check = true
+    },
+    setCampaignDetail(state) {
+      state.campaign = undefined
     },
   },
 })
