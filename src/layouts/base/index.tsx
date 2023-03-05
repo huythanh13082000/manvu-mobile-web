@@ -1,8 +1,9 @@
 import {makeStyles} from '@mui/styles'
 import React, {ReactNode, useEffect} from 'react'
+import { setTokenAxios } from '../../apis/axiosClient'
 import {useAppDispatch} from '../../app/hooks'
 import {createCampaignActions} from '../../feature/create_campaign/createCampaign.slice'
-import { userActions } from '../../feature/user/user.slice'
+import {userActions} from '../../feature/user/user.slice'
 
 const useStyles = makeStyles({
   base_layout_container: {
@@ -21,6 +22,7 @@ const BaseLayout = (props: {children: ReactNode}) => {
   }, [dispatch])
   useEffect(() => {
     if (localStorage.getItem('token')) {
+      setTokenAxios()
       dispatch(userActions.getProfile())
     }
   }, [dispatch])

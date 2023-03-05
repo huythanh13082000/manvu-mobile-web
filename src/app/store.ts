@@ -14,6 +14,10 @@ import {cardReducer} from '../feature/card/card.slice'
 import {createCampaignReducer} from '../feature/create_campaign/createCampaign.slice'
 import {myCampaignReducer} from '../feature/my_campaign/myCampaign.slice'
 import {myCampaignAdvertiserReducer} from '../feature/my_campaign_advertiser/myCampaignAdvertiser.slice'
+import {productReducer} from '../feature/product/product.slice'
+import {reportersReducer} from '../feature/Reporters/reporters.slice'
+import {serviceReducer} from '../feature/service/service.slice'
+import {servicesReducer} from '../feature/services/services.slice'
 import {tabReducer} from '../feature/tab/tab.slice'
 import userReducer from '../feature/user/user.slice'
 import rootSaga from './rootSaga'
@@ -29,6 +33,10 @@ const rootReducer = combineReducers({
   userReducer,
   tabReducer,
   cardReducer,
+  productReducer,
+  servicesReducer,
+  reportersReducer,
+  serviceReducer,
 })
 
 const sagaMiddleware = createSagaMiddleware()

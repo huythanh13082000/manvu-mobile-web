@@ -14,6 +14,7 @@ export const setTokenAxios = () => {
 
 axiosClient.interceptors.request.use(
   function (config: AxiosRequestConfig) {
+    setTokenAxios()
     return config
   },
   function (error) {
@@ -26,9 +27,9 @@ axiosClient.interceptors.response.use(
   },
   function (error) {
     console.log(error)
-    if ([401, 404].includes(error.response.status)) {
-      localStorage.removeItem('token')
-    }
+    // if ([401, 404].includes(error.response.status)) {
+    //   localStorage.removeItem('token')
+    // }
     return Promise.reject(error)
   }
 )

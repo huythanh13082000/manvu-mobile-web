@@ -1,20 +1,18 @@
-import React, {useEffect, useState} from 'react'
-import makeStyles from '@mui/styles/makeStyles'
-import HeaderSearch from '../../components/header/headerSearch'
 import Box from '@mui/material/Box/Box'
-import Tabs from '@mui/material/Tabs/Tabs'
-import Tab from '@mui/material/Tab/Tab'
-import Filter from '../../components/filter'
+import makeStyles from '@mui/styles/makeStyles'
+import { useEffect, useState } from 'react'
+import InfiniteScroll from 'react-infinite-scroll-component'
+import { useAppDispatch, useAppSelector } from '../../app/hooks'
 import CardBase from '../../components/card_base'
-import {useAppDispatch, useAppSelector} from '../../app/hooks'
+import Filter from '../../components/filter'
+import HeaderSearch from '../../components/header/headerSearch'
 import {
   campaignActions,
   selectListCampaign,
-  selectOffset,
+  selectOffset
 } from '../../feature/campaign/campaign.slice'
-import {Campaign} from '../../types/campaign.type'
-import {Area} from '../../types/area.type'
-import InfiniteScroll from 'react-infinite-scroll-component'
+import { Area } from '../../types/area.type'
+import { Campaign } from '../../types/campaign.type'
 
 const useStyles = makeStyles({
   home_container: {
@@ -28,17 +26,11 @@ const useStyles = makeStyles({
   },
 })
 
-function a11yProps(index: number) {
-  return {
-    id: `simple-tab-${index}`,
-    'aria-controls': `simple-tabpanel-${index}`,
-  }
-}
+
 
 const Home = () => {
   const classes = useStyles()
   const dispatch = useAppDispatch()
-  const [value, setValue] = useState(0)
   const listCampaign: Array<Campaign> = useAppSelector(selectListCampaign)
   const offsetStore = useAppSelector(selectOffset)
   const [limit, setLimit] = useState(30)
@@ -54,10 +46,8 @@ const Home = () => {
   const [columsfilter, setColumsfilter] = useState<string>('')
   const [tagIds, setTagIds] = useState<number[]>([])
   const [areaIds, setAreaIds] = useState<Area[]>([])
-  const handleChange = (event: React.SyntheticEvent, newValue: number) => {
-    setValue(newValue)
-  }
-
+ 
+  
   useEffect(() => {
     const newAreaIds = areaIds.map((item) => {
       return item.id
@@ -76,20 +66,7 @@ const Home = () => {
   return (
     <div className={classes.home_container}>
       <HeaderSearch />
-      <Box sx={{borderBottom: 1, borderColor: 'divider'}}>
-        <Tabs
-          value={value}
-          onChange={handleChange}
-          aria-label='basic tabs example'
-          variant='scrollable'
-        >
-          <Tab label='전체' {...a11yProps(0)} />
-          <Tab label='지역' {...a11yProps(1)} />
-          <Tab label='제품' {...a11yProps(2)} />
-          <Tab label='서비스' {...a11yProps(4)} />
-          <Tab label='기자단' {...a11yProps(5)} />
-        </Tabs>
-      </Box>
+
       <Box bgcolor={'#F6F6F6'} padding='1rem'>
         <Filter />
       </Box>
@@ -100,7 +77,7 @@ const Home = () => {
         loader={<></>}
       >
         {listCampaign.map((item) => (
-          <CardBase key={item.id} data={item}/>
+          <CardBase key={item.id} data={item} />
         ))}
       </InfiniteScroll>
     </div>
