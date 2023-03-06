@@ -1,3 +1,4 @@
+import React, {useState} from 'react'
 import {Button} from '@mui/material'
 import Checkbox from '@mui/material/Checkbox'
 import FormControlLabel from '@mui/material/FormControlLabel'
@@ -5,7 +6,6 @@ import {makeStyles} from '@mui/styles'
 import {useNavigate} from 'react-router-dom'
 import {TERMS_OF_USE} from '../../constants/termsOfUse'
 import {ROUTE} from '../../router/routes'
-import React, {useState} from 'react'
 import {snackBarActions} from '../../components/snackbar/snackbarSlice'
 import {useAppDispatch} from '../../app/hooks'
 

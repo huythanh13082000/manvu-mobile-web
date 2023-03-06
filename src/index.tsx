@@ -72,6 +72,15 @@ const theme = createTheme({
         },
       },
     },
+    MuiFormLabel: {
+      styleOverrides: {
+        root: {
+          fontWeight: 700,
+          fontSize: '18px',
+          color: '#000000',
+        },
+      },
+    },
   },
 })
 
