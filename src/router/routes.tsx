@@ -8,6 +8,7 @@ import RegisterMember from '../pages/register_member'
 import ReportersPage from '../pages/reporters'
 import ServicePage from '../pages/service'
 import ServicesPage from '../pages/services'
+import ServiceCenter from '../pages/service_center'
 import TermOfUse from '../pages/teams_of_use'
 import MyRouteProp from './MyRouteProp'
 
@@ -25,6 +26,7 @@ export const ROUTE = {
   UPDATE_MEMBER: '/update_member',
   RESISTER_ADVERTISER: '/register_advertiser',
   UPDATE_ADVERTISER: '/update_advertiser',
+  SERVICE_CENTER: '/service_center',
 }
 
 const routes: Array<MyRouteProp> = [
@@ -45,5 +47,6 @@ const routes: Array<MyRouteProp> = [
   {path: ROUTE.SERVICES, element: <ServicesPage />},
   {path: ROUTE.SERVICE, element: <ServicePage />},
   {path: ROUTE.REPORTERS, element: <ReportersPage />},
+  {path: ROUTE.SERVICE_CENTER, element: <ServiceCenter />},
 ]
 export default routes

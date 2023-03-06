@@ -13,7 +13,8 @@ export const HTTP_STATUS = {
   NOT_FOUND: 404,
   INTERNAL_SERVER_ERROR: 500,
 }
-export const BASE_URL = 'http://3.34.144.245:3535/'
+export const BASE_URL = 'https://server.rivupang.com/api/'
+export const IMAGE_URL = `https://manvu.s3.ap-northeast-2.amazonaws.com/`
 
 export const AREA_LIST = [
   {id: 1, area: '서울', subArea: '강남/논현'},

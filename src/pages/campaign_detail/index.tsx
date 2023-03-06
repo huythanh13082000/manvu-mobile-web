@@ -723,13 +723,11 @@ const CampaignDetail = () => {
               </Grid>
             )}
             <Grid>
-              {campaignDetail?.joinRequest &&
+              {/* {campaignDetail?.joinRequest &&
               campaignDetail.joinRequest.status === 0 ? (
                 <p className='pd-p10'>
                   <InfoIcon style={{fontSize: '35px', borderRadius: '10px'}} />
-                  {campaignDetail?.joinRequest
-                    ? '캠페인에 신청하셨습니다.선정 발표까지 기다려주세요..'
-                    : ''}
+                  {campaignDetail?.joinRequest ? '' : ''}
                 </p>
               ) : null}
               {campaignDetail?.joinRequest &&
@@ -747,7 +745,7 @@ const CampaignDetail = () => {
                     ? '캠페인에 선정 되셨습니다.'
                     : ''}
                 </p>
-              ) : null}
+              ) : null} */}
             </Grid>
             {!localStorage.getItem('token') ? (
               <Button

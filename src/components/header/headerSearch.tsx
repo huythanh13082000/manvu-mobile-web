@@ -71,7 +71,7 @@ const HeaderSearch = () => {
   return (
     <>
       <div className={classes.header_search_container}>
-        <img src={menu} alt='' />
+        <img src={menu} alt='' onClick={() => navigate(ROUTE.SERVICE_CENTER)} />
         <img src={logo} alt='' />
         <img src={search} alt='' />
       </div>

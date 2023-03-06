@@ -9,6 +9,7 @@ const AppBarCustom = (props: {
   title: string
   goBack?: () => void
   iconRightUrl?: string
+  imageUrl?: string
 }) => {
   const navigate = useNavigate()
   return (
@@ -28,6 +29,18 @@ const AppBarCustom = (props: {
             <img
               style={{width: '24px', height: '24px'}}
               src={props.iconRightUrl}
+              alt=''
+            />
+          )}
+          {props.imageUrl && (
+            <img
+              style={{
+                width: '45px',
+                height: '45px',
+                borderRadius: '50%',
+                objectFit: 'cover',
+              }}
+              src={props.imageUrl}
               alt=''
             />
           )}
