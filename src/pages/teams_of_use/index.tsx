@@ -5,6 +5,9 @@ import {makeStyles} from '@mui/styles'
 import {useNavigate} from 'react-router-dom'
 import {TERMS_OF_USE} from '../../constants/termsOfUse'
 import {ROUTE} from '../../router/routes'
+import React, {useState} from 'react'
+import {snackBarActions} from '../../components/snackbar/snackbarSlice'
+import {useAppDispatch} from '../../app/hooks'
 
 const useStyles = makeStyles({
   term_of_use_container: {
@@ -31,6 +34,8 @@ const useStyles = makeStyles({
           fontWeight: 400,
           fontSize: '14px',
           color: '#4D4D4D',
+          whiteSpace: 'break-spaces',
+          wordWrap: 'break-word',
         },
       },
     },
@@ -59,6 +64,19 @@ const useStyles = makeStyles({
 const TermOfUse = () => {
   const classes = useStyles()
   const navigate = useNavigate()
+  const dispatch = useAppDispatch()
+  const [check, setCheck] = useState(false)
+  const handleSubmit = () => {
+    if (check) navigate(ROUTE.REGISTER)
+    else {
+      dispatch(
+        snackBarActions.setStateSnackBar({
+          type: 'error',
+          content: '조건을 확인',
+        })
+      )
+    }
+  }
   return (
     <div className={classes.term_of_use_container}>
       <div>약관동의</div>
@@ -71,24 +89,29 @@ const TermOfUse = () => {
       <div>
         <p>2. 개인 정보 수집 및 이용 (필수)</p>
         <div>
-          <pre>{TERMS_OF_USE.one}</pre>
+          <pre>{TERMS_OF_USE.two}</pre>
         </div>
       </div>
       <div>
         <p>3. 위치정보 이용약권 (필수)</p>
         <div>
-          <pre>{TERMS_OF_USE.one}</pre>
+          <pre>{TERMS_OF_USE.three}</pre>
         </div>
       </div>
       <div>
         <FormControlLabel
-          control={<Checkbox defaultChecked />}
+          control={
+            <Checkbox
+              checked={check}
+              onChange={(e) => setCheck(e.target.checked)}
+            />
+          }
           label='이용약관,개인정보 수집 및 이용에 모두 동의합니다.'
         />
       </div>
       <div>
         <Button onClick={() => navigate(-1)}>취소</Button>
-        <Button onClick={() => navigate(ROUTE.REGISTER)}>가입하기</Button>
+        <Button onClick={() => handleSubmit()}>가입하기</Button>
       </div>
     </div>
   )

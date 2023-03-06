@@ -1,4 +1,5 @@
 import {all} from 'redux-saga/effects'
+import authSaga from '../feature/auth/auth.saga'
 import campaignSaga from '../feature/campaign/campaign.saga'
 import campaignDetailSaga from '../feature/campaign_detail/campaignDetail.saga'
 import cardSaga from '../feature/card/card.saga'
@@ -22,6 +23,7 @@ export default function* rootSaga() {
     servicesSaga(),
     reportersSaga(),
     serviceSaga(),
-    userSaga()
+    userSaga(),
+    authSaga(),
   ])
 }

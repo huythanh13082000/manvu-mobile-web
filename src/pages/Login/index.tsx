@@ -1,4 +1,4 @@
-import React from 'react'
+import React, {useState, useEffect} from 'react'
 import makeStyles from '@mui/styles/makeStyles'
 import CloseIcon from '@mui/icons-material/Close'
 import logo from '../../asset/images/logo_login.png'
@@ -16,6 +16,25 @@ import facebook from '../../asset/images/facebook_login.png'
 import apple from '../../asset/images/apple_login.png'
 import {useNavigate} from 'react-router-dom'
 import {ROUTE} from '../../router/routes'
+import {auth} from '../../firebaseConfig'
+import KakaoLogin from 'react-kakao-login'
+import NaverLogin from 'react-login-by-naver'
+import {useAppDispatch, useAppSelector} from '../../app/hooks'
+import {
+  authActions,
+  selectCurrentUser,
+  selectloginFail,
+  selectLoginMessage,
+  selectLoginSns,
+} from '../../feature/auth/auth.slice'
+import {
+  FacebookAuthProvider,
+  GoogleAuthProvider,
+  signInWithPopup,
+} from '@firebase/auth'
+import {LOGIN_TYPE} from '../../constants'
+import {NaverUser} from '../../types/naverUser.type'
+import {KakaoData} from '../../types/kakaoData.type'
 
 const useStyles = makeStyles({
   login_container: {
@@ -77,6 +96,126 @@ const useStyles = makeStyles({
 const Login = () => {
   const classes = useStyles()
   const navigate = useNavigate()
+  const label = {inputProps: {'aria-label': 'Checkbox demo'}}
+  const dispatch = useAppDispatch()
+  const [username, setUsername] = useState('')
+  const [password, setPassword] = useState('')
+  const currentUser = useAppSelector(selectCurrentUser)
+  const loginMessage = useAppSelector(selectLoginMessage)
+  const loginSns = useAppSelector(selectLoginSns)
+  const loginFail = useAppSelector(selectloginFail)
+  const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    if (event.target.name === 'username') {
+      setUsername(event.target.value)
+    } else {
+      setPassword(event.target.value)
+    }
+  }
+
+  const providerGoogle = new GoogleAuthProvider()
+  const providerFaceBook = new FacebookAuthProvider()
+
+  const signInGoogle = async () => {
+    await signInWithPopup(auth, providerGoogle)
+      .then((result) => {
+        // This gives you a Google Access Token. You can use it to access the Google API.
+        const credential = GoogleAuthProvider.credentialFromResult(result)
+        const token = credential?.accessToken
+        // The signed-in user info.
+        const user = result.user
+        if (user.providerData[0].email && user.providerData[0].photoURL) {
+          dispatch(
+            authActions.loginSns({
+              loginType: LOGIN_TYPE.GOOGLE,
+              snsLoginId: user.providerData[0].uid,
+              snsEmail: user.providerData[0].email,
+              photoURL: user.providerData[0].photoURL,
+            })
+          )
+        }
+        // ...
+      })
+      .catch((error) => {
+        // Handle Errors here.
+        const errorCode = error.code
+        const errorMessage = error.message
+        // The email of the user's account used.
+        const email = error.customData.email
+        // The AuthCredential type that was used.
+        const credential = GoogleAuthProvider.credentialFromError(error)
+
+        // ...
+      })
+  }
+  const signInFaceBook = async () => {
+    await signInWithPopup(auth, providerFaceBook)
+      .then((result) => {
+        // The signed-in user info.
+        const user = result.user
+
+        // This gives you a Facebook Access Token. You can use it to access the Facebook API.
+        const credential = FacebookAuthProvider.credentialFromResult(result)
+        const accessToken = credential?.accessToken
+        if (user.providerData[0].email && user.providerData[0].photoURL) {
+          dispatch(
+            authActions.loginSns({
+              loginType: LOGIN_TYPE.FACEBOOK,
+              snsLoginId: user.providerData[0].uid,
+              snsEmail: user.providerData[0].email,
+              photoURL: user.providerData[0].photoURL,
+            })
+          )
+        }
+        // ...
+      })
+      .catch((error) => {
+        // Handle Errors here.
+        const errorCode = error.code
+        const errorMessage = error.message
+        // The email of the user's account used.
+        const email = error.customData.email
+        // The AuthCredential type that was used.
+        const credential = FacebookAuthProvider.credentialFromError(error)
+        // ...
+      })
+  }
+  const signInNaver = (naverUser: NaverUser) => {
+    dispatch(
+      authActions.loginSns({
+        loginType: LOGIN_TYPE.NAVER,
+        snsLoginId: naverUser.id,
+        snsEmail: naverUser.email,
+        photoURL: naverUser.profile_image,
+      })
+    )
+  }
+  const signInKakaoTalk = (kakaoData: KakaoData) => {
+    if (kakaoData.profile) {
+      dispatch(
+        authActions.loginSns({
+          loginType: LOGIN_TYPE.KAKAO_TALK,
+          snsLoginId: kakaoData.profile.id.toString(),
+          snsEmail: kakaoData.profile.kakao_account.email,
+        })
+      )
+    }
+  }
+
+  useEffect(() => {
+    if (currentUser) {
+      navigate('/')
+    }
+    if (loginSns) navigate('/termsofuse')
+  }, [navigate, loginSns, currentUser])
+
+  const handleSubmit = async () => {
+    dispatch(
+      authActions.login({
+        username: username,
+        password: password,
+      })
+    )
+  }
   return (
     <div className={classes.login_container}>
       <div>
@@ -88,13 +227,13 @@ const Login = () => {
         <img src={logo} alt='' />
         <p>리뷰팡팡에 오신걸 환영합니다 ^^</p>
         <InputBase
-          onChange={(e: any) => console.log(111)}
+          onChange={(e: any) => setUsername(e)}
           placeholder='아이디를 이메일 형식으로 입력해주세요.'
           type='text'
           iconLeftUrl={mail}
         />
         <InputBase
-          onChange={(e: any) => console.log(111)}
+          onChange={(e: any) => setPassword(e)}
           placeholder='비밀번호를 입력해주세요.'
           type='password'
           iconLeftUrl={lock}
@@ -108,7 +247,9 @@ const Login = () => {
           </FormGroup>
           <span>비밀번호찾기</span>
         </p>
-        <Button variant='contained'>로그인</Button>
+        <Button variant='contained' onClick={handleSubmit}>
+          로그인
+        </Button>
       </div>
       <div>
         <p>

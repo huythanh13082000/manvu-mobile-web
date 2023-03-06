@@ -94,3 +94,16 @@ export const MEDIA_IMAGE_URL: any = {
 export const COLOR = {
   border: '#E1E1E1',
 }
+export const LOGIN_TYPE: {
+  USERNAME: number
+  NAVER: number
+  FACEBOOK: number
+  KAKAO_TALK: number
+  GOOGLE: number
+} = {
+  USERNAME: 0,
+  NAVER: 1,
+  FACEBOOK: 2,
+  KAKAO_TALK: 3,
+  GOOGLE: 4,
+}

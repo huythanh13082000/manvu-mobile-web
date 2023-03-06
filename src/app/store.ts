@@ -8,6 +8,7 @@ import {
 import createSagaMiddleware from 'redux-saga'
 import {loadingReducer} from '../components/loading/loadingSlice'
 import {snackBarReducer} from '../components/snackbar/snackbarSlice'
+import authReducer from '../feature/auth/auth.slice'
 import {campaignReducer} from '../feature/campaign/campaign.slice'
 import {campaignDetailReducer} from '../feature/campaign_detail/campaignDetail.slice'
 import {cardReducer} from '../feature/card/card.slice'
@@ -37,6 +38,7 @@ const rootReducer = combineReducers({
   servicesReducer,
   reportersReducer,
   serviceReducer,
+  authReducer,
 })
 
 const sagaMiddleware = createSagaMiddleware()
