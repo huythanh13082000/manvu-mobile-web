@@ -22,7 +22,9 @@ export const ROUTE = {
   TERMS_OF_USE: '/terms_of_use',
   REGISTER: '/register',
   RESISTER_MEMBER: '/register_member',
+  UPDATE_MEMBER: '/update_member',
   RESISTER_ADVERTISER: '/register_advertiser',
+  UPDATE_ADVERTISER: '/update_advertiser',
 }
 
 const routes: Array<MyRouteProp> = [

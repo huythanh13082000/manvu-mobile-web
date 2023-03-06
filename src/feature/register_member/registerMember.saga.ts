@@ -1,19 +1,29 @@
-import { PayloadAction } from '@reduxjs/toolkit'
-import { call, put, takeEvery } from 'redux-saga/effects'
-import { signUpApi } from '../../apis/signUpApi'
-import { userApi } from '../../apis/userApi'
-import { snackBarActions } from '../../components/snackbar/snackbarSlice'
-import { userActions } from '../user/user.slice'
-import { registerMemberAction } from './registerMember.slice'
+import {PayloadAction} from '@reduxjs/toolkit'
+import {NavigateFunction} from 'react-router-dom'
+import {call, put, takeEvery} from 'redux-saga/effects'
+import {signUpApi} from '../../apis/signUpApi'
+import {userApi} from '../../apis/userApi'
+import {snackBarActions} from '../../components/snackbar/snackbarSlice'
+import {ROUTE} from '../../router/routes'
+import {authActions} from '../auth/auth.slice'
+import {userActions} from '../user/user.slice'
+import {registerMemberAction} from './registerMember.slice'
 
-function* registermember(action: PayloadAction<FormData>) {
+function* registermember(
+  action: PayloadAction<{
+    data: FormData
+    history: NavigateFunction
+    user: {username: string; password: string}
+  }>
+) {
   try {
-    yield call(signUpApi.signUpMember, action.payload)
+    yield call(signUpApi.signUpMember, action.payload.data)
     yield put(registerMemberAction.signUpMemberSuccess())
+    yield put(authActions.login(action.payload.user))
     yield put(
       snackBarActions.setStateSnackBar({type: 'success', content: 'success'})
     )
-    yield put(registerMemberAction.setStatus(true))
+    yield action.payload.history(ROUTE.HOME)
   } catch (error: any) {
     yield put(registerMemberAction.signUpMemberFail())
     yield put(
@@ -32,7 +42,6 @@ function* signUpMemberSns(action: PayloadAction<FormData>) {
     yield put(
       snackBarActions.setStateSnackBar({type: 'success', content: 'success'})
     )
-    yield put(registerMemberAction.setStatus(true))
   } catch (error: any) {
     yield put(registerMemberAction.signUpMemberFail())
     yield put(

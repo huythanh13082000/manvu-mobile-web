@@ -27,8 +27,9 @@ const InputForm = (props: {
   placeholder: string
   label?: string
   onChange: (e: any) => void
-  value: string
+  value?: string
   style?: React.CSSProperties
+  disabled?: boolean
 }) => {
   const classes = useStyles()
   return (
@@ -40,6 +41,7 @@ const InputForm = (props: {
         placeholder={props.placeholder}
         id={props.label}
         onChange={(e) => props.onChange(e.target.value)}
+        disabled={props.disabled}
       />
     </div>
   )

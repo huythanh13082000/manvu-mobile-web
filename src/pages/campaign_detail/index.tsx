@@ -391,7 +391,6 @@ const CampaignDetail = () => {
   }
   useEffect(() => {
     window.scrollTo(0, 0)
-    console.log(111)
     dispatch(campaignDetailAction.getCampaignDetail(Number(id)))
   }, [dispatch, id])
   useEffect(() => {
@@ -432,7 +431,6 @@ const CampaignDetail = () => {
       )
     }
   }
-  console.log(111, campaignDetail)
   const listHashTag = useAppSelector(selectListHashTag)
   return (
     <>

@@ -39,36 +39,35 @@ function a11yProps(index: number) {
 const HeaderSearch = () => {
   const classes = useStyles()
   const navigate = useNavigate()
-  const [value, setValue] = useState(0)
+  const [valueTab, setValueTab] = useState(0)
   const handleChange = (event: React.SyntheticEvent, newValue: number) => {
-    setValue(newValue)
+    setValueTab(newValue)
   }
   const location = useLocation()
   useEffect(() => {
     switch (location.pathname) {
       case ROUTE.HOME:
-        setValue(0)
+        setValueTab(0)
         break
       case ROUTE.SERVICE:
-        setValue(1)
+        setValueTab(1)
         break
 
       case ROUTE.PRODUCT:
-        setValue(2)
+        setValueTab(2)
         break
 
       case ROUTE.SERVICES:
-        setValue(3)
+        setValueTab(3)
         break
 
       case ROUTE.REPORTERS:
-        setValue(4)
+        setValueTab(4)
         break
       default:
         break
     }
   }, [location])
-  console.log(11, value)
   return (
     <>
       <div className={classes.header_search_container}>
@@ -78,7 +77,7 @@ const HeaderSearch = () => {
       </div>
       <Box sx={{borderBottom: 1, borderColor: 'divider'}}>
         <Tabs
-          value={value}
+          value={valueTab}
           onChange={handleChange}
           aria-label='basic tabs example'
           variant='scrollable'

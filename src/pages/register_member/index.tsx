@@ -1,38 +1,39 @@
-import {makeStyles, useTheme} from '@mui/styles'
-import React, {useEffect, useState} from 'react'
-import AppBarCustom from '../../components/appbar'
-import InputForm from '../../components/input_form'
-import UploadAvatar from '../../components/upload_avatar'
+import {Button} from '@mui/material'
+import FormControl from '@mui/material/FormControl'
+import FormControlLabel from '@mui/material/FormControlLabel'
+import FormLabel from '@mui/material/FormLabel'
 import Radio from '@mui/material/Radio'
 import RadioGroup from '@mui/material/RadioGroup'
-import FormControlLabel from '@mui/material/FormControlLabel'
+import {makeStyles} from '@mui/styles'
+import {getAuth, RecaptchaVerifier, signInWithPhoneNumber} from 'firebase/auth'
+import {useEffect, useState} from 'react'
 import PhoneInput from 'react-phone-input-2'
 import 'react-phone-input-2/lib/style.css'
-import FormControl from '@mui/material/FormControl'
-import FormLabel from '@mui/material/FormLabel'
-import mailIcon from '../../asset/icons/mail.png'
-import plusIcon from '../../asset/icons/plus.png'
-import {snackBarActions} from '../../components/snackbar/snackbarSlice'
-import {getAuth, RecaptchaVerifier, signInWithPhoneNumber} from 'firebase/auth'
-import {auth} from '../../firebaseConfig'
-import {
-  registerMemberAction,
-  selectStatus,
-} from '../../feature/register_member/registerMember.slice'
-import {selectListTopic, topicAction} from '../../feature/topics/topics.slice'
-import {Topic} from '../../types/topic.type'
-import {useAppDispatch, useAppSelector} from '../../app/hooks'
-import {authActions, selectSnsUserInfor} from '../../feature/auth/auth.slice'
 import {useLocation, useNavigate} from 'react-router-dom'
-import {selectUser} from '../../feature/user/user.slice'
-import DialogAddress from './dialog_address'
-import InputBase from '../../components/input'
+import {useAppDispatch, useAppSelector} from '../../app/hooks'
+import facebookIcon from '../../asset/icons/icon_facebook.png'
+import instagramIcon from '../../asset/icons/icon_instagram.png'
 import naverIcon from '../../asset/icons/icon_naver.png'
 import tiktokIcon from '../../asset/icons/icon_tiktok.png'
-import instagramIcon from '../../asset/icons/icon_instagram.png'
 import twitterIcon from '../../asset/icons/icon_twitter.png'
-import facebookIcon from '../../asset/icons/icon_facebook.png'
 import youtubeIcon from '../../asset/icons/icon_youtube.png'
+import mailIcon from '../../asset/icons/mail.png'
+import plusIcon from '../../asset/icons/plus.png'
+import AppBarCustom from '../../components/appbar'
+import InputBase from '../../components/input'
+import InputForm from '../../components/input_form'
+import {snackBarActions} from '../../components/snackbar/snackbarSlice'
+import UploadAvatar from '../../components/upload_avatar'
+import {authActions, selectSnsUserInfor} from '../../feature/auth/auth.slice'
+import {
+  registerMemberAction,
+} from '../../feature/register_member/registerMember.slice'
+import {selectListTopic, topicAction} from '../../feature/topics/topics.slice'
+import {selectUser} from '../../feature/user/user.slice'
+import {auth} from '../../firebaseConfig'
+import {Topic} from '../../types/topic.type'
+import DialogAddress from './dialog_address'
+import {ROUTE} from '../../router/routes'
 
 const useStyles = makeStyles({
   register_member_container: {
@@ -150,7 +151,6 @@ const RegisterMember = () => {
   const snsUserInfor = useAppSelector(selectSnsUserInfor)
   const [loginType, setLoginType] = useState<number>(0)
   const location = useLocation()
-  const status = useAppSelector(selectStatus)
   const [addressItem, setAddressItem] = useState<{
     address: string
     receiver: string
@@ -246,7 +246,7 @@ const RegisterMember = () => {
     formData.append('loginType', JSON.stringify(loginType))
     formData.append('username', username)
     formData.append('snsLinks', JSON.stringify(sns))
-    if (location.pathname === '/registeraccount') {
+    if (location.pathname === ROUTE.RESISTER_MEMBER) {
       formData.append('password', password)
       formData.append('retypePassword', retypePassword)
       formData.append('email', email)
@@ -261,11 +261,17 @@ const RegisterMember = () => {
     formData.append('topicIds', JSON.stringify(arrayTopicId))
     formData.append('addressList', JSON.stringify(addressList))
 
-    if (location.pathname === '/registeraccount/sns') {
+    if (location.pathname === `${ROUTE.RESISTER_MEMBER}/sns`) {
       dispatch(registerMemberAction.signUpMemberSns(formData))
     } else
       checkVerify
-        ? dispatch(registerMemberAction.signUpMember(formData))
+        ? dispatch(
+            registerMemberAction.signUpMember({
+              data: formData,
+              history: navigate,
+              user: {username, password},
+            })
+          )
         : dispatch(
             snackBarActions.setStateSnackBar({
               content: '누락된 정보를 입력하세요',
@@ -274,12 +280,6 @@ const RegisterMember = () => {
           )
   }
 
-  useEffect(() => {
-    if (status && location.pathname === '/registeraccount') {
-      dispatch(authActions.login({username: email, password: password}))
-      navigate('/home')
-    }
-  }, [status, dispatch, navigate, email, password, location.pathname])
 
   useEffect(() => {
     if (snsUserInfor) {
@@ -427,6 +427,7 @@ const RegisterMember = () => {
 
   const getOtp = async () => {
     const recaptcha = new RecaptchaVerifier('recaptcha-container', {}, auth)
+
     if (phoneNumber) {
       try {
         const reponse = await setUpRecaptcha(phoneNumber)
@@ -469,28 +470,28 @@ const RegisterMember = () => {
         <InputForm
           label='Email'
           placeholder='이메일을 입력해주세요.'
-          value=''
-          onChange={() => console.log(1)}
+          value={email}
+          onChange={(e) => setEmail(e)}
         />
         <InputForm
           label='닉네임'
           placeholder='닉네임을 입력해주세요.'
-          value=''
-          onChange={() => console.log(1)}
+          value={username}
+          onChange={(e) => setUsername(e)}
         />
         <InputForm
           label='비밀번호'
           placeholder='비밀번호를 입력해주세요.'
-          value='ssad'
+          value={password}
           type='password'
-          onChange={() => console.log(1)}
+          onChange={(e) => setPassword(e)}
         />
         <InputForm
           label='비밀번호 확인'
           placeholder='비밀번호를 입력해주세요.'
-          value='ssad'
+          value={retypePassword}
           type='password'
-          onChange={() => console.log(1)}
+          onChange={(e) => setRetypePassword(e)}
         />
         <br />
         <FormControl>
@@ -499,6 +500,10 @@ const RegisterMember = () => {
             row
             aria-labelledby='demo-row-radio-buttons-group-label'
             name='row-radio-buttons-group'
+            value={gender === 0 ? 'female' : 'male'}
+            onChange={(e) =>
+              e.target.value === 'male' ? setGender(1) : setGender(0)
+            }
           >
             <FormControlLabel value='female' control={<Radio />} label='여성' />
             <FormControlLabel value='male' control={<Radio />} label='남성' />
@@ -516,12 +521,7 @@ const RegisterMember = () => {
               value={phoneNumber}
               onChange={(e: string) => setPhoneNumber(e)}
             />
-            {/* <InputForm
-              onChange={() => console.log(11)}
-              placeholder='휴대전화 번호를 입력해주세요'
-              value=''
-            /> */}
-            <button
+            <Button
               style={{
                 width: '30%',
                 display: 'flex',
@@ -533,8 +533,9 @@ const RegisterMember = () => {
                 boxSizing: 'border-box',
                 marginLeft: '8px',
                 color: checkGetOtp ? '#0065F2' : '#222222',
+                padding: 0,
               }}
-              // disabled={checkVerify ? true : false}
+              disabled={checkVerify ? true : false}
               onClick={getOtp}
             >
               <img
@@ -545,17 +546,19 @@ const RegisterMember = () => {
               <span style={{fontSize: '12px'}}>
                 {checkVerify ? '확인완료' : '확인'}
               </span>
-            </button>
+            </Button>
           </div>
+          <div style={{width: '100%'}} id='recaptcha-container'></div>
           <div
             style={{display: 'flex', alignItems: 'center', marginTop: '1rem'}}
           >
             <InputForm
-              onChange={() => console.log(11)}
+              disabled={checkVerify ? true : false}
+              value={otp}
               placeholder='휴대전화 번호를 입력해주세요'
-              value=''
+              onChange={(e) => setOtp(e)}
             />
-            <button
+            <Button
               style={{
                 width: '30%',
                 display: 'flex',
@@ -564,13 +567,17 @@ const RegisterMember = () => {
                 border: '1px solid #000000',
                 height: '48px',
                 justifyContent: 'center',
-
                 boxSizing: 'border-box',
                 marginLeft: '8px',
+                backgroundColor: !checkVerify ? '#0078FF' : '#1BB650',
+                color: 'white',
               }}
+              onClick={verifyOtp}
             >
-              <span style={{fontSize: '12px'}}>확인</span>
-            </button>
+              <span style={{fontSize: '12px'}}>
+                {checkVerify ? '확인완료' : '확인'}
+              </span>
+            </Button>
           </div>
         </div>
         <br />
@@ -663,11 +670,23 @@ const RegisterMember = () => {
             iconLeftUrl={twitterIcon}
           />
         </div>
+        <Button
+          style={{width: '100%'}}
+          variant='contained'
+          onClick={
+            location.pathname === ROUTE.RESISTER_MEMBER ||
+            location.pathname === `${ROUTE.RESISTER_MEMBER}/sns`
+              ? registerMember
+              : updateMember
+          }
+        >
+          완료
+        </Button>
       </div>
       <DialogAddress
         open={openDialog}
         setOpenDialog={setStateOpenDialog}
-        // data={addressItem}
+        data={addressItem}
         createAddressItem={(params) => createAddressList(params)}
         editAddressList={(params: {
           address: string

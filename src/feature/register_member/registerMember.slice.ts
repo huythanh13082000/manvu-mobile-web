@@ -1,23 +1,28 @@
 import {createSlice, PayloadAction} from '@reduxjs/toolkit'
-import {RootState} from '../../app/store'
+import {NavigateFunction} from 'react-router-dom'
 import {User} from '../../types/user.type'
 
 interface RegisterMemberState {
   loadding: boolean
   userProfile?: User
-  status: boolean
 }
 
 const initialState: RegisterMemberState = {
   loadding: false,
-  status: false,
 }
 
 const registerMember = createSlice({
   name: 'registerMember',
   initialState,
   reducers: {
-    signUpMember(state, action: PayloadAction<FormData>) {
+    signUpMember(
+      state,
+      action: PayloadAction<{
+        data: FormData
+        history: NavigateFunction
+        user: {username: string; password: string}
+      }>
+    ) {
       state.loadding = true
     },
     signUpMemberSuccess(state) {
@@ -38,15 +43,9 @@ const registerMember = createSlice({
     updateMemberFail(state) {
       state.loadding = false
     },
-    setStatus(state, action: PayloadAction<boolean>) {
-      state.status = action.payload
-    },
   },
 })
 
 export const registerMemberAction = registerMember.actions
-
-export const selectStatus = (state: RootState) =>
-  state.registerMemberReducer.status
 
 export const registerMemberReducer = registerMember.reducer

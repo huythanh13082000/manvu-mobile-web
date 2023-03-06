@@ -74,20 +74,21 @@ const ServicePage = () => {
     const newAreaIds = areaIds.map((item) => {
       return item.id
     })
-    dispatch(
-      serviceActions.getListCampaignService({
-        tabId: 1,
-        categoryId: value,
-        limit: limit,
-        offset: offset,
-        medias: JSON.stringify(medias),
-        tagIds: JSON.stringify(tagIds),
-        sortBy: columsfilter,
-        areaIds: JSON.stringify(newAreaIds),
-        lat: position?.lat,
-        lng: position?.lng,
-      })
-    )
+    position &&
+      dispatch(
+        serviceActions.getListCampaignService({
+          tabId: 1,
+          categoryId: value,
+          limit: limit,
+          offset: offset,
+          medias: JSON.stringify(medias),
+          tagIds: JSON.stringify(tagIds),
+          sortBy: columsfilter,
+          areaIds: JSON.stringify(newAreaIds),
+          lat: position?.lat,
+          lng: position?.lng,
+        })
+      )
   }, [
     value,
     dispatch,
