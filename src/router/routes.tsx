@@ -3,6 +3,7 @@ import CampaignFavourite from '../pages/campaign_favourite'
 import Faq from '../pages/faq'
 import Home from '../pages/home'
 import Login from '../pages/Login'
+import MyCampaign from '../pages/my_campaign'
 import Notification from '../pages/notification'
 import PointManagement from '../pages/point_management'
 import ProductPage from '../pages/product'
@@ -35,6 +36,7 @@ export const ROUTE = {
   FAQ: '/faq',
   NOTIFICATION: '/notification',
   POINT_MANAGEMENT: '/point_management',
+  MY_CAMPAIGN: '/my_campaign',
 }
 
 const routes: Array<MyRouteProp> = [
@@ -60,5 +62,6 @@ const routes: Array<MyRouteProp> = [
   {path: ROUTE.FAQ, element: <Faq />},
   {path: ROUTE.NOTIFICATION, element: <Notification />},
   {path: ROUTE.POINT_MANAGEMENT, element: <PointManagement />},
+  {path: ROUTE.MY_CAMPAIGN, element: <MyCampaign />},
 ]
 export default routes

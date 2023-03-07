@@ -2,9 +2,10 @@ import {PayloadAction} from '@reduxjs/toolkit'
 import {NavigateFunction} from 'react-router-dom'
 import {call, put, takeEvery} from 'redux-saga/effects'
 import {withdrawApi} from '../../apis/withdrawApi'
-import { snackBarActions } from '../../components/snackbar/snackbarSlice'
-import { WithdrawMoney } from '../../types/withdraw.type'
-import { withdrawActions } from '../withdraw/withdraw.slice'
+import {snackBarActions} from '../../components/snackbar/snackbarSlice'
+import {ROUTE} from '../../router/routes'
+import {WithdrawMoney} from '../../types/withdraw.type'
+import {withdrawActions} from '../withdraw/withdraw.slice'
 import {withdrawMoneyActions} from './withdrawMoney.slice'
 
 function* createWithdrawMoney(
@@ -24,7 +25,7 @@ function* createWithdrawMoney(
         type: 'success',
       })
     )
-    action.payload.history('/pointManagement')
+    action.payload.history(ROUTE.SERVICE_CENTER)
   } catch (error: any) {
     yield put(
       snackBarActions.setStateSnackBar({

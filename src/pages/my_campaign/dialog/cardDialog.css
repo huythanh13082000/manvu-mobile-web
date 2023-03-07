@@ -1,0 +1,39 @@
+.ccd-span1 {
+  font-weight: 400;
+  font-size: 10px;
+  line-height: 16px;
+  text-align: center;
+  color: #ffffff;
+  background: #0fc44d;
+  border-radius: 60px;
+  padding: 0.3rem 0.6rem;
+  margin-right: 0.3rem;
+}
+.ccd-span2 {
+  font-weight: 400;
+  font-size: 10px;
+  line-height: 16px;
+  text-align: center;
+  color: #ffffff;
+  background: #0078ff;
+  border-radius: 60px;
+  padding: 0.3rem 0.6rem;
+}
+.ccd-p1 {
+  font-weight: 700;
+  font-size: 16px;
+  margin: 0;
+  text-align: center;
+  letter-spacing: 0.1px;
+  color: #222222;
+}
+.ccd-button {
+  height: 48px;
+  background: #0078ff;
+  width: 129px;
+  font-weight: 700;
+  font-size: 15px;
+  line-height: 18px;
+  color: #ffffff;
+  margin: 1rem 0 !important;
+}

@@ -1,0 +1,68 @@
+.point-p1 {
+  font-style: normal;
+  font-weight: 400;
+  font-size: 13px;
+  line-height: 19px;
+  /* identical to box height */
+
+  /* dark gray text */
+
+  color: #4d4d4d;
+  font-family: 'Noto Sans KR';
+  margin-right: 1rem;
+}
+.point-img {
+  width: 21px;
+  height: 21px;
+  font-family: 'Noto Sans KR';
+  margin-right: 10px;
+}
+.point-p5{
+  font-style: normal;
+  font-weight: 400;
+  font-size: 13px;
+  line-height: 19px;
+  /* identical to box height */
+
+  /* dark gray text */
+  margin-right: 1rem;
+  color: #4d4d4d;
+  font-family: 'Noto Sans KR';
+}
+.point-p2 {
+  font-style: normal;
+  font-weight: 500;
+  font-size: 13px;
+  line-height: 19px;
+  /* identical to box height */
+
+  color: #ffffff;
+  font-family: 'Noto Sans KR';
+
+  background: #e93a3a;
+  border-radius: 100px;
+  padding: 0px 12px;
+
+}
+.point-p3 {
+  font-style: normal;
+  font-weight: 500;
+  font-size: 17px;
+  line-height: 24px;
+  font-family: 'Noto Sans KR';
+  /* or 147% */
+
+  /* text dark */
+
+  color: #222222;
+}
+.point-p4 {
+  font-style: normal;
+  font-weight: 700;
+  font-size: 15px;
+  line-height: 22px;
+  font-family: 'Noto Sans KR';
+  /* identical to box height, or 147% */
+
+  color: #6d00c3;
+}

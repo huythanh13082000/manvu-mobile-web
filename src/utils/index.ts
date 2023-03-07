@@ -1,5 +1,5 @@
 import moment from 'moment'
-import { User } from '../types/user.type'
+import {User} from '../types/user.type'
 
 export const sum = (data: any[]) => {
   let sum = 0
@@ -51,4 +51,7 @@ export const timeSpace = (a: string) => {
 }
 export const getDate = (params: string): string => {
   return `${moment(params).format('MM')}월${moment(params).format('DD')}일`
+}
+export function numberWithCommasNew(x: string): string {
+  return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',')
 }

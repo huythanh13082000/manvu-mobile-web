@@ -18,6 +18,7 @@ import {faqReducer} from '../feature/faq/fag.slice'
 import {myCampaignReducer} from '../feature/my_campaign/myCampaign.slice'
 import {myCampaignAdvertiserReducer} from '../feature/my_campaign_advertiser/myCampaignAdvertiser.slice'
 import {inappNotificationReducer} from '../feature/notification/inappNotificationSlice'
+import {pointTransactionReducer} from '../feature/point_transaction/pointTransaction.slice'
 import {productReducer} from '../feature/product/product.slice'
 import {registerMemberReducer} from '../feature/register_member/registerMember.slice'
 import {reportersReducer} from '../feature/Reporters/reporters.slice'
@@ -53,6 +54,7 @@ const rootReducer = combineReducers({
   inappNotificationReducer,
   withdrawReducer,
   withdrawMoneyReducer,
+  pointTransactionReducer,
 })
 
 const sagaMiddleware = createSagaMiddleware()

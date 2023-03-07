@@ -79,6 +79,22 @@ const theme = createTheme({
         },
       },
     },
+    MuiTextField: {
+      styleOverrides: {
+        root: {
+          height: '48px',
+          width: '100%',
+        },
+      },
+    },
+    MuiInputBase: {
+      styleOverrides: {
+        root: {
+          height: '48px',
+          width: '100%',
+        },
+      },
+    },
     MuiFormLabel: {
       styleOverrides: {
         root: {

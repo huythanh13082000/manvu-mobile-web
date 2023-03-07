@@ -2,6 +2,8 @@ import {Tab, Tabs} from '@mui/material'
 import {makeStyles} from '@mui/styles'
 import React from 'react'
 import AppBarCustom from '../../components/appbar'
+import PointTransaction from '../point_transaction'
+import WithdrawMoneyPage from '../withdraw_money'
 
 const useStyles = makeStyles({
   point_management_container: {
@@ -40,6 +42,9 @@ const PointManagement = () => {
           <Tab label='포인트 관리' {...a11yProps(1)} />
         </Tabs>
       </div>
+      <br />
+      {value === 0 && <WithdrawMoneyPage />}
+      {value === 1 && <PointTransaction />}
     </div>
   )
 }

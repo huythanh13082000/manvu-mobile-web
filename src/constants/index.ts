@@ -4,6 +4,9 @@ import iconTiktok from '../asset/icons/icon_tiktok.png'
 import icontwitter from '../asset/icons/icon_twitter.png'
 import iconYoutube from '../asset/icons/icon_youtube.png'
 import iconInstagram from '../asset/icons/icon_instagram.png'
+import wait from '../asset/icons/wait.png'
+import success from '../asset/icons/success.png'
+import error from '../asset/icons/error.png'
 
 export const HTTP_STATUS = {
   OK: 200,
@@ -108,3 +111,27 @@ export const LOGIN_TYPE: {
   KAKAO_TALK: 3,
   GOOGLE: 4,
 }
+
+export const TEXT_COLOR_WH: any = [
+  {
+    text: '처리중',
+    color: '#FFB227',
+    background: '#FFECDC',
+    icon: wait,
+    colorPoint: '#818488',
+  },
+  {
+    text: '완료 ',
+    color: '#05CB58',
+    background: '#DCFFE8',
+    icon: success,
+    colorPoint: '#6D00C3',
+  },
+  {
+    text: '취소',
+    color: '#B6291B',
+    background: '#FFDFDC',
+    icon: error,
+    colorPoint: '#B6291B',
+  },
+]

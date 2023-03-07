@@ -8,9 +8,9 @@ import heartRed from '../../asset/icons/heart_red.png'
 import userImage from '../../asset/icons/icon_user.png'
 import userJoin from '../../asset/icons/icon_user_join.png'
 import {COLOR, MEDIA_IMAGE_URL} from '../../constants'
-import { cardActions } from '../../feature/card/card.slice'
+import {cardActions} from '../../feature/card/card.slice'
 import {selectListHashTag} from '../../feature/create_campaign/createCampaign.slice'
-import { selectUser } from '../../feature/user/user.slice'
+import {selectUser} from '../../feature/user/user.slice'
 import {Campaign} from '../../types/campaign.type'
 import {numberWithCommas, timeSpace} from '../../utils'
 
@@ -150,7 +150,7 @@ const useStyles = makeStyles({
   },
 })
 
-const CardBase = (props: {data: Campaign}) => {
+const CardBase = (props: {data: Campaign; style?: React.CSSProperties}) => {
   const classes = useStyles()
   const navigate = useNavigate()
   const listHashTag = useAppSelector(selectListHashTag)
@@ -161,7 +161,7 @@ const CardBase = (props: {data: Campaign}) => {
     props.data.interactive ? setHeartActive(true) : setHeartActive(false)
   }, [props.data.interactive])
   return (
-    <div className={classes.card_base_container}>
+    <div className={classes.card_base_container} style={{...props.style}}>
       <div onClick={() => navigate('/campaign_detail/' + props.data.id)}>
         <div>
           <img

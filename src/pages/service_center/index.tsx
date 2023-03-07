@@ -192,7 +192,11 @@ const ServiceCenter = () => {
           <div>
             <span>현재 나의 포인트</span>
             <p>{numberWithCommas(Number(user.profile?.point))} P</p>
-            <img src={buttomImage} alt='' />
+            <img
+              src={buttomImage}
+              alt=''
+              onClick={() => navigate(ROUTE.POINT_MANAGEMENT)}
+            />
             <span>
               <img
                 src={noteIcon}
@@ -274,7 +278,7 @@ const ServiceCenter = () => {
       </div>
 
       <div>
-        <p>
+        <p onClick={() => navigate(ROUTE.MY_CAMPAIGN)}>
           <span>나의 캠페인</span>
           <ArrowForwardIosIcon />
         </p>
