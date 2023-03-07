@@ -1,0 +1,29 @@
+.ULI-img {
+  border: 1.5px dashed #e1e1e1;
+  position: relative;
+  background-size: cover !important;
+  background-repeat: no-repeat !important;
+  width: 110px;
+  height: 110px;
+  margin-bottom: 1rem;
+}
+.ULI-iconButton {
+  position: absolute;
+  bottom: 12%;
+  right: 20%;
+}
+.typify {
+  position: absolute;
+  top: -12px;
+  left: -10px;
+  width: 32px;
+  height: 32px;
+  border-radius: 32px;
+  background: rgb(0, 120, 255);
+  color: white;
+  display: flex;
+  -webkit-box-align: center;
+  align-items: center;
+  -webkit-box-pack: center;
+  justify-content: center;
+}

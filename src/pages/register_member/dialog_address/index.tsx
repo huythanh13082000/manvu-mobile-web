@@ -59,7 +59,16 @@ const BootstrapDialogTitle = (props: DialogTitleProps) => {
 export default function DialogAddress(Props: {
   open: boolean
   setOpenDialog: Function
-  data?: {address: string; receiver: string; receiverReceive?: boolean}
+  data?: {
+    address: string
+    receiver: string
+    addressPostal: string
+    addressPostalDetail: string
+    codePostal: string
+    phoneNumber: string
+    phoneNumberAndCodePostal: string
+    receiverReceive?: boolean
+  }
   createAddressItem: (params: {
     address: string
     receiver: string
@@ -120,6 +129,10 @@ export default function DialogAddress(Props: {
     if (Props.data) {
       setAddress(Props.data?.address)
       setReceiver(Props.data?.receiver)
+      setAddressPostal(Props.data?.addressPostal)
+      setCodePostal(Props.data?.codePostal)
+      setPhoneNumber(Props.data.phoneNumber)
+      setAddressPostalDetail(Props.data.addressPostalDetail)
     } else {
       setAddress('')
       setAddressPostal('')
@@ -140,7 +153,9 @@ export default function DialogAddress(Props: {
           id='customized-dialog-title'
           onClose={handleClose}
         >
-          <p className='dialog-title'> 주소 정보 </p>
+          <p className='dialog-title' style={{margin: 0, fontSize: '18px'}}>
+            주소 정보{' '}
+          </p>
         </BootstrapDialogTitle>
         <DialogContent dividers>
           <Grid>
@@ -172,23 +187,16 @@ export default function DialogAddress(Props: {
                 marginBottom={'1rem'}
                 alignItems='center'
               >
-                <Grid item xs={8}>
+                <Grid item xs={9}>
                   <TextField
-                    className='r-input'
                     id='outlined-basic'
                     variant='outlined'
                     size='small'
                     placeholder='주소검색'
-                    inputProps={{
-                      style: {
-                        height: '32px',
-                      },
-                      readOnly: true,
-                    }}
                     value={codePostal}
                   />
                 </Grid>
-                <Grid item xs={4}>
+                <Grid item xs={3}>
                   <span
                     style={{
                       cursor: 'pointer',
@@ -198,8 +206,8 @@ export default function DialogAddress(Props: {
                       fontWeight: 500,
                       fontSize: '14px',
                       border: '1px solid rgba(39, 39, 39, 0.24)',
-                      borderRadius: '4px',
                       height: '47px',
+                      textAlign: 'center',
                     }}
                     onClick={() => {
                       setOpenDaumPostcodeEmbed(true)

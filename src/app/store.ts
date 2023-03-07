@@ -22,6 +22,7 @@ import {pointTransactionReducer} from '../feature/point_transaction/pointTransac
 import {productReducer} from '../feature/product/product.slice'
 import {registerMemberReducer} from '../feature/register_member/registerMember.slice'
 import {reportersReducer} from '../feature/Reporters/reporters.slice'
+import {requestReducer} from '../feature/request/request.slice'
 import {serviceReducer} from '../feature/service/service.slice'
 import {servicesReducer} from '../feature/services/services.slice'
 import {tabReducer} from '../feature/tab/tab.slice'
@@ -55,6 +56,7 @@ const rootReducer = combineReducers({
   withdrawReducer,
   withdrawMoneyReducer,
   pointTransactionReducer,
+  requestReducer,
 })
 
 const sagaMiddleware = createSagaMiddleware()

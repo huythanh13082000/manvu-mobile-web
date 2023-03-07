@@ -135,3 +135,24 @@ export const TEXT_COLOR_WH: any = [
     colorPoint: '#B6291B',
   },
 ]
+export const COLOR_QUESTION_TYPE: any = {
+  ADVERTISING_INQUIRY: '#E0457F',
+  CHANGE_DESIGN: '#549C1F',
+  PAYMENT_ADVERTISEMENT: '#5290E3',
+
+  LIMIT_FUNCTION: '#0500FF',
+  NORMAL_QUESTION: '#FF7A00',
+  ERROR: '#AD00FF',
+  OTHER: '#D6B300',
+  EVENT_QUESTION: '#0065F2 ',
+}
+export const TEXT_QUESTION_TYPE: any = {
+  ADVERTISING_INQUIRY: '광고 문의',
+  CHANGE_DESIGN: '디자인수정',
+  PAYMENT_ADVERTISEMENT: '광고비 결제',
+  LIMIT_FUNCTION: '기능제안',
+  NORMAL_QUESTION: '일반 문의',
+  ERROR: '이용오류',
+  OTHER: '기타 문의',
+  EVENT_QUESTION: '이벤트 문의',
+}

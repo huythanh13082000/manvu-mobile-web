@@ -1,15 +1,16 @@
 import WestIcon from '@mui/icons-material/West'
 import AppBar from '@mui/material/AppBar'
-import Button from '@mui/material/Button'
-import IconButton from '@mui/material/IconButton'
 import Toolbar from '@mui/material/Toolbar'
 import {useNavigate} from 'react-router-dom'
+import {ROUTE} from '../../router/routes'
 
 const AppBarCustom = (props: {
   title: string
   goBack?: () => void
   iconRightUrl?: string
   imageUrl?: string
+  onClickRightIcon?: () => void
+  buttonRight?: string
 }) => {
   const navigate = useNavigate()
   return (
@@ -32,6 +33,13 @@ const AppBarCustom = (props: {
               alt=''
             />
           )}
+          {props.buttonRight && (
+            <img
+              src={props.buttonRight}
+              alt=''
+              onClick={() => props.onClickRightIcon && props.onClickRightIcon()}
+            />
+          )}
           {props.imageUrl && (
             <img
               style={{
@@ -42,6 +50,7 @@ const AppBarCustom = (props: {
               }}
               src={props.imageUrl}
               alt=''
+              onClick={() => navigate(ROUTE.UPDATE_MEMBER)}
             />
           )}
         </span>

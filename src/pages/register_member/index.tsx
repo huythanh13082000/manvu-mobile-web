@@ -1,4 +1,11 @@
-import {Button} from '@mui/material'
+import {
+  Button,
+  Select,
+  MenuItem,
+  ListItemIcon,
+  ListItemText,
+  Checkbox,
+} from '@mui/material'
 import FormControl from '@mui/material/FormControl'
 import FormControlLabel from '@mui/material/FormControlLabel'
 import FormLabel from '@mui/material/FormLabel'
@@ -25,9 +32,7 @@ import InputForm from '../../components/input_form'
 import {snackBarActions} from '../../components/snackbar/snackbarSlice'
 import UploadAvatar from '../../components/upload_avatar'
 import {authActions, selectSnsUserInfor} from '../../feature/auth/auth.slice'
-import {
-  registerMemberAction,
-} from '../../feature/register_member/registerMember.slice'
+import {registerMemberAction} from '../../feature/register_member/registerMember.slice'
 import {selectListTopic, topicAction} from '../../feature/topics/topics.slice'
 import {selectUser} from '../../feature/user/user.slice'
 import {auth} from '../../firebaseConfig'
@@ -280,7 +285,6 @@ const RegisterMember = () => {
           )
   }
 
-
   useEffect(() => {
     if (snsUserInfor) {
       setAvatar(snsUserInfor.photoURL)
@@ -372,7 +376,7 @@ const RegisterMember = () => {
     setFacebook('')
   }
   useEffect(() => {
-    if (location.pathname === '/updateaccount' && user.profile) {
+    if (location.pathname === ROUTE.UPDATE_MEMBER && user.profile) {
       setUsername(user.profile?.username)
       setTopicIds(user.profile?.topics)
       setAvatar(user.profile?.avatar)
@@ -467,32 +471,46 @@ const RegisterMember = () => {
           <label htmlFor=''>프로필 이미지</label>
           <UploadAvatar setFile={handleChangeFile} avatar={avatar} />
         </div>
-        <InputForm
-          label='Email'
-          placeholder='이메일을 입력해주세요.'
-          value={email}
-          onChange={(e) => setEmail(e)}
-        />
+        {location.pathname !== ROUTE.UPDATE_MEMBER ? (
+          <InputForm
+            label='Email'
+            placeholder='이메일을 입력해주세요.'
+            value={email}
+            onChange={(e) => setEmail(e)}
+          />
+        ) : (
+          <div></div>
+        )}
+
         <InputForm
           label='닉네임'
           placeholder='닉네임을 입력해주세요.'
           value={username}
           onChange={(e) => setUsername(e)}
         />
-        <InputForm
-          label='비밀번호'
-          placeholder='비밀번호를 입력해주세요.'
-          value={password}
-          type='password'
-          onChange={(e) => setPassword(e)}
-        />
-        <InputForm
-          label='비밀번호 확인'
-          placeholder='비밀번호를 입력해주세요.'
-          value={retypePassword}
-          type='password'
-          onChange={(e) => setRetypePassword(e)}
-        />
+
+        {location.pathname !== ROUTE.UPDATE_MEMBER ? (
+          <InputForm
+            label='비밀번호'
+            placeholder='비밀번호를 입력해주세요.'
+            value={password}
+            type='password'
+            onChange={(e) => setPassword(e)}
+          />
+        ) : (
+          <div></div>
+        )}
+        {location.pathname !== ROUTE.UPDATE_MEMBER ? (
+          <InputForm
+            label='비밀번호 확인'
+            placeholder='비밀번호를 입력해주세요.'
+            value={retypePassword}
+            type='password'
+            onChange={(e) => setRetypePassword(e)}
+          />
+        ) : (
+          <div></div>
+        )}
         <br />
         <FormControl>
           <FormLabel id='demo-row-radio-buttons-group-label'>성별</FormLabel>
@@ -595,7 +613,24 @@ const RegisterMember = () => {
                 <span>{item.receiver}</span>
                 <span>{item.phoneNumber}</span>
                 <span>{item.addressPostal}</span>
-                <span>수정/삭제</span>
+                <span>
+                  <span
+                    onClick={() => {
+                      setAddressItem(item)
+                      setOpenDialog(true)
+                    }}
+                  >
+                    수정
+                  </span>
+                  /
+                  <span
+                    onClick={() => {
+                      deleteAddressItem(item.address)
+                    }}
+                  >
+                    삭제
+                  </span>
+                </span>
               </p>
             ))}
           <div>
@@ -618,6 +653,7 @@ const RegisterMember = () => {
             }}
             type='text'
             iconLeftUrl={naverIcon}
+            value={blog_naver}
           />
         </div>
         <div>
@@ -628,6 +664,7 @@ const RegisterMember = () => {
             }}
             type='text'
             iconLeftUrl={instagramIcon}
+            value={instagram}
           />
         </div>
         <div>
@@ -638,6 +675,7 @@ const RegisterMember = () => {
             }}
             type='text'
             iconLeftUrl={youtubeIcon}
+            value={youtube}
           />
         </div>
         <div>
@@ -648,6 +686,7 @@ const RegisterMember = () => {
             }}
             type='text'
             iconLeftUrl={facebookIcon}
+            value={facebook}
           />
         </div>
         <div>
@@ -658,6 +697,7 @@ const RegisterMember = () => {
             }}
             type='text'
             iconLeftUrl={tiktokIcon}
+            value={tiktok}
           />
         </div>
         <div>
@@ -668,8 +708,32 @@ const RegisterMember = () => {
             }}
             type='text'
             iconLeftUrl={twitterIcon}
+            value={twitter}
           />
         </div>
+        <div>
+          <label htmlFor='mutiple-select-label'>내 채널 키워드</label>
+          <p></p>
+          <Select
+            labelId='mutiple-select-label'
+            id='mutiple-select-label'
+            multiple
+            value={selected}
+            onChange={handleChangeSelect}
+            renderValue={(selected) => selected.join(', ')}
+          >
+            {listTopic &&
+              listTopic.map((option: Topic) => (
+                <MenuItem key={option.id} value={option.text}>
+                  <ListItemIcon>
+                    <Checkbox checked={selected.indexOf(option.text) > -1} />
+                  </ListItemIcon>
+                  <ListItemText primary={option.text} />
+                </MenuItem>
+              ))}
+          </Select>
+        </div>
+        <br />
         <Button
           style={{width: '100%'}}
           variant='contained'

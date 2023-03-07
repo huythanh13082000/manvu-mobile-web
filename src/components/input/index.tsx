@@ -40,6 +40,7 @@ const InputBase = (props: {
   type: 'text' | 'number' | 'password'
   iconLeftUrl?: any
   disabled?: boolean
+  value?: string
 }) => {
   const classes = useStyles()
   const [hidePassword, setHidePassword] = useState(false)
@@ -56,6 +57,7 @@ const InputBase = (props: {
         placeholder={props.placeholder}
         onChange={(e) => props.onChange(e.target.value)}
         disabled={props.disabled}
+        value={props.value}
       />
       <img src={props.iconLeftUrl} alt='' />
       {props.type === 'password' && (

@@ -209,7 +209,10 @@ const ServiceCenter = () => {
         </div>
       </div>
       <div>
-        <p style={{display: 'flex'}}>
+        <p
+          style={{display: 'flex'}}
+          onClick={() => navigate(ROUTE.UPDATE_MEMBER)}
+        >
           <span>SNS채널 연결 상태</span> <ArrowForwardIosIcon />
         </p>
         <span>연결한 SNS채널은 표기가 됩니다.</span>
@@ -295,7 +298,7 @@ const ServiceCenter = () => {
         </div>
       </div>
 
-      <p>
+      <p onClick={() => navigate(ROUTE.UPDATE_MEMBER)}>
         <span>
           <img src={userIcon} alt='' />
           <span>개인정보수정</span>
@@ -326,7 +329,7 @@ const ServiceCenter = () => {
         </span>
         <ArrowForwardIosIcon />
       </p>
-      <p>
+      <p onClick={() => navigate(ROUTE.CHAT)}>
         <span>
           <img src={letterUnread} alt='' />
           <span>1:1문의</span>

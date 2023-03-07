@@ -1,0 +1,38 @@
+.dialog-title {
+  font-family: 'Noto Sans KR';
+  font-style: normal;
+  font-weight: 700;
+  font-size: 18px;
+  line-height: 28px;
+  margin: 0;
+  /* identical to box height, or 156% */
+
+  display: flex;
+  align-items: center;
+  text-align: center;
+
+  /* Neutral / 1 */
+
+  color: #262626;
+}
+.dialog-button {
+  background: #0078ff !important;
+  color: white;
+  height: 54px;
+  width: 100%;
+}
+.dialog-TextareaAutosize {
+  font-family: 'Noto Sans KR';
+  box-sizing: border-box;
+  font-style: normal;
+  font-weight: 400;
+  font-size: 14px;
+  line-height: 20px;
+  height: 115px;
+  color: rgba(45, 47, 49, 0.5);
+  width: 100%;
+  padding: 1rem;
+  margin-top: 1rem;
+  border-radius: 5px;
+  border: #ACB1B6 1px solid;
+}

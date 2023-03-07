@@ -13,6 +13,7 @@ import PointTransactionSaga from '../feature/point_transaction/pointTransaction.
 import productSaga from '../feature/product/product.saga'
 import registermemberSaga from '../feature/register_member/registerMember.saga'
 import reportersSaga from '../feature/Reporters/reporters.saga'
+import RequestSaga from '../feature/request/request.saga'
 import serviceSaga from '../feature/service/service.saga'
 import servicesSaga from '../feature/services/services.saga'
 import topicsSaga from '../feature/topics/topics.saga'
@@ -41,5 +42,6 @@ export default function* rootSaga() {
     withdrawSaga(),
     withdrawMoneySaga(),
     PointTransactionSaga(),
+    RequestSaga(),
   ])
 }

@@ -1,0 +1,36 @@
+.cr-p1 {
+  font-family: 'Noto Sans KR';
+  font-style: normal;
+  font-weight: 500;
+  font-size: 16px;
+  line-height: 24px;
+  /* or 150% */
+
+  /* Semantic / 1 */
+  margin: 0;
+}
+.cr-p2 {
+  font-family: 'Noto Sans KR';
+  font-style: normal;
+  font-weight: 400;
+  font-size: 14px;
+  line-height: 20px;
+  /* Semantic / 3 */
+
+  color: #6d829a;
+}
+.cr-p3 {
+  font-family: 'Noto Sans KR';
+  font-style: normal;
+  font-weight: 500;
+  font-size: 12px;
+  line-height: 16px;
+  /* identical to box height, or 133% */
+  color: #ff1400;
+  height: 15px;
+  background: #ffc7c7;
+  border-radius: 4px;
+  padding: 5px 10px;
+  margin: 0;
+  margin-left: 1rem;
+}
