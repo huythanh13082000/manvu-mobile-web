@@ -12,4 +12,7 @@ export const withdrawApi = {
   createWithdrawMoney(params: WithdrawMoney): Promise<any> {
     return axiosClient.post(WITHDRAW_API, params)
   },
+  updateWithdrawMoney(params: WithdrawMoney): Promise<any> {
+    return axiosClient.put(`${WITHDRAW_API}/${params.id}`, params)
+  },
 }

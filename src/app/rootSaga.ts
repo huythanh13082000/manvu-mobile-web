@@ -16,6 +16,8 @@ import serviceSaga from '../feature/service/service.saga'
 import servicesSaga from '../feature/services/services.saga'
 import topicsSaga from '../feature/topics/topics.saga'
 import userSaga from '../feature/user/user.saga'
+import withdrawSaga from '../feature/withdraw/withdraw.saga'
+import withdrawMoneySaga from '../feature/withdraw_money/withdrawMoney.saga'
 export default function* rootSaga() {
   yield all([
     campaignSaga(),
@@ -35,5 +37,7 @@ export default function* rootSaga() {
     campaignFavirateSaga(),
     faqSaga(),
     inappNotificationSaga(),
+    withdrawSaga(),
+    withdrawMoneySaga(),
   ])
 }

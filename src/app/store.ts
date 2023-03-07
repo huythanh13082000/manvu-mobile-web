@@ -26,6 +26,8 @@ import {servicesReducer} from '../feature/services/services.slice'
 import {tabReducer} from '../feature/tab/tab.slice'
 import {topicReducer} from '../feature/topics/topics.slice'
 import userReducer from '../feature/user/user.slice'
+import {withdrawReducer} from '../feature/withdraw/withdraw.slice'
+import {withdrawMoneyReducer} from '../feature/withdraw_money/withdrawMoney.slice'
 import rootSaga from './rootSaga'
 
 const rootReducer = combineReducers({
@@ -49,6 +51,8 @@ const rootReducer = combineReducers({
   campaignFavirateReducer,
   faqReducer,
   inappNotificationReducer,
+  withdrawReducer,
+  withdrawMoneyReducer,
 })
 
 const sagaMiddleware = createSagaMiddleware()

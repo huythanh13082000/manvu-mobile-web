@@ -307,7 +307,7 @@ const ServiceCenter = () => {
         <ArrowForwardIosIcon />
       </p>
 
-      <p>
+      <p onClick={() => navigate(ROUTE.POINT_MANAGEMENT)}>
         <span>
           <img src={crownStar} alt='' />
           <span>포인트 관리 </span>

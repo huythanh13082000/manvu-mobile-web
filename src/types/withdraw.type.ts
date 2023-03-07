@@ -1,9 +1,9 @@
 export interface Withdraw {
   recipientInformation: {
     bankName: string
-    bankAccountNumber: number
+    bankAccountNumber: number | string
     name: string
-    identityCard: number
+    identityCard: number | string
   }
   id: number
   userId: string
@@ -16,9 +16,10 @@ export interface WithdrawMoney {
   status: number
   recipientInformation: {
     bankName: string
-    bankAccountNumber: string
+    bankAccountNumber: string | number
     name: string
-    identityCard: string
+    identityCard: string | number
   }
   point: number
+  id?: number
 }

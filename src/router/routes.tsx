@@ -4,6 +4,7 @@ import Faq from '../pages/faq'
 import Home from '../pages/home'
 import Login from '../pages/Login'
 import Notification from '../pages/notification'
+import PointManagement from '../pages/point_management'
 import ProductPage from '../pages/product'
 import Register from '../pages/register'
 import RegisterAdvertiser from '../pages/register_advertiser'
@@ -33,6 +34,7 @@ export const ROUTE = {
   CAMPAIGN_FAVOURITE: '/campaign_favourite',
   FAQ: '/faq',
   NOTIFICATION: '/notification',
+  POINT_MANAGEMENT: '/point_management',
 }
 
 const routes: Array<MyRouteProp> = [
@@ -57,5 +59,6 @@ const routes: Array<MyRouteProp> = [
   {path: ROUTE.CAMPAIGN_FAVOURITE, element: <CampaignFavourite />},
   {path: ROUTE.FAQ, element: <Faq />},
   {path: ROUTE.NOTIFICATION, element: <Notification />},
+  {path: ROUTE.POINT_MANAGEMENT, element: <PointManagement />},
 ]
 export default routes
