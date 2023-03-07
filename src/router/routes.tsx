@@ -1,6 +1,9 @@
 import CampaignDetail from '../pages/campaign_detail'
+import CampaignFavourite from '../pages/campaign_favourite'
+import Faq from '../pages/faq'
 import Home from '../pages/home'
 import Login from '../pages/Login'
+import Notification from '../pages/notification'
 import ProductPage from '../pages/product'
 import Register from '../pages/register'
 import RegisterAdvertiser from '../pages/register_advertiser'
@@ -27,6 +30,9 @@ export const ROUTE = {
   RESISTER_ADVERTISER: '/register_advertiser',
   UPDATE_ADVERTISER: '/update_advertiser',
   SERVICE_CENTER: '/service_center',
+  CAMPAIGN_FAVOURITE: '/campaign_favourite',
+  FAQ: '/faq',
+  NOTIFICATION: '/notification',
 }
 
 const routes: Array<MyRouteProp> = [
@@ -48,5 +54,8 @@ const routes: Array<MyRouteProp> = [
   {path: ROUTE.SERVICE, element: <ServicePage />},
   {path: ROUTE.REPORTERS, element: <ReportersPage />},
   {path: ROUTE.SERVICE_CENTER, element: <ServiceCenter />},
+  {path: ROUTE.CAMPAIGN_FAVOURITE, element: <CampaignFavourite />},
+  {path: ROUTE.FAQ, element: <Faq />},
+  {path: ROUTE.NOTIFICATION, element: <Notification />},
 ]
 export default routes

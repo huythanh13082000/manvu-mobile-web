@@ -1,21 +1,20 @@
-import Box from '@mui/material/Box/Box'
-import makeStyles from '@mui/styles/makeStyles'
-import {useEffect, useState} from 'react'
+import {makeStyles} from '@mui/styles'
+import React, {useState, useEffect} from 'react'
 import InfiniteScroll from 'react-infinite-scroll-component'
 import {useAppDispatch, useAppSelector} from '../../app/hooks'
+import AppBarCustom from '../../components/appbar'
 import CardBase from '../../components/card_base'
 import Filter from '../../components/filter'
-import HeaderSearch from '../../components/header/headerSearch'
 import {
-  campaignActions,
+  homeActions,
+  homeState,
   selectListCampaign,
   selectOffset,
-} from '../../feature/campaign/campaign.slice'
+} from '../../feature/campaign_favourate/campaignFavirate.slice'
 import {Area} from '../../types/area.type'
-import {Campaign} from '../../types/campaign.type'
 
 const useStyles = makeStyles({
-  home_container: {
+  campaign_Favourite_container: {
     '&>div:last-child': {
       '&>div': {
         padding: '0.5rem',
@@ -26,10 +25,10 @@ const useStyles = makeStyles({
   },
 })
 
-const Home = () => {
+const CampaignFavourite = () => {
   const classes = useStyles()
   const dispatch = useAppDispatch()
-  const listCampaign: Array<Campaign> = useAppSelector(selectListCampaign)
+  const listCampaign: homeState = useAppSelector(selectListCampaign)
   const offsetStore = useAppSelector(selectOffset)
   const [limit, setLimit] = useState(30)
   const [offset, setOffset] = useState<number>(offsetStore)
@@ -50,35 +49,48 @@ const Home = () => {
       return item.id
     })
     dispatch(
-      campaignActions.getListCampaignSort({
+      homeActions.getListCampaignSort({
         limit: limit,
         offset: offset,
         medias: JSON.stringify(medias),
         tagIds: JSON.stringify(tagIds),
         sortBy: columsfilter,
         areaIds: JSON.stringify(newAreaIds),
+        status: JSON.stringify([1]),
+        filterLiked: true,
       })
     )
   }, [dispatch, limit, offset, medias, tagIds, columsfilter, areaIds])
   return (
-    <div className={classes.home_container}>
-      <HeaderSearch />
-
-      <Box bgcolor={'#F6F6F6'} padding='1rem'>
-        <Filter />
-      </Box>
+    <div className={classes.campaign_Favourite_container}>
+      <AppBarCustom title='찜한 목록' />
+      {/* <Filter
+        medias={medias}
+        tagIds={tagIds}
+        setMedias={(params) => setMedias(params)}
+        setTagIds={(params) => setTagIds(params)}
+        areaIds={areaIds}
+        setAreaIds={(params) => setAreaIds(params)}
+        setOffset={(params) => {
+          setOffset(params)
+        }}
+        columsfilter={columsfilter}
+        setColumsfilter={(params) => setColumsfilter(params)}
+      /> */}
       <InfiniteScroll
-        dataLength={listCampaign.length}
+        dataLength={listCampaign.list.length}
         next={() => setOffset(offset + 5)}
         hasMore={true}
         loader={<></>}
       >
-        {listCampaign.map((item) => (
-          <CardBase key={item.id} data={item} />
-        ))}
+        {listCampaign.list
+          .filter((item) => item.status === 1)
+          .map((item) => (
+            <CardBase key={item.id} data={item} />
+          ))}
       </InfiniteScroll>
     </div>
   )
 }
 
-export default Home
+export default CampaignFavourite

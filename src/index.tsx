@@ -75,7 +75,7 @@ const theme = createTheme({
     MuiSvgIcon: {
       styleOverrides: {
         root: {
-          color: '#A2A5AA',
+          // color: '#A2A5AA',
         },
       },
     },

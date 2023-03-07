@@ -29,6 +29,8 @@ import {
   selectMemberCampaignMineCount,
 } from '../../feature/my_campaign/myCampaign.slice'
 import {Button} from '@mui/material'
+import {useNavigate} from 'react-router-dom'
+import {ROUTE} from '../../router/routes'
 
 const useStyles = makeStyles({
   service_center_container: {
@@ -155,6 +157,7 @@ const ServiceCenter = () => {
   const classes = useStyles()
   const user = useAppSelector(selectUser)
   const dispatch = useAppDispatch()
+  const navigate = useNavigate()
   const memberCampaignMineCount: any = useAppSelector(
     selectMemberCampaignMineCount
   )
@@ -296,7 +299,7 @@ const ServiceCenter = () => {
         <ArrowForwardIosIcon />
       </p>
 
-      <p>
+      <p onClick={() => navigate(ROUTE.CAMPAIGN_FAVOURITE)}>
         <span>
           <img src={heartIcon} alt='' />
           <span>찜 목록 </span>
@@ -312,7 +315,7 @@ const ServiceCenter = () => {
         <ArrowForwardIosIcon />
       </p>
 
-      <p>
+      <p onClick={() => navigate(ROUTE.NOTIFICATION)}>
         <span>
           <img src={bell} alt='' />
           <span>알림 </span>
@@ -326,7 +329,7 @@ const ServiceCenter = () => {
         </span>
         <ArrowForwardIosIcon />
       </p>
-      <p>
+      <p onClick={() => navigate(ROUTE.FAQ)}>
         <span>
           <img src={questionSquare} alt='' />
           <span>FAQ</span>

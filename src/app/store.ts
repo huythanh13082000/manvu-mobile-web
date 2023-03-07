@@ -11,10 +11,13 @@ import {snackBarReducer} from '../components/snackbar/snackbarSlice'
 import authReducer from '../feature/auth/auth.slice'
 import {campaignReducer} from '../feature/campaign/campaign.slice'
 import {campaignDetailReducer} from '../feature/campaign_detail/campaignDetail.slice'
+import {campaignFavirateReducer} from '../feature/campaign_favourate/campaignFavirate.slice'
 import {cardReducer} from '../feature/card/card.slice'
 import {createCampaignReducer} from '../feature/create_campaign/createCampaign.slice'
+import {faqReducer} from '../feature/faq/fag.slice'
 import {myCampaignReducer} from '../feature/my_campaign/myCampaign.slice'
 import {myCampaignAdvertiserReducer} from '../feature/my_campaign_advertiser/myCampaignAdvertiser.slice'
+import {inappNotificationReducer} from '../feature/notification/inappNotificationSlice'
 import {productReducer} from '../feature/product/product.slice'
 import {registerMemberReducer} from '../feature/register_member/registerMember.slice'
 import {reportersReducer} from '../feature/Reporters/reporters.slice'
@@ -43,6 +46,9 @@ const rootReducer = combineReducers({
   authReducer,
   registerMemberReducer,
   topicReducer,
+  campaignFavirateReducer,
+  faqReducer,
+  inappNotificationReducer,
 })
 
 const sagaMiddleware = createSagaMiddleware()
