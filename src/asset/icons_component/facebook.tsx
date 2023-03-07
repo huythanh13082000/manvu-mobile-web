@@ -1,0 +1,121 @@
+import React from 'react'
+
+const FacebookIcon = (props: {color: string}) => {
+  return (
+    <svg
+      width='32'
+      height='32'
+      viewBox='0 0 32 32'
+      fill='none'
+      xmlns='http://www.w3.org/2000/svg'
+    >
+      <rect
+        width='32'
+        height='32'
+        rx='16'
+        fill='url(#paint0_linear_2117_31383)'
+      />
+      <g clip-path='url(#clip0_2117_31383)' filter='url(#filter0_i_2117_31383)'>
+        <g filter='url(#filter1_i_2117_31383)'>
+          <path
+            d='M20.3072 17.2351L20.8419 13.7838H17.5482V11.5405C17.5482 10.5968 18.0081 9.67472 19.4785 9.67472H20.997V6.73579C20.1127 6.59253 19.2191 6.51503 18.3235 6.50391C15.6127 6.50391 13.8428 8.15942 13.8428 11.1523V13.7838H10.8379V17.2351H13.8428V25.5827H17.5482V17.2351H20.3072Z'
+            fill='white'
+          />
+        </g>
+      </g>
+      <defs>
+        <filter
+          id='filter0_i_2117_31383'
+          x='6.06836'
+          y='6.07031'
+          width='19.5117'
+          height='20.0122'
+          filterUnits='userSpaceOnUse'
+          color-interpolation-filters='sRGB'
+        >
+          <feFlood flood-opacity='0' result='BackgroundImageFix' />
+          <feBlend
+            mode='normal'
+            in='SourceGraphic'
+            in2='BackgroundImageFix'
+            result='shape'
+          />
+          <feColorMatrix
+            in='SourceAlpha'
+            type='matrix'
+            values='0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 127 0'
+            result='hardAlpha'
+          />
+          <feOffset dy='0.5' />
+          <feGaussianBlur stdDeviation='1.25' />
+          <feComposite in2='hardAlpha' operator='arithmetic' k2='-1' k3='1' />
+          <feColorMatrix
+            type='matrix'
+            values='0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0.1 0'
+          />
+          <feBlend
+            mode='normal'
+            in2='shape'
+            result='effect1_innerShadow_2117_31383'
+          />
+        </filter>
+        <filter
+          id='filter1_i_2117_31383'
+          x='10.8379'
+          y='6.50391'
+          width='10.1582'
+          height='19.5786'
+          filterUnits='userSpaceOnUse'
+          color-interpolation-filters='sRGB'
+        >
+          <feFlood flood-opacity='0' result='BackgroundImageFix' />
+          <feBlend
+            mode='normal'
+            in='SourceGraphic'
+            in2='BackgroundImageFix'
+            result='shape'
+          />
+          <feColorMatrix
+            in='SourceAlpha'
+            type='matrix'
+            values='0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 127 0'
+            result='hardAlpha'
+          />
+          <feOffset dy='0.5' />
+          <feGaussianBlur stdDeviation='1' />
+          <feComposite in2='hardAlpha' operator='arithmetic' k2='-1' k3='1' />
+          <feColorMatrix
+            type='matrix'
+            values='0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0.2 0'
+          />
+          <feBlend
+            mode='normal'
+            in2='shape'
+            result='effect1_innerShadow_2117_31383'
+          />
+        </filter>
+        <linearGradient
+          id='paint0_linear_2117_31383'
+          x1='16'
+          y1='31.065'
+          x2='16'
+          y2='0'
+          gradientUnits='userSpaceOnUse'
+        >
+          <stop stop-color={props.color} />
+          <stop offset='1' stop-color={props.color} />
+        </linearGradient>
+        <clipPath id='clip0_2117_31383'>
+          <rect
+            width='19.5124'
+            height='19.5124'
+            fill='white'
+            transform='translate(6.06836 6.07031)'
+          />
+        </clipPath>
+      </defs>
+    </svg>
+  )
+}
+
+export default FacebookIcon
