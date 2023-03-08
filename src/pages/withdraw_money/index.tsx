@@ -258,7 +258,7 @@ const WithdrawMoneyPage = (props: {data?: WithdrawMoney}) => {
   return (
     <div className={classes.withdraw_money}>
       <Grid item xs={12}>
-        <Grid item xs={12} container padding={' 0 2rem'}>
+        <Grid item xs={12} container padding={' 0 1rem'}>
           <Grid item xs={12}>
             <Grid item xs={12}>
               <p className={classes.wm_p2}>
