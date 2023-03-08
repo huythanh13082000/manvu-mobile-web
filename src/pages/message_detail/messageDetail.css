@@ -1,0 +1,126 @@
+.rq-title {
+  font-family: 'Noto Sans KR';
+  font-style: normal;
+  font-weight: 700;
+  font-size: 24px;
+  line-height: 32px;
+  /* identical to box height, or 133% */
+
+  /* text dark */
+  margin: 0;
+  color: #222222;
+}
+.rq-button {
+  height: 28px;
+  background: white;
+  /* Primary 1 – #0065F2 */
+
+  border: 1.5px solid #0078ff;
+  font-family: 'Noto Sans KR';
+  font-style: normal;
+  font-weight: 500;
+  font-size: 12px;
+  line-height: 16px;
+  /* identical to box height, or 133% */
+
+  /* Primary 1 – #0065F2 */
+
+  color: #0078ff !important;
+  display: flex;
+  text-align: center;
+}
+.rq-p1 {
+  font-family: 'Noto Sans KR';
+  font-style: normal;
+  font-weight: 500;
+  font-size: 14px;
+  line-height: 20px;
+  /* identical to box height, or 143% */
+
+  display: flex;
+  align-items: center;
+
+  /* Neutral / 2 */
+  margin: 0;
+  color: #2d2f31;
+}
+.rq-p2 {
+  font-family: 'Noto Sans KR';
+  font-style: normal;
+  font-weight: 400;
+  font-size: 12px;
+  line-height: 16px;
+  margin: 0;
+  /* identical to box height, or 133% */
+
+  display: flex;
+  align-items: center;
+
+  /* Overlay/1 */
+
+  color: rgba(45, 47, 49, 0.5);
+}
+.rq-p3 {
+  font-family: 'Noto Sans KR';
+  font-style: normal;
+  font-weight: 500;
+  font-size: 16px;
+  line-height: 24px;
+  /* identical to box height, or 150% */
+
+  /* Neutral / 2 */
+
+  color: #2d2f31;
+  padding-bottom: 1rem;
+}
+.rq-p4 {
+  font-family: 'Noto Sans KR';
+  font-style: normal;
+  font-weight: 500;
+  font-size: 14px;
+  line-height: 20px;
+  /* identical to box height, or 143% */
+  margin: 0;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  /* Neutral / 2 */
+  width: 100px;
+  color: #2d2f31;
+}
+.rq-p5 {
+  font-family: 'Noto Sans KR';
+  font-style: normal;
+  font-weight: 500;
+  font-size: 14px;
+  line-height: 20px;
+  /* identical to box height, or 143% */
+  margin: 0;
+  color: #ff0000;
+  display: flex;
+  width: 100px;
+  align-items: center;
+  justify-content: space-between;
+}
+.rq-p11{
+    display: -webkit-box;
+    max-width: 100%;
+    margin-top: 10px;
+    -webkit-line-clamp: 1;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    /* text dark */
+  
+    color: #222222;
+
+    font-family: 'Noto Sans KR';
+    font-style: normal;
+    font-weight: 500;
+    font-size: 14px;
+    line-height: 20px;
+    /* identical to box height, or 143% */
+    /* Neutral / 2 */
+    margin: 0;
+    color: #2d2f31;
+}

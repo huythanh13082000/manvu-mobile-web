@@ -73,6 +73,7 @@ export default function DialogRequest(Props: {
   question?: Question
   status?: string
   setQuestion: Function
+  setOpenDialogCreate?: () => void
 }) {
   const dispatch = useAppDispatch()
   const [open, setOpen] = React.useState(Props.open)
@@ -138,6 +139,7 @@ export default function DialogRequest(Props: {
     clearInput()
     Props.setQuestion()
     handleClose()
+    Props.setOpenDialogCreate && Props.setOpenDialogCreate()
   }
   React.useEffect(() => {
     setType(Props.question?.type)

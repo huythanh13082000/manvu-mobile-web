@@ -13,6 +13,7 @@ import {
 import InfiniteScroll from 'react-infinite-scroll-component'
 import CardRequest from '../../components/card_request'
 import DialogRequest from './Dialog'
+import {useNavigate} from 'react-router-dom'
 
 const useStyles = makeStyles({
   chat_container: {},
@@ -20,6 +21,7 @@ const useStyles = makeStyles({
 
 const ChatPage = () => {
   const classes = useStyles()
+  const navigate = useNavigate()
   const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null)
   const open = Boolean(anchorEl)
   const dispatch = useAppDispatch()
@@ -120,8 +122,7 @@ const ChatPage = () => {
             <span
               style={{width: '100%'}}
               onClick={() => {
-                if (item.id) handleClickCard(item.id)
-                setQuestion(item)
+                navigate(`/message_detail/${item.id}`)
               }}
               key={item.id}
             >

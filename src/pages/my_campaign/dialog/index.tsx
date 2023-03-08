@@ -88,6 +88,7 @@ export default function CustomizedDialogs(props: {
         onClose={() => props.onClose()}
         aria-labelledby='customized-dialog-title'
         open={props.open}
+        maxWidth='md'
       >
         <BootstrapDialogTitle
           id='customized-dialog-title'

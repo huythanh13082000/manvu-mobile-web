@@ -181,6 +181,10 @@ const ServiceCenter = () => {
     }
   }
   console.log('member', memberCampaignMineCount)
+  const handleLogout = async () => {
+    localStorage.removeItem('token')
+    navigate(ROUTE.LOGIN)
+  }
   return (
     <div className={classes.service_center_container}>
       <AppBarCustom
@@ -351,7 +355,7 @@ const ServiceCenter = () => {
         <ArrowForwardIosIcon />
       </p>
       <div>
-        <Button>로그아웃 계정</Button>
+        <Button onClick={handleLogout}>로그아웃 계정</Button>
         <p>
           <span>© 리뷰팡팡</span>. All Rights Reserved.
         </p>
