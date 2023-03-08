@@ -3,6 +3,7 @@ import CampaignFavourite from '../pages/campaign_favourite'
 import ChatPage from '../pages/chat'
 import CreateCampaignPage from '../pages/create_campaign'
 import Faq from '../pages/faq'
+import ForgotPassword from '../pages/forgot_password'
 import Home from '../pages/home'
 import Login from '../pages/Login'
 import MessageDetail from '../pages/message_detail'
@@ -47,6 +48,7 @@ export const ROUTE = {
   MESSAGE_DETAIL: '/message_detail/:id',
   CREATE_CAMPAIGN: '/create_campaign',
   PAYMENT_HISTORY: '/payment_history',
+  FORGOT_PASSWORD: '/forgot_password',
 }
 
 const routes: Array<MyRouteProp> = [
@@ -80,5 +82,6 @@ const routes: Array<MyRouteProp> = [
   {path: ROUTE.MESSAGE_DETAIL, element: <MessageDetail />},
   {path: ROUTE.CREATE_CAMPAIGN, element: <CreateCampaignPage />},
   {path: ROUTE.PAYMENT_HISTORY, element: <PaymentHistory />},
+  {path: ROUTE.FORGOT_PASSWORD, element: <ForgotPassword />},
 ]
 export default routes

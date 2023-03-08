@@ -32,7 +32,7 @@ import {
   GoogleAuthProvider,
   signInWithPopup,
 } from '@firebase/auth'
-import {LOGIN_TYPE} from '../../constants'
+import {KAKAO_TALK_TOKEN, LOGIN_TYPE} from '../../constants'
 import {NaverUser} from '../../types/naverUser.type'
 import {KakaoData} from '../../types/kakaoData.type'
 
@@ -130,6 +130,7 @@ const Login = () => {
               snsLoginId: user.providerData[0].uid,
               snsEmail: user.providerData[0].email,
               photoURL: user.providerData[0].photoURL,
+              history: navigate,
             })
           )
         }
@@ -163,6 +164,7 @@ const Login = () => {
               snsLoginId: user.providerData[0].uid,
               snsEmail: user.providerData[0].email,
               photoURL: user.providerData[0].photoURL,
+              history: navigate,
             })
           )
         }
@@ -186,6 +188,7 @@ const Login = () => {
         snsLoginId: naverUser.id,
         snsEmail: naverUser.email,
         photoURL: naverUser.profile_image,
+        history: navigate,
       })
     )
   }
@@ -196,6 +199,7 @@ const Login = () => {
           loginType: LOGIN_TYPE.KAKAO_TALK,
           snsLoginId: kakaoData.profile.id.toString(),
           snsEmail: kakaoData.profile.kakao_account.email,
+          history: navigate,
         })
       )
     }
@@ -239,7 +243,9 @@ const Login = () => {
               label='자동로그인'
             />
           </FormGroup>
-          <span>비밀번호찾기</span>
+          <span onClick={() => navigate(ROUTE.FORGOT_PASSWORD)}>
+            비밀번호찾기
+          </span>
         </p>
         <Button variant='contained' onClick={handleSubmit}>
           로그인
@@ -251,10 +257,39 @@ const Login = () => {
           <span>또는 SNS</span>
           <img src={lineRight} alt='' />
         </p>
-        <CardLoginSns iconUrl={naver} text='네이버로 로그인' />
-        <CardLoginSns iconUrl={kakaoTalk} text='카카오로 로그인' />
-        <CardLoginSns iconUrl={google} text='구글로 로그인' />
-        <CardLoginSns iconUrl={facebook} text='페이스북으로 로그인' />
+        {window.location.href.includes('login') && (
+          <NaverLogin
+            clientId='snV4rWk1rnPhdd68jcJZ'
+            callbackUrl={window.location.href}
+            render={(props) => (
+              <div onClick={props.onClick}>
+                <CardLoginSns iconUrl={naver} text='네이버로 로그인' />
+              </div>
+            )}
+            onSuccess={(naverUser) => signInNaver(naverUser)}
+            onFailure={() => console.log(111)}
+          />
+        )}
+        <KakaoLogin
+          token={KAKAO_TALK_TOKEN}
+          onSuccess={(kakaoData) => signInKakaoTalk(kakaoData)}
+          onFail={console.error}
+          onLogout={console.info}
+          style={{width: '100%', border: 'none', padding: 0}}
+        >
+          <CardLoginSns
+            iconUrl={kakaoTalk}
+            text='카카오로 로그인'
+            style={{margin: 0}}
+          />
+        </KakaoLogin>
+
+        <div onClick={() => signInGoogle()}>
+          <CardLoginSns iconUrl={google} text='구글로 로그인' />
+        </div>
+        <div onClick={() => signInFaceBook()}>
+          <CardLoginSns iconUrl={facebook} text='페이스북으로 로그인' />
+        </div>
         <CardLoginSns iconUrl={apple} text='Apple로 로그인' />
 
         <span onClick={() => navigate(ROUTE.TERMS_OF_USE)}>회원가입</span>

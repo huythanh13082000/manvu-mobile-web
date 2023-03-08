@@ -1,4 +1,5 @@
 import {PayloadAction} from '@reduxjs/toolkit'
+import {NavigateFunction} from 'react-router-dom'
 import {call, put, takeLatest} from 'redux-saga/effects'
 import {authApi} from '../../apis/authApi'
 import {setTokenAxios} from '../../apis/axiosClient'
@@ -38,6 +39,7 @@ function* loginSns(
     snsLoginId: string
     snsEmail: string
     photoURL: string
+    history: NavigateFunction
   }>
 ) {
   try {
@@ -45,6 +47,7 @@ function* loginSns(
     yield localStorage.setItem('token', user.token || '')
     setTokenAxios()
     yield put(authActions.loginSuccess(user))
+    action.payload.history(ROUTE.HOME)
   } catch (error) {
     yield put(
       authActions.loginSnsFail({

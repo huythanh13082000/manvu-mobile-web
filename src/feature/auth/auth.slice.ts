@@ -63,6 +63,7 @@ const authSlice = createSlice({
         snsLoginId: string
         snsEmail?: string
         photoURL?: string
+        history: NavigateFunction
       }>
     ) {
       state.logging = true

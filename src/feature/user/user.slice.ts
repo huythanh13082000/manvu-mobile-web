@@ -1,6 +1,7 @@
 import {createSlice, PayloadAction} from '@reduxjs/toolkit'
+import {NavigateFunction} from 'react-router-dom'
 import {RootState} from '../../app/store'
-import { User } from '../../types/user.type'
+import {User} from '../../types/user.type'
 
 export interface userState {
   loading?: boolean
@@ -35,7 +36,10 @@ const userSlice = createSlice({
     activeTab(state, action: PayloadAction<number>) {
       state.active = action.payload
     },
-    forgotPasswordSendMail(state, action: PayloadAction<{email: string}>) {},
+    forgotPasswordSendMail(
+      state,
+      action: PayloadAction<{email: string; history: NavigateFunction}>
+    ) {},
   },
 })
 //actions

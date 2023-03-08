@@ -1,9 +1,11 @@
 import {PayloadAction} from '@reduxjs/toolkit'
+import {NavigateFunction} from 'react-router-dom'
 import {call, put, takeEvery} from 'redux-saga/effects'
 import {authApi} from '../../apis/authApi'
 import {userApi} from '../../apis/userApi'
-import { snackBarActions } from '../../components/snackbar/snackbarSlice'
-import { User } from '../../types/user.type'
+import {snackBarActions} from '../../components/snackbar/snackbarSlice'
+import {ROUTE} from '../../router/routes'
+import {User} from '../../types/user.type'
 import {userActions} from './user.slice'
 
 function* getUser() {
@@ -14,7 +16,9 @@ function* getUser() {
     yield put(userActions.getProfileFail())
   }
 }
-function* forgotPasswordSendMail(action: PayloadAction<{email: string}>) {
+function* forgotPasswordSendMail(
+  action: PayloadAction<{email: string; history: NavigateFunction}>
+) {
   try {
     yield call(authApi.forgotPassWordSendMail, action.payload)
     yield put(
@@ -23,6 +27,7 @@ function* forgotPasswordSendMail(action: PayloadAction<{email: string}>) {
         type: 'success',
       })
     )
+    action.payload.history(ROUTE.LOGIN)
   } catch (error) {
     yield put(
       snackBarActions.setStateSnackBar({

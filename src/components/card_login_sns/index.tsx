@@ -20,12 +20,18 @@ const useStyles = makeStyles({
   },
 })
 
-const CardLoginSns = (props: {iconUrl: string; text: string}) => {
+const CardLoginSns = (props: {
+  iconUrl: string
+  text: string
+  style?: React.CSSProperties
+}) => {
   const classes = useStyles()
   return (
-    <div className={classes.card_login_sns_container}>
+    <div className={classes.card_login_sns_container} style={{...props.style}}>
       <img src={props.iconUrl} alt='' />
-      <span>{props.text}</span>
+      <span style={{fontSize: '16px', fontFamily: 'Noto Sans KR'}}>
+        {props.text}
+      </span>
     </div>
   )
 }

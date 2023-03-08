@@ -180,3 +180,4 @@ export const PAYMENT_HISTORY_ICON: any = {
   '0': bankIcon,
   '1': credit,
 }
+export const KAKAO_TALK_TOKEN = '923068423948123ce72b86bdbb111550'
