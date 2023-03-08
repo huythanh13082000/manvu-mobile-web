@@ -47,11 +47,13 @@ const HeaderSearch = () => {
   }
   const user = useAppSelector(selectUser)
   const routeMenu = () => {
-    user.profile &&
-    user.profile?.roles &&
-    user.profile?.roles.find((item) => item.name === 'advertiser')
-      ? navigate(ROUTE.SERVICE_CENTER_ADVERTISER)
-      : navigate(ROUTE.SERVICE_CENTER)
+    if (user.profile && user.profile?.roles) {
+      user.profile?.roles.find((item) => item.name === 'advertiser')
+        ? navigate(ROUTE.SERVICE_CENTER_ADVERTISER)
+        : navigate(ROUTE.SERVICE_CENTER)
+    } else {
+      navigate(ROUTE.LOGIN)
+    }
   }
   const location = useLocation()
   useEffect(() => {
