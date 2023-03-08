@@ -9,6 +9,7 @@ import faqSaga from '../feature/faq/faq.saga'
 import myCampaignSaga from '../feature/my_campaign/myCampaign.saga'
 import myCampaignAdvertiserSaga from '../feature/my_campaign_advertiser/myCampaignAdvertiser.saga'
 import inappNotificationSaga from '../feature/notification/inappNotification.saga'
+import {paymentSaga} from '../feature/payment/payment.saga'
 import PointTransactionSaga from '../feature/point_transaction/pointTransaction.saga'
 import productSaga from '../feature/product/product.saga'
 import registerAdvertiserSaga from '../feature/register_advertiser/registerAdvertiser.saga'
@@ -45,5 +46,6 @@ export default function* rootSaga() {
     PointTransactionSaga(),
     RequestSaga(),
     registerAdvertiserSaga(),
+    paymentSaga(),
   ])
 }

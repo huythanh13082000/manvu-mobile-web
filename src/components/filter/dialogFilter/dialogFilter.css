@@ -1,0 +1,34 @@
+.dialogFilter-p1 {
+  font-family: 'Noto Sans KR';
+  font-style: normal;
+  font-weight: 500;
+  font-size: 18px;
+  line-height: 25px;
+  /* identical to box height, or 139% */
+
+  letter-spacing: 0.1px;
+  margin-top: 0.1rem 0;
+}
+.dialogFilter-span1 {
+  font-family: 'Noto Sans KR';
+  font-style: normal;
+  font-weight: 500;
+  font-size: 14px;
+  line-height: 25px;
+  /* identical to box height, or 179% */
+
+  letter-spacing: 0.1px;
+
+  color: #b3b3b3;
+  cursor: pointer;
+}
+.dialogFilter-title {
+  font-family: 'Noto Sans KR';
+  font-style: normal;
+  font-weight: 700;
+  font-size: 18px;
+  line-height: 25px;
+  /* identical to box height, or 192% */
+
+  letter-spacing: 0.1px;
+}

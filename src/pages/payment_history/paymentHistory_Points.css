@@ -1,0 +1,32 @@
+.paymentHistoryPoints-span {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 62px;
+  height: 40px;
+
+  /* stroke */
+
+  border: 1px solid #a2a5aa;
+  border-radius: 4px;
+  font-family: 'Noto Sans KR';
+  font-style: normal;
+  font-weight: 500;
+  font-size: 16px;
+  line-height: 24px;
+  /* identical to box height, or 150% */
+
+  /* Neutral/G500 */
+
+  color: #171a1f;
+  cursor: pointer;
+}
+#infiniteScroll-PointManagement {
+  overflow: auto;
+  overflow: -moz-scrollbars-none;
+  -ms-overflow-style: none;
+}
+#infiniteScroll-PointManagement::-webkit-scrollbar {
+  width: 0 !important;
+  display: none;
+}

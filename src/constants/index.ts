@@ -7,6 +7,8 @@ import iconInstagram from '../asset/icons/icon_instagram.png'
 import wait from '../asset/icons/wait.png'
 import success from '../asset/icons/success.png'
 import error from '../asset/icons/error.png'
+import bankIcon from '../asset/icons/bank_icon.png'
+import credit from '../asset/icons/credit_icon.png'
 
 export const HTTP_STATUS = {
   OK: 200,
@@ -174,3 +176,7 @@ export const LIST_TAB = [
     text: '기자단',
   },
 ]
+export const PAYMENT_HISTORY_ICON: any = {
+  '0': bankIcon,
+  '1': credit,
+}

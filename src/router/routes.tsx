@@ -8,6 +8,7 @@ import Login from '../pages/Login'
 import MessageDetail from '../pages/message_detail'
 import MyCampaign from '../pages/my_campaign'
 import Notification from '../pages/notification'
+import PaymentHistory from '../pages/payment_history'
 import PointManagement from '../pages/point_management'
 import ProductPage from '../pages/product'
 import Register from '../pages/register'
@@ -45,6 +46,7 @@ export const ROUTE = {
   CHAT: '/chat',
   MESSAGE_DETAIL: '/message_detail/:id',
   CREATE_CAMPAIGN: '/create_campaign',
+  PAYMENT_HISTORY: '/payment_history',
 }
 
 const routes: Array<MyRouteProp> = [
@@ -77,5 +79,6 @@ const routes: Array<MyRouteProp> = [
   {path: ROUTE.CHAT, element: <ChatPage />},
   {path: ROUTE.MESSAGE_DETAIL, element: <MessageDetail />},
   {path: ROUTE.CREATE_CAMPAIGN, element: <CreateCampaignPage />},
+  {path: ROUTE.PAYMENT_HISTORY, element: <PaymentHistory />},
 ]
 export default routes

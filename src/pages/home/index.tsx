@@ -1,4 +1,5 @@
 import Box from '@mui/material/Box/Box'
+import {Grid} from '@mui/material'
 import makeStyles from '@mui/styles/makeStyles'
 import {useEffect, useState} from 'react'
 import InfiniteScroll from 'react-infinite-scroll-component'
@@ -64,8 +65,22 @@ const Home = () => {
     <div className={classes.home_container}>
       <HeaderSearch />
 
-      <Box bgcolor={'#F6F6F6'} padding='1rem'>
-        <Filter />
+      <Box bgcolor={'#F6F6F6'} padding='1rem 0'>
+        <Grid container justifyContent={'space-between'}>
+          <Filter
+            medias={medias}
+            tagIds={tagIds}
+            setMedias={(params) => setMedias(params)}
+            setTagIds={(params) => setTagIds(params)}
+            areaIds={areaIds}
+            setAreaIds={(params) => setAreaIds(params)}
+            setOffset={(params) => {
+              setOffset(params)
+            }}
+            columsfilter={columsfilter}
+            setColumsfilter={(params) => setColumsfilter(params)}
+          />
+        </Grid>
       </Box>
       <InfiniteScroll
         dataLength={listCampaign.length}
@@ -73,9 +88,11 @@ const Home = () => {
         hasMore={true}
         loader={<></>}
       >
-        {listCampaign.map((item) => (
-          <CardBase key={item.id} data={item} />
-        ))}
+        {listCampaign
+          .filter((item) => item.status === 1)
+          .map((item) => (
+            <CardBase key={item.id} data={item} />
+          ))}
       </InfiniteScroll>
     </div>
   )

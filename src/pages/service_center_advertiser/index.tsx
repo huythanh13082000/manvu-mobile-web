@@ -244,7 +244,7 @@ const ServiceCenterAdvertiser = () => {
         <img src={rightImage} alt='' style={{width: '24px', height: '24px'}} />
       </div>
 
-      <p onClick={() => navigate(ROUTE.UPDATE_ADVERTISER)}>
+      <p onClick={() => navigate(ROUTE.PAYMENT_HISTORY)}>
         <span>
           <img src={pointIcon} alt='' />
           <span style={{fontSize: '16px'}}>

@@ -1,9 +1,11 @@
-import {Tab, Tabs} from '@mui/material'
+import {Tab, Tabs, Grid} from '@mui/material'
 import {makeStyles} from '@mui/styles'
+import Box from '@mui/material/Box/Box'
 import React, {useEffect, useState} from 'react'
 import InfiniteScroll from 'react-infinite-scroll-component'
 import {useAppDispatch, useAppSelector} from '../../app/hooks'
 import CardService from '../../components/card_service'
+import Filter from '../../components/filter'
 import HeaderSearch from '../../components/header/headerSearch'
 import {
   selectCategories,
@@ -126,19 +128,23 @@ const ServicePage = () => {
         })}
       </Tabs>
 
-      {/* <Filter
-              medias={medias}
-              tagIds={tagIds}
-              areaIds={areaIds}
-              setAreaIds={(params) => setAreaIds(params)}
-              setMedias={(params) => setMedias(params)}
-              setTagIds={(params) => setTagIds(params)}
-              setOffset={(params) => {
-                setOffset(params)
-              }}
-              columsfilter={columsfilter}
-              setColumsfilter={(params) => setColumsfilter(params)}
-            /> */}
+      <Box bgcolor={'#F6F6F6'} padding='1rem 0'>
+        <Grid container justifyContent={'space-between'}>
+          <Filter
+            medias={medias}
+            tagIds={tagIds}
+            setMedias={(params) => setMedias(params)}
+            setTagIds={(params) => setTagIds(params)}
+            areaIds={areaIds}
+            setAreaIds={(params) => setAreaIds(params)}
+            setOffset={(params) => {
+              setOffset(params)
+            }}
+            columsfilter={columsfilter}
+            setColumsfilter={(params) => setColumsfilter(params)}
+          />
+        </Grid>
+      </Box>
       <InfiniteScroll
         dataLength={listCampaignService.length}
         next={() => setOffset(offset + 10)}
