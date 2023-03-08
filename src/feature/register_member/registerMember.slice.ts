@@ -31,7 +31,10 @@ const registerMember = createSlice({
     signUpMemberFail(state) {
       state.loadding = false
     },
-    signUpMemberSns(state, action: PayloadAction<FormData>) {
+    signUpMemberSns(
+      state,
+      action: PayloadAction<{data: FormData; history: NavigateFunction}>
+    ) {
       state.loadding = true
     },
     updateMember(state, action: PayloadAction<{form: FormData; history: any}>) {

@@ -35,14 +35,17 @@ function* registerAdvertiser(
   }
 }
 
-function* signUpAdvertiserSns(action: PayloadAction<FormData>) {
+function* signUpAdvertiserSns(
+  action: PayloadAction<{data: FormData; history: NavigateFunction}>
+) {
   try {
-    yield call(signUpApi.signUpAdvertiserSns, action.payload)
+    yield call(signUpApi.signUpAdvertiserSns, action.payload.data)
     yield put(registerAdvertiserAction.signUpAdvertiserSuccess())
     yield put(
       snackBarActions.setStateSnackBar({type: 'success', content: 'success'})
     )
     yield put(registerAdvertiserAction.setStatus(true))
+    action.payload.history(ROUTE.LOGIN)
   } catch (error: any) {
     yield put(registerAdvertiserAction.signUpAdvertiserFail())
     yield put(

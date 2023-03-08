@@ -35,13 +35,16 @@ function* registermember(
   }
 }
 
-function* signUpMemberSns(action: PayloadAction<FormData>) {
+function* signUpMemberSns(
+  action: PayloadAction<{data: FormData; history: NavigateFunction}>
+) {
   try {
-    yield call(signUpApi.signUpMemberSns, action.payload)
+    yield call(signUpApi.signUpMemberSns, action.payload.data)
     yield put(registerMemberAction.signUpMemberSuccess())
     yield put(
       snackBarActions.setStateSnackBar({type: 'success', content: 'success'})
     )
+    yield action.payload.history(ROUTE.LOGIN)
   } catch (error: any) {
     yield put(registerMemberAction.signUpMemberFail())
     yield put(

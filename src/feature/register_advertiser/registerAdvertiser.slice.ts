@@ -32,7 +32,10 @@ const registerAdvertiser = createSlice({
     signUpAdvertiserFail(state) {
       state.loadding = false
     },
-    signUpAdvertiserSns(state, action: PayloadAction<FormData>) {
+    signUpAdvertiserSns(
+      state,
+      action: PayloadAction<{data: FormData; history: NavigateFunction}>
+    ) {
       state.loadding = true
     },
     updateAdvertiser(

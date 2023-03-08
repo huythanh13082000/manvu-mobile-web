@@ -267,7 +267,12 @@ const RegisterMember = () => {
     formData.append('addressList', JSON.stringify(addressList))
 
     if (location.pathname === `${ROUTE.RESISTER_MEMBER}/sns`) {
-      dispatch(registerMemberAction.signUpMemberSns(formData))
+      dispatch(
+        registerMemberAction.signUpMemberSns({
+          data: formData,
+          history: navigate,
+        })
+      )
     } else
       checkVerify
         ? dispatch(
@@ -471,7 +476,7 @@ const RegisterMember = () => {
           <label htmlFor=''>프로필 이미지</label>
           <UploadAvatar setFile={handleChangeFile} avatar={avatar} />
         </div>
-        {location.pathname !== ROUTE.UPDATE_MEMBER ? (
+        {location.pathname === ROUTE.RESISTER_MEMBER ? (
           <InputForm
             label='Email'
             placeholder='이메일을 입력해주세요.'
@@ -489,7 +494,7 @@ const RegisterMember = () => {
           onChange={(e) => setUsername(e)}
         />
 
-        {location.pathname !== ROUTE.UPDATE_MEMBER ? (
+        {location.pathname === ROUTE.RESISTER_MEMBER ? (
           <InputForm
             label='비밀번호'
             placeholder='비밀번호를 입력해주세요.'
@@ -500,7 +505,7 @@ const RegisterMember = () => {
         ) : (
           <div></div>
         )}
-        {location.pathname !== ROUTE.UPDATE_MEMBER ? (
+        {location.pathname === ROUTE.RESISTER_MEMBER ? (
           <InputForm
             label='비밀번호 확인'
             placeholder='비밀번호를 입력해주세요.'

@@ -47,6 +47,7 @@ function* loginSns(
     yield localStorage.setItem('token', user.token || '')
     setTokenAxios()
     yield put(authActions.loginSuccess(user))
+    yield put(userActions.getProfile())
     action.payload.history(ROUTE.HOME)
   } catch (error) {
     yield put(
@@ -57,6 +58,7 @@ function* loginSns(
         snsLoginId: action.payload.snsLoginId,
       })
     )
+    action.payload.history(ROUTE.TERMS_OF_USE)
   }
 }
 export default function* authSaga() {

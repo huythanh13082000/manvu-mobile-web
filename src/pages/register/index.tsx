@@ -4,7 +4,9 @@ import AppBarCustom from '../../components/appbar'
 import member from '../../asset/icons/member.png'
 import advertiser from '../../asset/icons/advertiser.png'
 import {useNavigate} from 'react-router-dom'
-import { ROUTE } from '../../router/routes'
+import {ROUTE} from '../../router/routes'
+import {useAppSelector} from '../../app/hooks'
+import {selectSnsUserInfor} from '../../feature/auth/auth.slice'
 
 const useStyles = makeStyles({
   register_container: {
@@ -45,19 +47,31 @@ const useStyles = makeStyles({
 const Register = () => {
   const classes = useStyles()
   const navigate = useNavigate()
+  const userSns = useAppSelector(selectSnsUserInfor)
+  const handleSubmit = () => {
+    userSns
+      ? navigate(`${ROUTE.RESISTER_MEMBER}/sns`)
+      : navigate(ROUTE.RESISTER_MEMBER)
+  }
+  const handleSubmitAdvertiser = () => {
+    userSns
+      ? navigate(`${ROUTE.RESISTER_ADVERTISER}/sns`)
+      : navigate(ROUTE.RESISTER_ADVERTISER)
+  }
+
   return (
     <div className={classes.register_container}>
       <AppBarCustom title='회원가입' />
       <div>
         <p>회원가입 종류를 선택해주세요.</p>
-        <div onClick={()=>navigate(ROUTE.RESISTER_MEMBER)}>
+        <div onClick={handleSubmit}>
           <img src={member} alt='' />
           <div>
             <p>체험단 회원가입</p>
             <p>바로가기</p>
           </div>
         </div>
-        <div onClick={()=>navigate(ROUTE.RESISTER_ADVERTISER)}>
+        <div onClick={handleSubmitAdvertiser}>
           <img src={advertiser} alt='' />
           <div>
             <p>광고주 회원가입</p>

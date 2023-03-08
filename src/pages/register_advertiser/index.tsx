@@ -130,7 +130,12 @@ const RegisterAdvertiser = () => {
     }
 
     if (location.pathname === `${ROUTE.RESISTER_ADVERTISER}/sns`) {
-      dispatch(registerAdvertiserAction.signUpAdvertiserSns(formData))
+      dispatch(
+        registerAdvertiserAction.signUpAdvertiserSns({
+          data: formData,
+          history: navigate,
+        })
+      )
     } else
       dispatch(
         registerAdvertiserAction.signUpAdvertiser({
@@ -302,7 +307,6 @@ const RegisterAdvertiser = () => {
               6.아이디(<span style={{color: '#ACB1B6'}}>이메일 형식</span>)
             </p>
             <TextField
-              error={error.includes('email') ? false : true}
               value={email}
               onChange={(e) => {
                 setEmail(e.target.value)
