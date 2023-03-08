@@ -156,3 +156,21 @@ export const TEXT_QUESTION_TYPE: any = {
   OTHER: '기타 문의',
   EVENT_QUESTION: '이벤트 문의',
 }
+export const LIST_TAB = [
+  {
+    id: 1,
+    text: '지역',
+  },
+  {
+    id: 2,
+    text: '제품',
+  },
+  {
+    id: 3,
+    text: '서비스',
+  },
+  {
+    id: 4,
+    text: '기자단',
+  },
+]

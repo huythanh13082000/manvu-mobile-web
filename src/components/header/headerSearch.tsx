@@ -8,6 +8,8 @@ import Tabs from '@mui/material/Tabs/Tabs'
 import Tab from '@mui/material/Tab/Tab'
 import {useLocation, useNavigate} from 'react-router-dom'
 import {ROUTE} from '../../router/routes'
+import {useAppSelector} from '../../app/hooks'
+import {selectUser} from '../../feature/user/user.slice'
 
 const useStyles = makeStyles({
   header_search_container: {
@@ -43,6 +45,14 @@ const HeaderSearch = () => {
   const handleChange = (event: React.SyntheticEvent, newValue: number) => {
     setValueTab(newValue)
   }
+  const user = useAppSelector(selectUser)
+  const routeMenu = () => {
+    user.profile &&
+    user.profile?.roles &&
+    user.profile?.roles.find((item) => item.name === 'advertiser')
+      ? navigate(ROUTE.SERVICE_CENTER_ADVERTISER)
+      : navigate(ROUTE.SERVICE_CENTER)
+  }
   const location = useLocation()
   useEffect(() => {
     switch (location.pathname) {
@@ -71,7 +81,7 @@ const HeaderSearch = () => {
   return (
     <>
       <div className={classes.header_search_container}>
-        <img src={menu} alt='' onClick={() => navigate(ROUTE.SERVICE_CENTER)} />
+        <img src={menu} alt='' onClick={routeMenu} />
         <img src={logo} alt='' />
         <img src={search} alt='' />
       </div>

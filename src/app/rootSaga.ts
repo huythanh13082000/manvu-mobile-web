@@ -11,6 +11,7 @@ import myCampaignAdvertiserSaga from '../feature/my_campaign_advertiser/myCampai
 import inappNotificationSaga from '../feature/notification/inappNotification.saga'
 import PointTransactionSaga from '../feature/point_transaction/pointTransaction.saga'
 import productSaga from '../feature/product/product.saga'
+import registerAdvertiserSaga from '../feature/register_advertiser/registerAdvertiser.saga'
 import registermemberSaga from '../feature/register_member/registerMember.saga'
 import reportersSaga from '../feature/Reporters/reporters.saga'
 import RequestSaga from '../feature/request/request.saga'
@@ -43,5 +44,6 @@ export default function* rootSaga() {
     withdrawMoneySaga(),
     PointTransactionSaga(),
     RequestSaga(),
+    registerAdvertiserSaga(),
   ])
 }

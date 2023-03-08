@@ -1,40 +1,33 @@
-import {makeStyles} from '@mui/styles'
-import {useAppDispatch, useAppSelector} from '../../app/hooks'
-import AppBarCustom from '../../components/appbar'
-import {IMAGE_URL} from '../../constants'
-import {selectUser} from '../../feature/user/user.slice'
-import arrowBig from '../../asset/icons/arrow_big.png'
-import buttomImage from '../../asset/icons/button.png'
-import noteIcon from '../../asset/icons/note.png'
 import ArrowForwardIosIcon from '@mui/icons-material/ArrowForwardIos'
-import {numberWithCommas} from '../../utils'
-import NaverIcon from '../../asset/icons_component/naver'
-import YoutubeIcon from '../../asset/icons_component/youtube'
-import FacebookIcon from '../../asset/icons_component/facebook'
-import InstagramIcon from '../../asset/icons_component/instagram'
-import TwitterIcon from '../../asset/icons_component/twitter'
-import TiktokIcon from '../../asset/icons_component/tiktok'
-import userIcon from '../../asset/icons/user_circle.png'
-import heartIcon from '../../asset/icons/heart_icon.png'
-import crownStar from '../../asset/icons/crown_star.png'
+import {Button} from '@mui/material'
+import {makeStyles} from '@mui/styles'
+import {useEffect} from 'react'
+import {useNavigate} from 'react-router-dom'
+import {useAppDispatch, useAppSelector} from '../../app/hooks'
 import bell from '../../asset/icons/bell.png'
+import crownStar from '../../asset/icons/crown_star.png'
+import group from '../../asset/icons/group.png'
+import heartIcon from '../../asset/icons/heart_icon.png'
 import letterUnread from '../../asset/icons/letter_unread.png'
 import questionSquare from '../../asset/icons/question_square.png'
-import setting from '../../asset/icons/settings.png'
-import group from '../../asset/icons/group.png'
 import rightIcon from '../../asset/icons/right.png'
-import {useEffect} from 'react'
+import setting from '../../asset/icons/settings.png'
+import userIcon from '../../asset/icons/user_circle.png'
+import medal from '../../asset/icons/medal_ribbons_ star.png'
+import AppBarCustom from '../../components/appbar'
+import pointIcon from '../../asset/icons/point_icon.png'
+import {IMAGE_URL} from '../../constants'
 import {
-  myCampaignActions,
-  selectMemberCampaignMineCount,
-} from '../../feature/my_campaign/myCampaign.slice'
-import {Button} from '@mui/material'
-import {useNavigate} from 'react-router-dom'
+  myCampaignAdvertiserActions,
+  selectAdvertiserCampaignMineCount,
+} from '../../feature/my_campaign_advertiser/myCampaignAdvertiser.slice'
+import {selectUser} from '../../feature/user/user.slice'
 import {ROUTE} from '../../router/routes'
 import rightImage from '../../asset/icons/arrow_right.png'
+import {numberWithCommas} from '../../utils'
 
 const useStyles = makeStyles({
-  service_center_container: {
+  service_center_advertiser_container: {
     '&>div:nth-of-type(1)': {
       padding: '0.5rem 1rem',
       '&>div': {
@@ -131,6 +124,32 @@ const useStyles = makeStyles({
       },
     },
     '&>div:nth-of-type(4)': {
+      display: 'flex',
+      padding: '1rem',
+      justifyContent: 'space-between',
+      alignItem: 'center',
+      background:
+        'linear-gradient(270deg, rgba(230, 188, 210, 0.3) 0%, rgba(195, 169, 224, 0.3) 51.1%, rgba(164, 152, 236, 0.3) 100%), #FFFFFF',
+      '&>div': {
+        display: 'flex',
+        '&>img': {
+          width: '40px',
+          height: '40px',
+        },
+        '&>div': {
+          '&>p': {
+            fontWeight: 700,
+            padding: 0,
+            margin: 0,
+          },
+          '&>p:nth-of-type(2)': {
+            fontWeight: 400,
+            fontSize: '14px',
+          },
+        },
+      },
+    },
+    '&>div:nth-of-type(5)': {
       padding: '1rem',
       background: ' #F4F4F4',
       '&>button': {
@@ -154,142 +173,44 @@ const useStyles = makeStyles({
   },
 })
 
-const ServiceCenter = () => {
+const ServiceCenterAdvertiser = () => {
   const classes = useStyles()
   const user = useAppSelector(selectUser)
   const dispatch = useAppDispatch()
   const navigate = useNavigate()
-  const memberCampaignMineCount: any = useAppSelector(
-    selectMemberCampaignMineCount
+  const advertiserCampaignMineCount: any = useAppSelector(
+    selectAdvertiserCampaignMineCount
   )
   useEffect(() => {
-    dispatch(myCampaignActions.getMemberCampaignMineCount())
+    dispatch(myCampaignAdvertiserActions.getAdvertiserCampaignMineCount())
   }, [dispatch])
   const renderText = (index: number) => {
     switch (index) {
       case 0:
-        return '신청'
+        return '전체건수'
       case 1:
-        return '선정'
+        return '진행중'
       case 2:
-        return '수정'
+        return '수정신청'
       case 3:
-        return '등록 '
-      case 4:
-        return '종료'
+        return '완료건수'
       default:
         break
     }
   }
-  console.log('member', memberCampaignMineCount)
   const handleLogout = async () => {
     localStorage.removeItem('token')
     navigate(ROUTE.LOGIN)
     window.location.reload()
   }
   return (
-    <div className={classes.service_center_container}>
+    <div className={classes.service_center_advertiser_container}>
       <AppBarCustom
         title={user.profile?.username}
         imageUrl={`${IMAGE_URL}${user.profile?.avatar}`}
       />
-      <div>
-        <div>
-          <div>
-            <span>현재 나의 포인트</span>
-            <p>{numberWithCommas(Number(user.profile?.point))} P</p>
-            <img
-              src={buttomImage}
-              alt=''
-              onClick={() => navigate(ROUTE.POINT_MANAGEMENT)}
-            />
-            <span>
-              <img
-                src={noteIcon}
-                alt=''
-                style={{margin: '0 0 0.5rem 0.5rem'}}
-              />
-            </span>
-          </div>
-          <img src={arrowBig} alt='' style={{width: '130px'}} />
-        </div>
-      </div>
-      <div>
-        <p
-          style={{display: 'flex'}}
-          onClick={() => navigate(ROUTE.UPDATE_MEMBER)}
-        >
-          <span>SNS채널 연결 상태</span>{' '}
-          <img
-            src={rightImage}
-            alt=''
-            style={{width: '24px', height: '24px'}}
-          />
-        </p>
-        <span>연결한 SNS채널은 표기가 됩니다.</span>
-        <div>
-          <NaverIcon
-            color={
-              user &&
-              user.profile &&
-              user.profile?.snsLinks.filter((item: any) => item.blog_naver)
-                .length > 0
-                ? '#00C73C'
-                : '#999999'
-            }
-          />
-          <FacebookIcon
-            color={
-              user &&
-              user.profile &&
-              user.profile?.snsLinks.filter((item: any) => item.facebook)
-                .length > 0
-                ? '#0062E0'
-                : '#999999'
-            }
-          />
-          <YoutubeIcon
-            color={
-              user &&
-              user.profile &&
-              user.profile?.snsLinks.filter((item: any) => item.youtube)
-                .length > 0
-                ? '#FF0000'
-                : '#999999'
-            }
-          />
-          <InstagramIcon
-            color={
-              user &&
-              user.profile &&
-              user.profile?.snsLinks.filter((item: any) => item.instagram)
-                .length > 0
-                ? '#FF0000'
-                : '#999999'
-            }
-          />
-          <TwitterIcon
-            color={
-              user &&
-              user.profile &&
-              user.profile?.snsLinks.filter((item: any) => item.twitter)
-                .length > 0
-                ? '#0CA8F6'
-                : '#999999'
-            }
-          />
-          <TiktokIcon
-            color={
-              user &&
-              user.profile &&
-              user.profile?.snsLinks.filter((item: any) => item.tiktok).length >
-                0
-                ? '#000000'
-                : '#999999'
-            }
-          />
-        </div>
-      </div>
+      <div></div>
+      <div></div>
 
       <div>
         <p onClick={() => navigate(ROUTE.MY_CAMPAIGN)}>
@@ -300,20 +221,43 @@ const ServiceCenter = () => {
             style={{width: '24px', height: '24px'}}
           />
         </p>
-        <div>
-          {memberCampaignMineCount &&
-            Object.keys(memberCampaignMineCount).map((key, index) => (
+        <div style={{justifyContent: 'space-between'}}>
+          {advertiserCampaignMineCount &&
+            Object.keys(advertiserCampaignMineCount).map((key, index) => (
               <div>
                 <img src={group} alt='' />
-                <p>{memberCampaignMineCount[`${key}`]}</p>
+                <p>{advertiserCampaignMineCount[`${key}`]}</p>
                 <div>{renderText(index)}</div>
                 <img src={rightIcon} alt='' />
               </div>
             ))}
         </div>
       </div>
+      <div>
+        <div>
+          <img src={medal} alt='' />
+          <div>
+            <p>결제관리</p>
+            <p>캠페인 생성가능 사용하기</p>
+          </div>
+        </div>
+        <img src={rightImage} alt='' style={{width: '24px', height: '24px'}} />
+      </div>
 
-      <p onClick={() => navigate(ROUTE.UPDATE_MEMBER)}>
+      <p onClick={() => navigate(ROUTE.UPDATE_ADVERTISER)}>
+        <span>
+          <img src={pointIcon} alt='' />
+          <span style={{fontSize: '16px'}}>
+            포인트 관리(
+            <span style={{color: 'violet'}}>
+              나의 포인트 {numberWithCommas(Number(user.profile?.point))}P
+            </span>
+            )
+          </span>
+        </span>
+        <img src={rightImage} alt='' style={{width: '24px', height: '24px'}} />
+      </p>
+      <p onClick={() => navigate(ROUTE.UPDATE_ADVERTISER)}>
         <span>
           <img src={userIcon} alt='' />
           <span>개인정보수정</span>
@@ -321,6 +265,13 @@ const ServiceCenter = () => {
         <img src={rightImage} alt='' style={{width: '24px', height: '24px'}} />
       </p>
 
+      <p onClick={() => navigate(ROUTE.CREATE_CAMPAIGN)}>
+        <span>
+          <img src={crownStar} alt='' />
+          <span>캠페인 등록 </span>
+        </span>
+        <img src={rightImage} alt='' style={{width: '24px', height: '24px'}} />
+      </p>
       <p onClick={() => navigate(ROUTE.CAMPAIGN_FAVOURITE)}>
         <span>
           <img src={heartIcon} alt='' />
@@ -328,15 +279,6 @@ const ServiceCenter = () => {
         </span>
         <img src={rightImage} alt='' style={{width: '24px', height: '24px'}} />
       </p>
-
-      <p onClick={() => navigate(ROUTE.POINT_MANAGEMENT)}>
-        <span>
-          <img src={crownStar} alt='' />
-          <span>포인트 관리 </span>
-        </span>
-        <img src={rightImage} alt='' style={{width: '24px', height: '24px'}} />
-      </p>
-
       <p onClick={() => navigate(ROUTE.NOTIFICATION)}>
         <span>
           <img src={bell} alt='' />
@@ -375,4 +317,4 @@ const ServiceCenter = () => {
   )
 }
 
-export default ServiceCenter
+export default ServiceCenterAdvertiser

@@ -104,7 +104,7 @@
 }
 .rq-p11{
     display: -webkit-box;
-    max-width: 100%;
+    /* max-width: 100%; */
     margin-top: 10px;
     -webkit-line-clamp: 1;
     -webkit-box-orient: vertical;

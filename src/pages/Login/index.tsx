@@ -201,18 +201,12 @@ const Login = () => {
     }
   }
 
-  useEffect(() => {
-    if (currentUser) {
-      navigate('/')
-    }
-    if (loginSns) navigate('/termsofuse')
-  }, [navigate, loginSns, currentUser])
-
   const handleSubmit = async () => {
     dispatch(
       authActions.login({
         username: username,
         password: password,
+        history: navigate,
       })
     )
   }

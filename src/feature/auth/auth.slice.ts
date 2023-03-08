@@ -1,10 +1,12 @@
 import {createSlice, PayloadAction} from '@reduxjs/toolkit'
+import {NavigateFunction} from 'react-router-dom'
 import {RootState} from '../../app/store'
 import {User} from '../../types/user.type'
 
 export interface LoginPayload {
   username: string
   password: string
+  history?: NavigateFunction
 }
 
 export interface snsUserInfor {

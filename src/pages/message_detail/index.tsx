@@ -1,14 +1,14 @@
-import { Close } from '@mui/icons-material'
+import {Close} from '@mui/icons-material'
 import DeleteSweepOutlinedIcon from '@mui/icons-material/DeleteSweepOutlined'
 import ModeEditOutlineOutlinedIcon from '@mui/icons-material/ModeEditOutlineOutlined'
 import MoreVertOutlinedIcon from '@mui/icons-material/MoreVertOutlined'
-import { Button, Grid, IconButton, Menu, MenuItem } from '@mui/material'
-import { makeStyles } from '@mui/styles'
+import {Button, Grid, IconButton, Menu, MenuItem} from '@mui/material'
+import {makeStyles} from '@mui/styles'
 import moment from 'moment'
-import React, { useEffect, useState } from 'react'
-import { useParams } from 'react-router-dom'
-import { FILE_API } from '../../apis/urlConfig'
-import { useAppDispatch, useAppSelector } from '../../app/hooks'
+import React, {useEffect, useState} from 'react'
+import {useParams} from 'react-router-dom'
+import {FILE_API} from '../../apis/urlConfig'
+import {useAppDispatch, useAppSelector} from '../../app/hooks'
 import camera from '../../asset/icons/camera.png'
 import sendMessage from '../../asset/icons/send.png'
 import AppBarCustom from '../../components/appbar'
@@ -16,9 +16,9 @@ import {
   requestActions,
   selectListQuestion,
   selectListQuestionTotal,
-  selectQuestionDetail
+  selectQuestionDetail,
 } from '../../feature/request/request.slice'
-import { Question } from '../../types/question.type'
+import {Question} from '../../types/question.type'
 import DialogRequest from '../chat/Dialog'
 import DialogImg from './DialogImg'
 import './messageDetail.css'
@@ -202,7 +202,7 @@ const MessageDetail = () => {
             </Menu>
           </Grid>
         </Grid>
-        <div style={{padding: '0 1rem'}}>
+        <div style={{padding: '0 1rem', minHeight: '70vh'}}>
           <p className='rq-p3' style={{borderBottom: '1px solid #e1e1e1'}}>
             {questionDetail?.content}
           </p>
@@ -285,7 +285,7 @@ const MessageDetail = () => {
           marginTop='3rem'
           container
           alignItems='center'
-          position={'fixed'}
+          position={'sticky'}
           bottom='0'
           bgcolor='#F6F6F6'
           padding='1rem 0'

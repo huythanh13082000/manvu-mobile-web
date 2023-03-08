@@ -1,0 +1,82 @@
+.ccp-title {
+  font-style: normal;
+  font-weight: 700 !important;
+  font-size: 20px;
+  line-height: 32px;
+  /* identical to box height, or 160% */
+
+  display: flex;
+  align-items: center;
+  letter-spacing: -0.1px;
+
+  /* text dark */
+
+  color: #222222;
+}
+.ccp-input {
+  font-family: 'Noto Sans KR';
+  font-style: normal;
+  font-weight: 600;
+  font-size: 16px;
+  line-height: 19px;
+  /* identical to box height */
+  margin: 1rem 0;
+  /* text dark */
+  color: #222222;
+}
+.ccp-textarea {
+  font-family: 'Noto Sans KR';
+  width: 100%;
+  padding: 1.2rem 1rem;
+  font-style: normal;
+  font-weight: 500;
+  font-size: 16px;
+  line-height: 20px;
+  box-sizing: border-box;
+  /* identical to box height, or 143% */
+
+  /* color: #b5b5b5 !important; */
+  border: 1px solid #cfcfcf;
+}
+.ccpn-p1 {
+
+  font-family: 'Noto Sans KR';
+  font-style: normal;
+  font-weight: 500;
+  font-size: 16px;
+  line-height: 19px;
+  margin-top: 0.5rem;
+  margin-bottom: 0.5rem;
+  /* identical to box height */
+
+  /* text dark */
+
+  color: #222222;
+}
+.ccp-datepicker {
+  width: 226px !important;
+  height: 48px !important;
+  font-family: 'Noto Sans KR' !important;
+  font-style: normal;
+  font-weight: 500;
+  font-size: 14px;
+  line-height: 20px;
+  /* identical to box height, or 143% */
+
+  /* text dark */
+
+  color: #222222;
+}
+.ccpn-button {
+  font-family: 'Noto Sans KR' !important;
+  font-style: normal;
+  font-weight: 700 !important;
+  font-size: 15px;
+  line-height: 22px;
+  /* identical to box height */
+  width: 100%;
+
+  color: #ffffff;
+  height: 48px;
+}
+

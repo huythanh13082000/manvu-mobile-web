@@ -1,0 +1,59 @@
+.rc-title {
+  font-style: normal;
+  font-weight: 700;
+  font-size: 24px;
+  line-height: 32px;
+  /* identical to box height, or 133% */
+
+  letter-spacing: -0.1px;
+
+  color: #111111;
+}
+.rc-p1 {
+  font-style: normal;
+  font-weight: 400;
+  font-size: 16px;
+  line-height: 24px;
+  /* identical to box height, or 150% */
+
+  letter-spacing: 0.1px;
+  margin-top: 0;
+  color: #414141;
+}
+.rc-p2 {
+  font-style: normal;
+  font-weight: 700;
+  font-size: 16px;
+  line-height: 18px;
+  /* identical to box height, or 112% */
+
+  color: #292929;
+}
+.rc-grid-img {
+  border-radius: 5px;
+  width: 422px;
+  justify-content: center;
+}
+.rc-p3 {
+  font-style: normal;
+  font-weight: 700;
+  font-size: 16px;
+  line-height: 24px;
+  /* identical to box height, or 150% */
+  letter-spacing: 0.1px;
+  text-align: center;
+  color: #b5b5b5;
+}
+.rc-p4 {
+  font-style: normal;
+  font-weight: 500;
+  font-size: 13px;
+  line-height: 18px;
+  /* identical to box height, or 138% */
+  color: #414141;
+}
+.rc-input {
+  border: #cfcfcf;
+  width: 100%;
+  height: 48px;
+}

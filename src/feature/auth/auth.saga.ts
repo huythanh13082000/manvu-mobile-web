@@ -2,8 +2,9 @@ import {PayloadAction} from '@reduxjs/toolkit'
 import {call, put, takeLatest} from 'redux-saga/effects'
 import {authApi} from '../../apis/authApi'
 import {setTokenAxios} from '../../apis/axiosClient'
-import { User } from '../../types/user.type'
-import { userActions } from '../user/user.slice'
+import {ROUTE} from '../../router/routes'
+import {User} from '../../types/user.type'
+import {userActions} from '../user/user.slice'
 import {authActions, LoginPayload} from './auth.slice'
 
 function* handleLogin(action: PayloadAction<LoginPayload>) {
@@ -13,6 +14,9 @@ function* handleLogin(action: PayloadAction<LoginPayload>) {
     yield setTokenAxios()
     yield put(authActions.loginSuccess(User))
     yield put(userActions.getProfileSuccess({profile: User}))
+    action.payload &&
+      action.payload.history &&
+      action.payload.history(ROUTE.HOME)
   } catch (error: any) {
     if (error.response.data.message === 'Username does not exist!') {
       yield put(

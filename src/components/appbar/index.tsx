@@ -5,7 +5,7 @@ import {useNavigate} from 'react-router-dom'
 import {ROUTE} from '../../router/routes'
 
 const AppBarCustom = (props: {
-  title: string
+  title?: string
   goBack?: () => void
   iconRightUrl?: string
   imageUrl?: string
