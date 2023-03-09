@@ -233,7 +233,7 @@ const ServiceCenterAdvertiser = () => {
             ))}
         </div>
       </div>
-      <div>
+      <div onClick={() => navigate(ROUTE.PAYMENT)}>
         <div>
           <img src={medal} alt='' />
           <div>

@@ -12,6 +12,8 @@ import MyCampaign from '../pages/my_campaign'
 import MyCampaignAdvertiser from '../pages/my_campaign_advertiser'
 import Notification from '../pages/notification'
 import PageSearch from '../pages/page_search'
+import Payment from '../pages/payment'
+import PaymentBankCredit from '../pages/payment_bank_credit'
 import PaymentHistory from '../pages/payment_history'
 import PointManagement from '../pages/point_management'
 import ProductPage from '../pages/product'
@@ -56,6 +58,8 @@ export const ROUTE = {
   FORGOT_PASSWORD: '/forgot_password',
   CAMPAIGN_ADVERTISER_MANAGER: '/campaign_advertiser_manager/:id',
   PAGE_SEARCH: '/page_search',
+  PAYMENT: '/payment',
+  PAYMENT_BANK_CREDIT: '/payment_bank_credit',
 }
 
 const routes: Array<MyRouteProp> = [
@@ -99,5 +103,7 @@ const routes: Array<MyRouteProp> = [
     element: <CampaignAdvertiserManager />,
   },
   {path: ROUTE.PAGE_SEARCH, element: <PageSearch />},
+  {path: ROUTE.PAYMENT, element: <Payment />},
+  {path: ROUTE.PAYMENT_BANK_CREDIT, element: <PaymentBankCredit />},
 ]
 export default routes

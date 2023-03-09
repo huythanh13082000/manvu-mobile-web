@@ -9,6 +9,11 @@ import success from '../asset/icons/success.png'
 import error from '../asset/icons/error.png'
 import bankIcon from '../asset/icons/bank_icon.png'
 import credit from '../asset/icons/credit_icon.png'
+import {PackageType} from '../types/package.type'
+import freeIcon from '../asset/images/free_icon.png'
+import starterIcon from '../asset/images/starter_icon.png'
+import proIcon from '../asset/images/pro_icon.png'
+import globalIcon from '../asset/images/global_icon.png'
 
 export const HTTP_STATUS = {
   OK: 200,
@@ -190,3 +195,62 @@ export const PAYMENT_HISTORY_ICON: any = {
   '1': credit,
 }
 export const KAKAO_TALK_TOKEN = '923068423948123ce72b86bdbb111550'
+
+export const PACKAGE_RIVU: PackageType[] = [
+  {
+    recomend: '무료로 시작하는',
+    name: 'Free',
+    point: '0원',
+    description: [
+      '캠페인 1개 등록가능',
+      '인플루언서 2명 이하 선정가능',
+      '기업회원 관리페이지 제공',
+      '모집 블로그/인스타그램/페이스북 등록가능',
+    ],
+    button: {text: '무료시작', color: '#4A4F55'},
+    img: freeIcon,
+  },
+  {
+    recomend: '작은 비즈니스는',
+    name: 'Starter',
+    point: '40,000 원/월',
+    description: [
+      '브랜드 2개 캠페인 등록가능',
+      '인플루언서 5명 이하 선정가능',
+      '기업회원 관리페이지 제공',
+      '모집 블로그/인스타그램/페이스북/유튜브 등록가능',
+    ],
+    button: {text: '스타트로 시작', color: '#0078FF'},
+    img: starterIcon,
+  },
+  {
+    recomend: '전문 비즈니스는',
+    name: 'Pro',
+    point: '120,000 원/월',
+    description: [
+      '브랜드 3개 캠페인 등록가능',
+      '인플루언서 10명 이하 선정가능',
+      '기업회원 관리페이지 제공',
+      '모집 블로그/인스타그램/페이스북/유튜브/트위터/틱톡 등록가능',
+      '전담 CX매니저 배정',
+    ],
+    suggest: '전담 CX매니저가 추천하는 상품',
+    button: {text: '프로로 시작', color: '#FF006B'},
+    img: proIcon,
+  },
+  {
+    recomend: '프로 비즈니스는',
+    name: 'Global',
+    point: '180,000 원/월',
+    suggest: '리뷰팡팡을 무제한 이용할 수 있는 방법',
+    description: [
+      '캠페인 브랜드 무제한 등록가능',
+      '인플루언서 무제한 선정가능',
+      '기업회원 관리페이지 매니저 대행 관리',
+      '모집 블로그/인스타그램/페이스북/유튜브/트위터/틱톡 등록가능',
+      '전담 CX매니저 배정',
+    ],
+    button: {text: '글로벌로 시작', color: '#7C2BFF'},
+    img: globalIcon,
+  },
+]
