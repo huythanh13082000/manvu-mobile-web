@@ -1,3 +1,4 @@
+import CampaignAdvertiserManager from '../pages/campaign_advertiser_manager'
 import CampaignDetail from '../pages/campaign_detail'
 import CampaignFavourite from '../pages/campaign_favourite'
 import ChatPage from '../pages/chat'
@@ -8,6 +9,7 @@ import Home from '../pages/home'
 import Login from '../pages/Login'
 import MessageDetail from '../pages/message_detail'
 import MyCampaign from '../pages/my_campaign'
+import MyCampaignAdvertiser from '../pages/my_campaign_advertiser'
 import Notification from '../pages/notification'
 import PaymentHistory from '../pages/payment_history'
 import PointManagement from '../pages/point_management'
@@ -44,11 +46,14 @@ export const ROUTE = {
   NOTIFICATION: '/notification',
   POINT_MANAGEMENT: '/point_management',
   MY_CAMPAIGN: '/my_campaign',
+  MY_CAMPAIGN_ADVERTISER: '/my_campaign_advertiser',
   CHAT: '/chat',
   MESSAGE_DETAIL: '/message_detail/:id',
+  UPDATE_CAMPAIGN: '/update_campaign/:id',
   CREATE_CAMPAIGN: '/create_campaign',
   PAYMENT_HISTORY: '/payment_history',
   FORGOT_PASSWORD: '/forgot_password',
+  CAMPAIGN_ADVERTISER_MANAGER: '/campaign_advertiser_manager/:id',
 }
 
 const routes: Array<MyRouteProp> = [
@@ -80,10 +85,16 @@ const routes: Array<MyRouteProp> = [
   {path: ROUTE.NOTIFICATION, element: <Notification />},
   {path: ROUTE.POINT_MANAGEMENT, element: <PointManagement />},
   {path: ROUTE.MY_CAMPAIGN, element: <MyCampaign />},
+  {path: ROUTE.MY_CAMPAIGN_ADVERTISER, element: <MyCampaignAdvertiser />},
   {path: ROUTE.CHAT, element: <ChatPage />},
   {path: ROUTE.MESSAGE_DETAIL, element: <MessageDetail />},
   {path: ROUTE.CREATE_CAMPAIGN, element: <CreateCampaignPage />},
+  {path: ROUTE.UPDATE_CAMPAIGN, element: <CreateCampaignPage />},
   {path: ROUTE.PAYMENT_HISTORY, element: <PaymentHistory />},
   {path: ROUTE.FORGOT_PASSWORD, element: <ForgotPassword />},
+  {
+    path: ROUTE.CAMPAIGN_ADVERTISER_MANAGER,
+    element: <CampaignAdvertiserManager />,
+  },
 ]
 export default routes

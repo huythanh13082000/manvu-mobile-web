@@ -4,6 +4,7 @@ import campaignSaga from '../feature/campaign/campaign.saga'
 import campaignDetailSaga from '../feature/campaign_detail/campaignDetail.saga'
 import campaignFavirateSaga from '../feature/campaign_favourate/campaignFavirate.saga'
 import cardSaga from '../feature/card/card.saga'
+import cardChannelSaga from '../feature/card_channel/cardChannel.saga'
 import createCampaignSaga from '../feature/create_campaign/createCampaign.Saga'
 import faqSaga from '../feature/faq/faq.saga'
 import myCampaignSaga from '../feature/my_campaign/myCampaign.saga'
@@ -47,5 +48,6 @@ export default function* rootSaga() {
     RequestSaga(),
     registerAdvertiserSaga(),
     paymentSaga(),
+    cardChannelSaga(),
   ])
 }

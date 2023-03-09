@@ -13,6 +13,7 @@ import {campaignReducer} from '../feature/campaign/campaign.slice'
 import {campaignDetailReducer} from '../feature/campaign_detail/campaignDetail.slice'
 import {campaignFavirateReducer} from '../feature/campaign_favourate/campaignFavirate.slice'
 import {cardReducer} from '../feature/card/card.slice'
+import {cardChannelReducer} from '../feature/card_channel/cardChannel.slice'
 import {createCampaignReducer} from '../feature/create_campaign/createCampaign.slice'
 import {faqReducer} from '../feature/faq/fag.slice'
 import {myCampaignReducer} from '../feature/my_campaign/myCampaign.slice'
@@ -61,6 +62,7 @@ const rootReducer = combineReducers({
   requestReducer,
   registerAdvertiserReducer,
   paymentReducer,
+  cardChannelReducer,
 })
 
 const sagaMiddleware = createSagaMiddleware()

@@ -1,17 +1,17 @@
-import { PayloadAction } from "@reduxjs/toolkit";
-import { call, put, takeEvery } from "redux-saga/effects";
-import { advertiserCampaignApi } from "../../apis/advertiserCampaignApi";
-import { hashTagApi } from "../../apis/hashTagApi";
-import { placeApi } from "../../apis/placeApi";
-import { tabApi } from "../../apis/tabApi";
-import { uploadImagesThumbsApi } from "../../apis/uploadImagesThumbsApi";
-import { snackBarActions } from "../../components/snackbar/snackbarSlice";
-import { Categories } from "../../types/categories.type";
-import { CreateCampaign } from "../../types/createCampaign.type";
-import { Place } from "../../types/place.type";
-import { myCampaignAdvertiserActions } from "../my_campaign_advertiser/myCampaignAdvertiser.slice";
-import { createCampaignActions } from "./createCampaign.slice";
-
+import {PayloadAction} from '@reduxjs/toolkit'
+import {NavigateFunction} from 'react-router-dom'
+import {call, put, takeEvery} from 'redux-saga/effects'
+import {advertiserCampaignApi} from '../../apis/advertiserCampaignApi'
+import {hashTagApi} from '../../apis/hashTagApi'
+import {placeApi} from '../../apis/placeApi'
+import {tabApi} from '../../apis/tabApi'
+import {uploadImagesThumbsApi} from '../../apis/uploadImagesThumbsApi'
+import {snackBarActions} from '../../components/snackbar/snackbarSlice'
+import {Categories} from '../../types/categories.type'
+import {CreateCampaign} from '../../types/createCampaign.type'
+import {Place} from '../../types/place.type'
+import {myCampaignAdvertiserActions} from '../my_campaign_advertiser/myCampaignAdvertiser.slice'
+import {createCampaignActions} from './createCampaign.slice'
 
 function* createCampaign(action: PayloadAction<CreateCampaign>) {
   try {
@@ -52,27 +52,29 @@ function* createCampaign(action: PayloadAction<CreateCampaign>) {
   }
 }
 
-function* updateCampaign(action: PayloadAction<CreateCampaign>) {
+function* updateCampaign(
+  action: PayloadAction<{data: CreateCampaign; history: NavigateFunction}>
+) {
   try {
     let fileUpload: {images?: []; thumbs?: []} = {}
     if (
-      action.payload.formData &&
-      !action.payload.formData.entries().next().done
+      action.payload.data.formData &&
+      !action.payload.data.formData.entries().next().done
     ) {
       fileUpload = yield call(
         uploadImagesThumbsApi.uploadImagesThumbs,
-        action.payload.formData
+        action.payload.data.formData
       )
     }
-    if (action.payload.images1 && fileUpload.images)
+    if (action.payload.data.images1 && fileUpload.images)
       yield call(advertiserCampaignApi.updateCampaign, {
-        ...action.payload,
-        images: [...action.payload.images1, ...fileUpload.images],
+        ...action.payload.data,
+        images: [...action.payload.data.images1, ...fileUpload.images],
       })
-    else if (action.payload.images1) {
+    else if (action.payload.data.images1) {
       yield call(advertiserCampaignApi.updateCampaign, {
-        ...action.payload,
-        images: [...action.payload.images1],
+        ...action.payload.data,
+        images: [...action.payload.data.images1],
       })
     }
     yield put(createCampaignActions.updateCampaignSuccess())
@@ -82,6 +84,7 @@ function* updateCampaign(action: PayloadAction<CreateCampaign>) {
         type: 'success',
       })
     )
+    yield action.payload.history(-1)
     yield put(
       myCampaignAdvertiserActions.getAdvertiserCampaignMine({
         type: 'all',

@@ -1,8 +1,8 @@
-import { createSlice, PayloadAction } from '@reduxjs/toolkit'
-import { RootState } from '../../app/store'
-import { CreateCampaign } from '../../types/createCampaign.type';
-import { Place } from '../../types/place.type';
-
+import {createSlice, PayloadAction} from '@reduxjs/toolkit'
+import {NavigateFunction} from 'react-router-dom'
+import {RootState} from '../../app/store'
+import {CreateCampaign} from '../../types/createCampaign.type'
+import {Place} from '../../types/place.type'
 
 interface createCampaignState extends CreateCampaign {
   loadding?: boolean
@@ -29,7 +29,10 @@ const createCampaignSlice = createSlice({
     createCampaignFail(state) {
       state.loadding = false
     },
-    updateCampaign(state, action: PayloadAction<CreateCampaign>) {
+    updateCampaign(
+      state,
+      action: PayloadAction<{data: CreateCampaign; history: NavigateFunction}>
+    ) {
       state.loadding = true
     },
     updateCampaignSuccess(state) {
@@ -93,6 +96,7 @@ export const selectListHashTag = (state: RootState) =>
   state.createCampaignReducer.listHashTag
 export const SelectListTabId = (state: RootState) =>
   state.createCampaignReducer.listTabId
-export const selectListPlace = (state:RootState)=> state.createCampaignReducer.listPlace
+export const selectListPlace = (state: RootState) =>
+  state.createCampaignReducer.listPlace
 
 export const createCampaignReducer = createCampaignSlice.reducer

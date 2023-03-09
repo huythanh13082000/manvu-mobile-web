@@ -137,6 +137,15 @@ export const TEXT_COLOR_WH: any = [
     colorPoint: '#B6291B',
   },
 ]
+export const MY_CAMPAIGN_ADVERTISER_STATUS = {}
+export const MEDIA_TEXT: any = {
+  blog_naver: '네이버',
+  facebook: '페이스북',
+  tiktok: 'Tik의 톡',
+  youtube: '유튜브',
+  instagram: '인스 타 그램',
+  twitter: '트위터',
+}
 export const COLOR_QUESTION_TYPE: any = {
   ADVERTISING_INQUIRY: '#E0457F',
   CHANGE_DESIGN: '#549C1F',

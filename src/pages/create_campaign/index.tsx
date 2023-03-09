@@ -37,6 +37,7 @@ import {
   SelectListTabId,
 } from '../../feature/create_campaign/createCampaign.slice'
 import {selectUser} from '../../feature/user/user.slice'
+import {ROUTE} from '../../router/routes'
 import {CreateCampaign} from '../../types/createCampaign.type'
 import {numberWithCommas} from '../../utils'
 import './CreateCampaign.css'
@@ -219,24 +220,14 @@ const CreateCampaignPage = () => {
       else
         dispatch(
           createCampaignActions.updateCampaign({
-            ...campaign,
-            _id: Number(id),
-            images1: images1,
+            data: {
+              ...campaign,
+              _id: Number(id),
+              images1: images1,
+            },
+            history: navigate,
           })
         )
-      if (
-        user.profile?.roles &&
-        user.profile?.roles[0] &&
-        user.profile?.roles[0].name === 'member'
-      ) {
-        navigate('/myCampaign')
-      } else if (
-        user.profile?.roles &&
-        user.profile?.roles[0] &&
-        user.profile?.roles[0].name === 'advertiser'
-      ) {
-        navigate('/mycampaignAdvertiser')
-      }
     } else
       dispatch(
         snackBarActions.setStateSnackBar({
