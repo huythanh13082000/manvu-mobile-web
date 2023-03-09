@@ -85,7 +85,7 @@ const HeaderSearch = () => {
       <div className={classes.header_search_container}>
         <img src={menu} alt='' onClick={routeMenu} />
         <img src={logo} alt='' />
-        <img src={search} alt='' />
+        <img src={search} alt='' onClick={() => navigate(ROUTE.PAGE_SEARCH)} />
       </div>
       <Box sx={{borderBottom: 1, borderColor: 'divider'}}>
         <Tabs

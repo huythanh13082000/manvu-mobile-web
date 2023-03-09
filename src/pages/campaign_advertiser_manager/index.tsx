@@ -83,7 +83,7 @@ const CampaignAdvertiserManager = () => {
                         onChange={handleChangeTabApp}
                         value={valueTabApp}
                         aria-label='Tabs where each tab needs to be selected manually'
-                        style={{justifyContent: 'center'}}
+                        centered
                       >
                         <Tab
                           label={`신청 리뷰어 (${campaignDetail?.members?.length})`}

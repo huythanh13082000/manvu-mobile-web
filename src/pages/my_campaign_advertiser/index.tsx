@@ -109,7 +109,7 @@ const MyCampaignAdvertiser = () => {
         value={value}
         onChange={handleChange}
         aria-label='basic tabs example'
-        variant='scrollable'
+        centered
       >
         <Tab
           label={`전체(${advertiserCampaignMineCount['countTotal']})`}

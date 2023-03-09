@@ -1,5 +1,5 @@
 import {PayloadAction} from '@reduxjs/toolkit'
-import {call, put, takeEvery} from 'redux-saga/effects'
+import {call, put, takeEvery, takeLatest} from 'redux-saga/effects'
 import {advertiserCampaignApi} from '../../apis/advertiserCampaignApi'
 import {campaignApi} from '../../apis/campaignApi'
 import { Campaign } from '../../types/campaign.type'
@@ -96,7 +96,7 @@ export default function* campaignFavirateSaga() {
     homeActions.getListCampaignAdvertiser.type,
     getListCampaignAdvertiser
   )
-  yield takeEvery(homeActions.getListCampaignSearch.type, getListCampaignSearch)
+  yield takeLatest(homeActions.getListCampaignSearch.type, getListCampaignSearch)
   yield takeEvery(homeActions.getListCampaignSort.type, getListCampaignSort)
   yield takeEvery(
     homeActions.getListCampaignAdvertiserSort.type,

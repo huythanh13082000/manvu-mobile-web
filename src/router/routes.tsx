@@ -11,6 +11,7 @@ import MessageDetail from '../pages/message_detail'
 import MyCampaign from '../pages/my_campaign'
 import MyCampaignAdvertiser from '../pages/my_campaign_advertiser'
 import Notification from '../pages/notification'
+import PageSearch from '../pages/page_search'
 import PaymentHistory from '../pages/payment_history'
 import PointManagement from '../pages/point_management'
 import ProductPage from '../pages/product'
@@ -54,6 +55,7 @@ export const ROUTE = {
   PAYMENT_HISTORY: '/payment_history',
   FORGOT_PASSWORD: '/forgot_password',
   CAMPAIGN_ADVERTISER_MANAGER: '/campaign_advertiser_manager/:id',
+  PAGE_SEARCH: '/page_search',
 }
 
 const routes: Array<MyRouteProp> = [
@@ -96,5 +98,6 @@ const routes: Array<MyRouteProp> = [
     path: ROUTE.CAMPAIGN_ADVERTISER_MANAGER,
     element: <CampaignAdvertiserManager />,
   },
+  {path: ROUTE.PAGE_SEARCH, element: <PageSearch />},
 ]
 export default routes

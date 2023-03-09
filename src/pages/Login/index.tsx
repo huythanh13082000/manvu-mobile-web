@@ -290,7 +290,7 @@ const Login = () => {
         <div onClick={() => signInFaceBook()}>
           <CardLoginSns iconUrl={facebook} text='페이스북으로 로그인' />
         </div>
-        <CardLoginSns iconUrl={apple} text='Apple로 로그인' />
+        {/* <CardLoginSns iconUrl={apple} text='Apple로 로그인' /> */}
 
         <span onClick={() => navigate(ROUTE.TERMS_OF_USE)}>회원가입</span>
       </div>

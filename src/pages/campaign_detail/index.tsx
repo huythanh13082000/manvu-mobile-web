@@ -437,7 +437,7 @@ const CampaignDetail = () => {
       {' '}
       {campaignDetail && campaignDetail.id.toString().includes(id || '') && (
         <div className={classes.campaign_detail_container}>
-          <AppBarCustom title='[송파]준준테라피' iconRightUrl={iconShare} />
+          <AppBarCustom title={campaignDetail.name} iconRightUrl={iconShare} />
           <div>
             <img src={FILE_API + campaignDetail?.images[indexImage]} alt='' />
             <span
