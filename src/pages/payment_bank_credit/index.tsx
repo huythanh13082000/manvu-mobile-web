@@ -33,6 +33,7 @@ import noteGreen from '../../asset/icons/note_green.png'
 import './payment.css'
 import PackageRevu from '../../components/package_revu'
 import PackageRevuNew from '../../components/package_revu_new'
+import {numberWithCommas} from '../../utils'
 
 const useStyles = makeStyles({
   payment_bank_credit_container: {
@@ -351,7 +352,8 @@ const PaymentBankCredit = () => {
         </div>
 
         <p>
-          <span>받을 포인트</span> <span>1000 P</span>
+          <span>받을 포인트</span>{' '}
+          <span>{numberWithCommas(Number(price))} P</span>
         </p>
         <div>
           <p>결제 수단</p>
