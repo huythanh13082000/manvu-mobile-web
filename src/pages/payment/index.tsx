@@ -2,7 +2,7 @@ import {Grid} from '@mui/material'
 import {makeStyles} from '@mui/styles'
 import React from 'react'
 import {useNavigate} from 'react-router-dom'
-import {useAppDispatch} from '../../app/hooks'
+import {useAppDispatch, useAppSelector} from '../../app/hooks'
 import AppBarCustom from '../../components/appbar'
 import PackageRevu from '../../components/package_revu'
 import {snackBarActions} from '../../components/snackbar/snackbarSlice'
@@ -10,6 +10,7 @@ import {PACKAGE_RIVU} from '../../constants'
 import {paymentAction} from '../../feature/payment/payment.slice'
 import infoIcon from '../../asset/icons/info_blue.png'
 import {ROUTE} from '../../router/routes'
+import {selectUser} from '../../feature/user/user.slice'
 
 const useStyles = makeStyles({
   payment_container: {
@@ -72,6 +73,7 @@ const Payment = () => {
   const classes = useStyles()
   const dispatch = useAppDispatch()
   const navigate = useNavigate()
+  const user = useAppSelector(selectUser)
   const [open, setOpen] = React.useState<boolean>(false)
   const [type, setType] = React.useState<string>('0')
   const [price, setPrice] = React.useState<string>('')
@@ -160,6 +162,7 @@ const Payment = () => {
         })
       )
   }
+
   return (
     <div className={classes.payment_container}>
       <AppBarCustom title='리뷰팡팡 요금' />
@@ -177,7 +180,7 @@ const Payment = () => {
               참여한 체험단들에게 포인트를 줄 수 있습니다.
             </p>
           </div>
-          <span onClick={() => navigate(ROUTE.PAYMENT_BANK_CREDIT)}>
+          <span onClick={() => navigate('/payment_bank_credit/no_package')}>
             포인트 충전하기
           </span>
         </div>
@@ -192,6 +195,7 @@ const Payment = () => {
                 setPackageName(item.name)
                 setPaymentType('buy-package')
                 setData('')
+                navigate(`/payment_bank_credit/${item.name}`)
               }}
             >
               <PackageRevu {...item} />

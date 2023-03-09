@@ -7,12 +7,32 @@ import InputForm from '../../components/input_form'
 import textForm from '../../asset/icons/원.png'
 import bankIcon from '../../asset/icons/bank_icon.png'
 import creditIcon from '../../asset/icons/credit_icon.png'
-import {FormControlLabel, Radio, RadioGroup, TextField} from '@mui/material'
+import {
+  Button,
+  FormControl,
+  FormControlLabel,
+  MenuItem,
+  Radio,
+  RadioGroup,
+  Select,
+  TextField,
+} from '@mui/material'
 import Copy from '../../components/copy'
-import {useAppDispatch} from '../../app/hooks'
-import {useNavigate} from 'react-router-dom'
+import {useAppDispatch, useAppSelector} from '../../app/hooks'
+import {useNavigate, useParams} from 'react-router-dom'
 import {paymentAction} from '../../feature/payment/payment.slice'
 import {snackBarActions} from '../../components/snackbar/snackbarSlice'
+import {selectUser} from '../../feature/user/user.slice'
+import {RecaptchaVerifier, signInWithPhoneNumber} from 'firebase/auth'
+import {auth} from '../../firebaseConfig'
+import {VERIFY_PHONE_NUMBER} from '../../apis/urlConfig'
+import axiosClient from '../../apis/axiosClient'
+import {CARD_TYPE, PACKAGE_RIVU} from '../../constants'
+import noteRed from '../../asset/icons/note_red.png'
+import noteGreen from '../../asset/icons/note_green.png'
+import './payment.css'
+import PackageRevu from '../../components/package_revu'
+import PackageRevuNew from '../../components/package_revu_new'
 
 const useStyles = makeStyles({
   payment_bank_credit_container: {
@@ -29,7 +49,7 @@ const useStyles = makeStyles({
         alignItems: 'center',
         marginTop: '1rem',
         '&>div:nth-of-type(1)': {
-          width: '100%',
+          width: '80%',
           '&>p:nth-of-type(1)': {
             fontWeight: 700,
             fontSize: '14px',
@@ -46,6 +66,19 @@ const useStyles = makeStyles({
             color: '#252B32',
             margin: '6px',
           },
+        },
+        '&>span': {
+          width: '79px',
+          height: '25px',
+          background: '#0078FF',
+          padding: '2px 6px',
+          borderRadius: '4px',
+          fontWeight: 500,
+          fontSize: '10px',
+          color: '#FFFFFF',
+          display: 'flex',
+          alignItems: 'center',
+          justifyContent: 'center',
         },
       },
       '&>p:nth-of-type(1)': {
@@ -67,7 +100,7 @@ const useStyles = makeStyles({
           },
         },
       },
-      '&>div:nth-of-type(2)': {
+      '&>div:nth-of-type(3)': {
         position: 'relative',
         '&>img': {
           position: 'absolute',
@@ -75,7 +108,7 @@ const useStyles = makeStyles({
           right: 9,
         },
       },
-      '&>div:nth-of-type(3)': {
+      '&>div:nth-of-type(4)': {
         fontWeight: 700,
         fontSize: '14px',
       },
@@ -107,12 +140,17 @@ const useStyles = makeStyles({
       marginRight: '8px',
     },
   },
+  p_label: {
+    fontSize: '14px',
+    margin: '8px 0',
+  },
 })
 
 const PaymentBankCredit = () => {
   const classes = useStyles()
   const dispatch = useAppDispatch()
   const navigate = useNavigate()
+  const user = useAppSelector(selectUser)
   const [open, setOpen] = React.useState<boolean>(false)
   const [type, setType] = React.useState<string>('0')
   const [price, setPrice] = React.useState<string>('')
@@ -136,7 +174,7 @@ const PaymentBankCredit = () => {
       if (type === '0') {
         dispatch(
           paymentAction.createPayment(
-            paymentType === 'buy-package'
+            id !== 'no_package'
               ? {
                   type,
                   price:
@@ -167,7 +205,7 @@ const PaymentBankCredit = () => {
       } else {
         dispatch(
           paymentAction.createPayment(
-            paymentType === 'buy-package'
+            id !== 'no_package'
               ? {
                   type,
                   price:
@@ -204,6 +242,55 @@ const PaymentBankCredit = () => {
         })
       )
   }
+  const [accountName, setAccountName] = React.useState<string>('')
+  const [cardNumber, setCardNumber] = React.useState<string>('')
+  const [expirationMonth, setExpirationMonth] = React.useState<string>('')
+  const [expirationYear, setExpirationYear] = React.useState<string>('')
+  const [code, setCode] = React.useState<string>('')
+  const [buttonStatus, setButtonStatus] = React.useState(1)
+  const [confirmOtp, setConfirmOtp] = React.useState<any>()
+  const [checkOtp, setCheckOtp] = React.useState(1)
+  const {id} = useParams()
+
+  const getOtp = async () => {
+    try {
+      if (user.profile?.phoneNumber) {
+        const recaptcha = new RecaptchaVerifier('recaptcha-container', {}, auth)
+        const res = await signInWithPhoneNumber(
+          auth,
+          user.profile.phoneNumber,
+          recaptcha
+        )
+        setButtonStatus(2)
+        setConfirmOtp(res)
+        recaptcha.clear()
+      } else
+        dispatch(
+          snackBarActions.setStateSnackBar({
+            content: 'account has not registered phone number',
+            type: 'error',
+          })
+        )
+    } catch (error) {
+      console.log(error)
+    }
+  }
+  const handleCheckOtp = async () => {
+    try {
+      if (buttonStatus === 2) {
+        const a: any = await confirmOtp.confirm(Number(code))
+        await axiosClient.post(VERIFY_PHONE_NUMBER, {
+          firebaseIdToken: a._tokenResponse.idToken,
+        })
+        setButtonStatus(3)
+        setCheckOtp(3)
+      }
+    } catch (error) {
+      if (buttonStatus === 2) {
+        setCheckOtp(2)
+      }
+    }
+  }
   return (
     <div className={classes.payment_bank_credit_container}>
       <AppBarCustom title='Payment' />
@@ -218,6 +305,11 @@ const PaymentBankCredit = () => {
               참여한 체험단들에게 포인트를 줄 수 있습니다.
             </p>
           </div>
+          {id !== 'no_package' && (
+            <span onClick={() => navigate('/payment_bank_credit/no_package')}>
+              포인트 충전하기
+            </span>
+          )}
         </div>
         <p>
           <span>안내</span>
@@ -226,12 +318,34 @@ const PaymentBankCredit = () => {
             하나카드 /현대카드는 사용불가
           </span>
         </p>
+        {PACKAGE_RIVU.map((item) => {
+          if (item.name === id)
+            return (
+              <div
+                style={{
+                  boxShadow: '0px 0px 6px rgba(0, 0, 0, 0.2)',
+                  borderRadius: '6px',
+                }}
+                onClick={() => {
+                  setPackageName(item.name)
+                  setPaymentType('buy-package')
+                  setData('')
+                }}
+              >
+                <PackageRevuNew {...item} />
+              </div>
+            )
+        })}
+        {id === 'no_package' && <div></div>}
         <div>
           <InputForm
             label='결제 금액'
-            onChange={() => console.log(1)}
             placeholder=''
             type='text'
+            value={price}
+            onChange={(e) => {
+              setPrice(e)
+            }}
           />
           <img src={textForm} alt='' />
         </div>
@@ -245,12 +359,14 @@ const PaymentBankCredit = () => {
             aria-labelledby='demo-radio-buttons-group-label'
             name='radio-buttons-group'
             onChange={handleChange}
+            value={type}
           >
             <FormControlLabel
               style={{
                 border: '0.5px solid #A2A5AA',
                 boxSizing: 'border-box',
                 margin: 0,
+                padding: '0.3rem 0',
               }}
               value='0'
               control={<Radio />}
@@ -267,6 +383,7 @@ const PaymentBankCredit = () => {
                 borderTop: 0,
                 boxSizing: 'border-box',
                 margin: 0,
+                padding: '0.3rem 0',
               }}
               value='1'
               control={<Radio />}
@@ -359,10 +476,223 @@ const PaymentBankCredit = () => {
                 id='name_send'
                 placeholder='입금자명 '
                 style={{marginTop: '8px'}}
+                value={depositorName}
+                onChange={(e) => {
+                  setDepositorName(e.target.value)
+                }}
               />
             </div>
           </div>
         )}
+        {type === '1' && (
+          <div style={{width: '100%'}}>
+            <div>
+              <p className={classes.p_label}>카드 번호</p>
+              <TextField
+                value={cardNumber}
+                size='small'
+                style={{width: '100%'}}
+                placeholder='카드 번호'
+                onChange={(e) => setCardNumber(e.target.value)}
+                error={cardNumber ? false : true}
+              />
+            </div>
+
+            <div>
+              <p className={classes.p_label}>만기 월 / 만료 년</p>
+              <div
+                style={{
+                  width: '100%',
+                  display: 'flex',
+                  justifyContent: 'space-between',
+                }}
+              >
+                <TextField
+                  type={'number'}
+                  value={expirationMonth}
+                  size='small'
+                  style={{width: '49%'}}
+                  placeholder='월'
+                  onChange={(e) => {
+                    if (
+                      e.target.value.length <= 2 &&
+                      Number(e.target.value) >= 0 &&
+                      Number(e.target.value) <= 12
+                    ) {
+                      setExpirationMonth(e.target.value)
+                    }
+                  }}
+                  error={expirationMonth ? false : true}
+                />
+                <TextField
+                  type={'number'}
+                  value={expirationYear}
+                  size='small'
+                  style={{width: '49%'}}
+                  placeholder='년도'
+                  error={expirationYear ? false : true}
+                  onChange={(e) => {
+                    if (e.target.value.length <= 2) {
+                      setExpirationYear(e.target.value)
+                    }
+                  }}
+                />
+              </div>
+            </div>
+
+            <div>
+              <p className={classes.p_label}>
+                {buttonStatus === 1
+                  ? '할부선택'
+                  : buttonStatus === 2
+                  ? '확인'
+                  : '완료'}
+              </p>
+              <div
+                style={{
+                  width: '49%',
+                  display: 'flex',
+                  alignItems: 'center',
+                  flexWrap: 'wrap',
+                }}
+              >
+                <FormControl fullWidth size='small' style={{width: '100%'}}>
+                  <Select
+                    value={type}
+                    onChange={(e) => {
+                      setType(e.target.value)
+                    }}
+                    error={type ? false : true}
+                  >
+                    {CARD_TYPE.map((item) => {
+                      return <MenuItem value={item}>{item}</MenuItem>
+                    })}
+                  </Select>
+                </FormControl>
+              </div>
+            </div>
+            <div>
+              <p className={classes.p_label} style={{fontWeight: 700}}>
+                전화번호 인증 *
+              </p>
+              <p className={classes.p_label}>
+                회원가입시 가입한 휴대전화 번호로 인증번호가 전송됩니다.
+                인증해주세요.
+              </p>
+              <div style={{display: 'flex', justifyContent: 'space-between'}}>
+                <div style={{width: '78%', position: 'relative'}}>
+                  <TextField
+                    value={code}
+                    size='small'
+                    style={{width: '100%'}}
+                    placeholder='인증번호 입력바랍니다.'
+                    onChange={(e) => setCode(e.target.value)}
+                    error={!code ? true : false}
+                    disabled={checkOtp === 3 ? true : false}
+                  />
+                  <span
+                    className='payment-spanDialog'
+                    style={{
+                      color: '#0067FF',
+                      borderBottom: '1px solid #0067FF',
+                      fontWeight: 700,
+                      cursor: 'pointer',
+                      position: 'absolute',
+                      top: '0.6rem',
+                      right: '1rem',
+                      width: '39px',
+                      fontSize: '14px',
+                    }}
+                    onClick={() => {
+                      checkOtp !== 3 && getOtp()
+                    }}
+                  >
+                    보내기
+                  </span>
+                </div>
+                <button
+                  className={`payment-button-check-phoneNumber ${
+                    checkOtp === 1
+                      ? 'accuracy'
+                      : checkOtp === 2
+                      ? 'error'
+                      : 'confirm'
+                  }`}
+                  onClick={() => {
+                    handleCheckOtp()
+                  }}
+                  style={{height: '48px', width: '20%'}}
+                  disabled={buttonStatus === 3 ? true : false}
+                >
+                  인증전송
+                </button>
+              </div>
+            </div>
+            <p
+              className='payment-spanDialog'
+              style={{textAlign: 'start', width: '100%'}}
+            >
+              {checkOtp === 2 ? (
+                <span
+                  style={{color: '#F52C1D', display: 'flex', fontSize: '14px'}}
+                >
+                  <img src={noteRed} alt='' style={{width: '20px'}} />
+                  &nbsp;잘못된 인증 코드를 입력했습니다.
+                </span>
+              ) : checkOtp === 3 ? (
+                <span
+                  style={{color: '#11CE90', display: 'flex', fontSize: '14px'}}
+                >
+                  <img src={noteGreen} style={{width: '20px'}} alt='' />
+                  &nbsp;성공적인 인증.
+                </span>
+              ) : (
+                ''
+              )}
+            </p>
+            <div style={{width: '100%'}} id='recaptcha-container'></div>
+          </div>
+        )}
+        <div>
+          <p className='payment-title' style={{margin: '1rem 0'}}>
+            결제 동의
+          </p>
+          <p style={{borderBottom: '1px solid #A2A5AA', margin: '0'}}></p>
+          <p style={{marginTop: '0', padding: '0rem 0'}}>
+            <div style={{display: 'flex', padding: '1rem 0'}}>
+              <input
+                type='checkbox'
+                id='vehicle1'
+                name='vehicle1'
+                value='Bike'
+                checked={check}
+                style={{transform: 'scale(1.5)'}}
+                onClick={() => setCheck(!check)}
+              />
+              <span
+                className='payment-span'
+                style={{marginLeft: '0.5rem', fontWeight: '600'}}
+                onClick={() => setCheck(!check)}
+              >
+                키인승인 결제 정보에 동의합니다.
+              </span>
+            </div>
+            <span className='payment-span' style={{padding: '1rem 0'}}>
+              환불을 요청할 경우, 환불 수수료10% 제외된 금액으로 환불처리됩니다.
+            </span>
+            <p style={{margin: '0.5rem 0'}}></p>
+            <span className='payment-span' style={{padding: '1rem 0'}}>
+              (프로젝트 진행 이력이 없는 경우 환불 수수료는 발생되지 않습니다.)
+            </span>
+          </p>
+        </div>
+        <Button
+          variant='contained'
+          style={{width: '100%'}}
+          onClick={handleSubmit}
+        >
+          완료
+        </Button>
       </div>
     </div>
   )

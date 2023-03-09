@@ -35,7 +35,7 @@ const PackageRevu = (props: PackageType) => {
           }}
           onClick={() => setStatus(!status)}
         >
-          Detail <KeyboardArrowDownIcon />
+          Detail {!status ? <KeyboardArrowDownIcon /> : <KeyboardArrowUpIcon />}
         </span>
       </p>
 

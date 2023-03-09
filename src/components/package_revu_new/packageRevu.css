@@ -1,0 +1,93 @@
+.packageRevu-container {
+  padding: 1rem;
+  background: #ffffff;
+  border-radius: 6px;
+  margin-top: 1rem;
+}
+.packageRevu-recomend {
+  font-family: 'Noto Sans KR';
+  font-style: normal;
+  font-weight: 400;
+  font-size: 14px;
+  line-height: 21px;
+  /* identical to box height, or 150% */
+
+  text-align: center;
+
+  /* Neutral/G200 */
+
+  color: #4a4f55;
+}
+.packageRevu-name {
+  font-family: 'Qatar2022';
+  font-style: normal;
+  font-weight: 500;
+  font-size: 28px;
+  color: #4a4f55;
+  margin: 10px 0;
+}
+.packageRevu-point {
+  font-family: 'Noto Sans KR';
+  font-style: normal;
+  font-weight: 500;
+  font-size: 20px;
+  line-height: 21px;
+  /* identical to box height, or 105% */
+
+  /* Neutral/G500 */
+
+  color: #171a1f;
+  margin: 0;
+  padding-bottom: 1rem;
+  border-bottom: 1px solid #a2a5aa;
+  display: flex;
+  justify-content: space-between;
+}
+.packageRevu-description {
+  font-family: 'Noto Sans KR';
+  font-style: normal;
+  font-weight: 400;
+  font-size: 14px;
+  line-height: 21px;
+  /* identical to box height, or 150% */
+  display: block;
+  /* Neutral/G300 */
+
+  color: #252b32;
+}
+.packageRevu-button {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+  padding: 4px 12px;
+  gap: 10px;
+
+  width: 100%;
+  height: 32px;
+
+  /* stroke */
+
+  border: 0.5px solid #a2a5aa;
+  border-radius: 4px;
+  cursor: pointer;
+}
+.packageRevu-suggest {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  padding: 2px 20px;
+  gap: 10px;
+
+  position: absolute;
+  height: 29px;
+  left: 1rem;
+  top: calc(-3% - 29px / 2 - 5.5px);
+
+  background: #fd584e;
+  border-radius: 100px;
+  color: white;
+  font-size: 12px;
+}
+

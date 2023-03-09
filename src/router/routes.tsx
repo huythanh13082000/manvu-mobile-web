@@ -59,7 +59,7 @@ export const ROUTE = {
   CAMPAIGN_ADVERTISER_MANAGER: '/campaign_advertiser_manager/:id',
   PAGE_SEARCH: '/page_search',
   PAYMENT: '/payment',
-  PAYMENT_BANK_CREDIT: '/payment_bank_credit',
+  PAYMENT_BANK_CREDIT: '/payment_bank_credit/:id',
 }
 
 const routes: Array<MyRouteProp> = [
