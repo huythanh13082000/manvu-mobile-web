@@ -187,6 +187,22 @@ const ServiceCenter = () => {
     navigate(ROUTE.LOGIN)
     window.location.reload()
   }
+  const navigateSwitch = (index: number) => {
+    switch (index) {
+      case 0:
+        return navigate(`${ROUTE.MY_CAMPAIGN}/pending`)
+      case 1:
+        return navigate(`${ROUTE.MY_CAMPAIGN}/accepted`)
+      case 2:
+        return navigate(`${ROUTE.MY_CAMPAIGN}/requesting_update`)
+      case 3:
+        return navigate(`${ROUTE.MY_CAMPAIGN}/posted`)
+      case 4:
+        return navigate(`${ROUTE.MY_CAMPAIGN}/ended`)
+      default:
+        break
+    }
+  }
   return (
     <div className={classes.service_center_container}>
       <AppBarCustom
@@ -303,7 +319,7 @@ const ServiceCenter = () => {
         <div>
           {memberCampaignMineCount &&
             Object.keys(memberCampaignMineCount).map((key, index) => (
-              <div>
+              <div onClick={() => navigateSwitch(index)}>
                 <img src={group} alt='' />
                 <p>{memberCampaignMineCount[`${key}`]}</p>
                 <div>{renderText(index)}</div>

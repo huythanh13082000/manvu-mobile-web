@@ -3,7 +3,8 @@ import {call, put, takeEvery} from 'redux-saga/effects'
 import {campaignCategoriesApi} from '../../apis/campaignCategoriesApi'
 import {campaignDetailApi} from '../../apis/campaignDetailApi'
 import {joinRequestApi} from '../../apis/joinRequestApi'
-import { Campaign } from '../../types/campaign.type'
+import {Campaign} from '../../types/campaign.type'
+import {myCampaignActions} from '../my_campaign/myCampaign.slice'
 import {campaignDetailAction} from './campaignDetail.slice'
 
 function* getCampaignDetail(action: PayloadAction<number>) {
@@ -23,6 +24,7 @@ function* createRequest(action: PayloadAction<number>) {
     yield call(joinRequestApi.createRequest, action.payload)
     yield put(campaignDetailAction.createRequestSuccess())
     yield put(campaignDetailAction.getCampaignDetail(action.payload))
+    yield put(myCampaignActions.getMemberCampaignMineCount())
   } catch (error) {
     yield put(campaignDetailAction.createRequestFail())
   }
@@ -63,6 +65,7 @@ function* deleteRequest(action: PayloadAction<number>) {
     yield call(joinRequestApi.deleteRequest, action.payload)
     yield put(campaignDetailAction.deleteRequestSuccess())
     yield put(campaignDetailAction.getCampaignDetail(action.payload))
+    yield put(myCampaignActions.getMemberCampaignMineCount())
   } catch (error) {
     yield put(campaignDetailAction.deleteRequestFail())
   }
@@ -75,5 +78,8 @@ export default function* campaignDetailSaga() {
   )
   yield takeEvery(campaignDetailAction.createRequest.type, createRequest)
   yield takeEvery(campaignDetailAction.deleteRequest.type, deleteRequest)
-  yield takeEvery(campaignDetailAction.getlistCampaignRelated.type, getlistCampaignRelated)
+  yield takeEvery(
+    campaignDetailAction.getlistCampaignRelated.type,
+    getlistCampaignRelated
+  )
 }

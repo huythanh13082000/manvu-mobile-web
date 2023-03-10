@@ -7,29 +7,25 @@ import {
   MenuItem,
   Select,
   Tab,
-  Tabs,
+  Tabs
 } from '@mui/material'
-import {makeStyles} from '@mui/styles'
-import React, {useState, useEffect} from 'react'
-import {useNavigate} from 'react-router-dom'
-import {joinRequestApi} from '../../apis/joinRequestApi'
-import {useAppDispatch, useAppSelector} from '../../app/hooks'
+import { makeStyles } from '@mui/styles'
+import React, { useEffect, useState } from 'react'
+import { useNavigate, useParams } from 'react-router-dom'
+import { useAppDispatch, useAppSelector } from '../../app/hooks'
+import buttonGreen from '../../asset/icons/button_green.png'
+import buttonSend from '../../asset/icons/button_send.png'
+import buttonViolet from '../../asset/icons/button_violet.png'
+import noteRed from '../../asset/icons/note_red.png'
 import AppBarCustom from '../../components/appbar'
 import CardBase from '../../components/card_base'
-import {snackBarActions} from '../../components/snackbar/snackbarSlice'
-import {selectListHashTag} from '../../feature/create_campaign/createCampaign.slice'
 import {
   myCampaignActions,
   selectMemberCampaignMine,
-  selectMemberCampaignMineCount,
+  selectMemberCampaignMineCount
 } from '../../feature/my_campaign/myCampaign.slice'
-import {selectUser} from '../../feature/user/user.slice'
-import {Campaign} from '../../types/campaign.type'
-import buttonSend from '../../asset/icons/button_send.png'
+import { Campaign } from '../../types/campaign.type'
 import CustomizedDialogs from './dialog'
-import noteRed from '../../asset/icons/note_red.png'
-import buttonGreen from '../../asset/icons/button_green.png'
-import buttonViolet from '../../asset/icons/button_violet.png'
 
 const useStyles = makeStyles({
   my_campaign_container: {
@@ -51,26 +47,36 @@ const MyCampaign = () => {
   const [open, setOpen] = React.useState(false)
   const [listItemSelect, setListItemSelect] = useState<number[]>([])
   const [changeAllStatus, setChangeAllStatus] = useState<boolean>(false)
+  const {id} = useParams()
+  useEffect(() => {
+    id && setType(id)
+    switch (id) {
+      case 'pending':
+        setValue(0)
+        break
+      case 'accepted':
+        setValue(1)
+        break
+      case 'requesting_update':
+        setValue(2)
+        break
+      case 'posted':
+        setValue(3)
+        break
+      case 'ended':
+        setValue(4)
+        break
+      default:
+        break
+    }
+  }, [id])
   const handleClickOpen = () => {
     setOpen(true)
   }
   const handleClose = () => {
     setOpen(false)
   }
-  function createData(
-    name: string,
-    calories: number,
-    fat: number,
-    carbs: number,
-    protein: number
-  ) {
-    return {name, calories, fat, carbs, protein}
-  }
-  const rows = [
-    createData('Frozen yoghurt', 159, 6.0, 24, 4.0),
-    createData('Ice cream sandwich', 237, 9.0, 37, 4.3),
-    createData('Eclair', 262, 16.0, 24, 6.0),
-  ]
+
   const handleChange = (event: React.SyntheticEvent, newValue: number) => {
     setValue(newValue)
     switch (newValue) {
@@ -102,18 +108,6 @@ const MyCampaign = () => {
     selectMemberCampaignMineCount
   )
   const listCampaignSelect = useAppSelector(selectMemberCampaignMine)
-  const listHashTag = useAppSelector(selectListHashTag)
-  const user = useAppSelector(selectUser)
-  const styleTab = {
-    fontFamily: 'Noto Sans KR',
-    fontStyle: 'normal',
-    fontWeight: 700,
-    fontSize: '20px',
-    lineHeight: '30px',
-    color: '#0050C5;',
-    padding: '0.5rem 3rem',
-    borderRight: '0.5px solid #C4C4C4',
-  }
   const options: string[] = [
     '블로그',
     '페이스북',
@@ -158,63 +152,15 @@ const MyCampaign = () => {
           break
       }
     })
-    dispatch(
-      myCampaignActions.getMemberCampaignMine({
-        type: type || 'pending',
-        medias: JSON.stringify(selected1),
-      })
-    )
-  }, [dispatch, selected, type])
-  const menuRef = React.useRef<HTMLInputElement>(null)
-  useEffect(() => {
-    let handler = (event: any) => {
-      if (!menuRef.current?.contains(event.target)) {
-      }
-    }
-  })
-  useEffect(() => {
-    dispatch(myCampaignActions.getMemberCampaignMineCount())
-    dispatch(myCampaignActions.getMemberCampaignMine({type: 'pending'}))
-  }, [dispatch])
-
-  const handleItemSelect = (id: number) => {
-    if (listItemSelect.includes(id)) {
-      setListItemSelect([...listItemSelect.filter((item) => item !== id)])
-    } else {
-      setListItemSelect([...listItemSelect, id])
-    }
-  }
-  const handleChangeAll = () => {
-    if (!changeAllStatus) {
-      listCampaignSelect &&
-        listCampaignSelect.list &&
-        setListItemSelect([...listCampaignSelect?.list?.map((item) => item.id)])
-    } else {
-      setListItemSelect([])
-    }
-    setChangeAllStatus(!changeAllStatus)
-  }
-  const deleteListJoin = async () => {
-    try {
-      await joinRequestApi.deleteRequests(listItemSelect)
+    type &&
       dispatch(
         myCampaignActions.getMemberCampaignMine({
-          type: type || 'pending',
-          medias: JSON.stringify([]),
+          type: type,
+          medias: JSON.stringify(selected1),
         })
       )
-      dispatch(
-        snackBarActions.setStateSnackBar({content: 'success', type: 'success'})
-      )
-      dispatch(myCampaignActions.getMemberCampaignMineCount())
-      setListItemSelect([])
-    } catch (error) {
-      dispatch(
-        snackBarActions.setStateSnackBar({content: 'error', type: 'error'})
-      )
-      setListItemSelect([])
-    }
-  }
+  }, [dispatch, selected, type])
+
   const renderText = (index: number) => {
     switch (index) {
       case 0:
