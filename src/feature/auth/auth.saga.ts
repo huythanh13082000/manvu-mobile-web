@@ -3,6 +3,7 @@ import {NavigateFunction} from 'react-router-dom'
 import {call, put, takeLatest} from 'redux-saga/effects'
 import {authApi} from '../../apis/authApi'
 import {setTokenAxios} from '../../apis/axiosClient'
+import {snackBarActions} from '../../components/snackbar/snackbarSlice'
 import {ROUTE} from '../../router/routes'
 import {User} from '../../types/user.type'
 import {userActions} from '../user/user.slice'
@@ -20,15 +21,28 @@ function* handleLogin(action: PayloadAction<LoginPayload>) {
       action.payload.history(ROUTE.HOME)
   } catch (error: any) {
     if (error.response.data.message === 'Username does not exist!') {
+      // yield put(
+      //   authActions.loginFailed('가입하지 않은 회원입니다. 가입해주세요.')
+      // )
       yield put(
-        authActions.loginFailed('가입하지 않은 회원입니다. 가입해주세요.')
+        snackBarActions.setStateSnackBar({
+          content: '가입하지 않은 회원입니다. 가입해주세요.',
+          type: 'error',
+        })
       )
     } else {
       yield put(
-        authActions.loginFailed(
-          '사용자 이름 또는 비밀번호가 틀릴 수 있으므로 다시 확인하십시오'
-        )
+        snackBarActions.setStateSnackBar({
+          content:
+            '사용자 이름 또는 비밀번호가 틀릴 수 있으므로 다시 확인하십시오',
+          type: 'error',
+        })
       )
+      // yield put(
+      //   authActions.loginFailed(
+      //     '사용자 이름 또는 비밀번호가 틀릴 수 있으므로 다시 확인하십시오'
+      //   )
+      // )
     }
   }
 }

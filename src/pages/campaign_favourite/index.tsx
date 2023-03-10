@@ -10,7 +10,7 @@ import {
   homeState,
   selectListCampaign,
   selectOffset,
-} from '../../feature/campaign_favourate/campaignFavirate.slice'
+} from '../../feature/campaign_favourate/campaignFavirateSlice'
 import {Area} from '../../types/area.type'
 
 const useStyles = makeStyles({
@@ -43,13 +43,12 @@ const CampaignFavourite = () => {
   const [columsfilter, setColumsfilter] = useState<string>('')
   const [tagIds, setTagIds] = useState<number[]>([])
   const [areaIds, setAreaIds] = useState<Area[]>([])
-
   useEffect(() => {
     const newAreaIds = areaIds.map((item) => {
       return item.id
     })
     dispatch(
-      homeActions.getListCampaignSort({
+      homeActions.getListCampaignSortFavourite({
         limit: limit,
         offset: offset,
         medias: JSON.stringify(medias),
@@ -64,7 +63,8 @@ const CampaignFavourite = () => {
   return (
     <div className={classes.campaign_Favourite_container}>
       <AppBarCustom title='찜한 목록' />
-      {/* <Filter
+      <br />
+      <Filter
         medias={medias}
         tagIds={tagIds}
         setMedias={(params) => setMedias(params)}
@@ -76,7 +76,7 @@ const CampaignFavourite = () => {
         }}
         columsfilter={columsfilter}
         setColumsfilter={(params) => setColumsfilter(params)}
-      /> */}
+      />
       <InfiniteScroll
         dataLength={listCampaign.list.length}
         next={() => setOffset(offset + 5)}

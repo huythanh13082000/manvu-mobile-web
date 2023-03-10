@@ -4,11 +4,11 @@ import AppBarCustom from '../../components/appbar'
 import InputBase from '../../components/input'
 import searchIcon from '../../asset/icons/search.png'
 import {useAppDispatch, useAppSelector} from '../../app/hooks'
-import {
-  homeActions,
-  selectListCampaignSearch,
-} from '../../feature/campaign_favourate/campaignFavirate.slice'
 import CardBase from '../../components/card_base'
+import {
+  campaignActions,
+  selectListCampaignSearch,
+} from '../../feature/campaign/campaign.slice'
 
 const useStyles = makeStyles({
   page_search_container: {
@@ -29,8 +29,11 @@ const PageSearch = () => {
   const [keySearch, setKeySearch] = useState('')
   const dispatch = useAppDispatch()
   useEffect(() => {
-    if (keySearch)
-      dispatch(homeActions.getListCampaignSearch({search: keySearch}))
+    dispatch(
+      campaignActions.getListCampaignSearch({
+        search: keySearch,
+      })
+    )
   }, [dispatch, keySearch])
   const listCampaignSearch = useAppSelector(selectListCampaignSearch)
   return (

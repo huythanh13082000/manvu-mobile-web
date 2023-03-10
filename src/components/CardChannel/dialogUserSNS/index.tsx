@@ -17,6 +17,7 @@ import naverIcon from '../../../asset/icons/icon_naver.png'
 import tiktokIcon from '../../../asset/icons/tiktok.png'
 import twitterIcon from '../../../asset/icons/icon_twitter.png'
 import youtubeIcon from '../../../asset/icons/icon_youtube.png'
+import noImage from '../../../asset/images/no_image.png'
 
 const BootstrapDialog = styled(Dialog)(({theme}) => ({
   '& .MuiDialogContent-root': {
@@ -129,23 +130,23 @@ export default function DialogUserSNS(Props: {
               borderBottom='1px solid #E1E1E1'
               padding='0.5rem 0'
             >
-              <Grid item xs={2}>
+              <Grid item xs={3}>
                 <img
                   src={
                     Props.data?.avatar
                       ? `${FILE_API}${Props.data.avatar}`
-                      : '/img/logo.png'
+                      : noImage
                   }
                   style={{
-                    width: '60px',
-                    height: '60px',
+                    width: '50px',
+                    height: '50px',
                     borderRadius: '50%',
                     objectFit: 'cover',
                   }}
                   alt=''
                 />
               </Grid>
-              <Grid item xs={10}>
+              <Grid item xs={9}>
                 <p className='dus_p1'>
                   이름:
                   <span className='dus_span1'>{Props.data?.username}</span>

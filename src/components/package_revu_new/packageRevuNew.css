@@ -1,8 +1,9 @@
-.packageRevu-container {
+.packageRevu-container-new {
   padding: 1rem;
   background: #ffffff;
   border-radius: 6px;
   margin-top: 1rem;
+  position: 'relative'
 }
 .packageRevu-recomend {
   font-family: 'Noto Sans KR';
@@ -72,22 +73,5 @@
   border-radius: 4px;
   cursor: pointer;
 }
-.packageRevu-suggest {
-  display: flex;
-  flex-direction: row;
-  justify-content: center;
-  align-items: center;
-  padding: 2px 20px;
-  gap: 10px;
 
-  position: absolute;
-  height: 29px;
-  left: 1rem;
-  top: calc(-3% - 29px / 2 - 5.5px);
-
-  background: #fd584e;
-  border-radius: 100px;
-  color: white;
-  font-size: 12px;
-}
 

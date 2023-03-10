@@ -1,12 +1,12 @@
 import {useState} from 'react'
 import vIcon from '../../asset/images/v_payment.png'
 import {PackageType} from '../../types/package.type'
-import './packageRevu.css'
+import './packageRevuNew.css'
 
 const PackageRevuNew = (props: PackageType) => {
   const [status, setStatus] = useState(false)
   return (
-    <div className='packageRevu-container'>
+    <div className='packageRevu-container-new'>
       <div
         style={{
           display: 'flex',

@@ -3,6 +3,7 @@ import {useEffect, useState} from 'react'
 import {FILE_API} from '../../apis/urlConfig'
 import {COLOR_QUESTION_TYPE, TEXT_QUESTION_TYPE} from '../../constants'
 import {Question} from '../../types/question.type'
+import noAvatar from '../../asset/images/no_image.png'
 import './CardRequest.css'
 
 const CardRequest = (props: Question) => {
@@ -41,7 +42,7 @@ const CardRequest = (props: Question) => {
           src={
             props.images && props.images.length !== 0
               ? `${FILE_API}${props.images[0]}`
-              : '/img/Sell-Your-Product.png'
+              : noAvatar
           }
           alt='img'
           style={{

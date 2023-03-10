@@ -1,8 +1,8 @@
-import {createSlice, PayloadAction} from '@reduxjs/toolkit'
-import {RootState} from '../../app/store'
-import {Campaign} from '../../types/campaign.type'
-import {ListParams} from '../../types/common.type'
-import {mereListById} from '../../utils'
+import { createSlice, PayloadAction } from '@reduxjs/toolkit'
+import { RootState } from '../../app/store'
+import { Campaign } from '../../types/campaign.type'
+import { ListParams } from '../../types/common.type'
+import { mereListById } from '../../utils'
 
 export interface homeState {
   list: Array<Campaign>
@@ -62,7 +62,7 @@ const campaignFavirateSlice = createSlice({
     getListCampaignAdvertiserFail(state) {
       state.loading = false
     },
-    getListCampaignSort(
+    getListCampaignSortFavourite(
       state,
       action: PayloadAction<{
         sortDir?: string
@@ -81,14 +81,14 @@ const campaignFavirateSlice = createSlice({
       state.loading = false
       state.offset = Number(action.payload.offset)
     },
-    getListCampaignSortSuccess(state, action: PayloadAction<Campaign[]>) {
+    getListCampaignSortFavouriteSuccess(state, action: PayloadAction<Campaign[]>) {
       state.loading = false
       state.listASC = action.payload
       if (state.offset === 0) {
         state.list = action.payload
       } else state.list = mereListById(state.list, action.payload) as any
     },
-    getListCampaignSortFail(state) {
+    getListCampaignSortFavouriteFail(state) {
       state.loading = false
     },
     getListCampaignAdvertiserSort(
@@ -119,16 +119,12 @@ const campaignFavirateSlice = createSlice({
 
 export const homeActions = campaignFavirateSlice.actions
 
-export const selectListCampaign = (state: RootState) =>
-  state.campaignFavirateReducer
+export const selectListCampaign = (state: RootState) => state.campaignFavirateReducer
 export const selectListCampaignSearch = (state: RootState) =>
   state.campaignFavirateReducer.listSearch
-export const selectListTopCampaign = (state: RootState) =>
-  state.campaignFavirateReducer.listASC
+export const selectListTopCampaign = (state: RootState) => state.campaignFavirateReducer.listASC
 
-export const selectTotal = (state: RootState) =>
-  state.campaignFavirateReducer.total
-export const selectOffset = (state: RootState) =>
-  state.campaignFavirateReducer.offset
+export const selectTotal = (state: RootState) => state.campaignFavirateReducer.total
+export const selectOffset = (state: RootState) => state.campaignFavirateReducer.offset
 
 export const campaignFavirateReducer = campaignFavirateSlice.reducer

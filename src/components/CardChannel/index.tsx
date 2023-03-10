@@ -65,7 +65,7 @@ const CardChannel = (props: {
             width: '50px',
             height: '50px',
             borderRadius: '50%',
-            marginRight: '1rem',
+            marginRight: '6px',
             objectFit: 'cover',
           }}
         />
@@ -73,10 +73,9 @@ const CardChannel = (props: {
           <p className='ccn-p1'>
             {props.data?.user && props.data?.user.username}
           </p>
-
           <p className='ccn-p2'></p>
           <p className='ccn-p3'>
-            {moment(props.data?.createdAt).format('hh:mm a DD/MM/YYYY')}
+            {moment(props.data?.createdAt).format('YYYY/MM/DD hh:mm')}
           </p>
         </Grid>
       </Grid>
@@ -99,9 +98,8 @@ const CardChannel = (props: {
                     backgroundColor: 'white',
                     color: '#000000',
                     border: '1px solid #000000',
-                    width: '140px',
+                    width: '132px',
                     height: '32px',
-                    margin: '0 6px',
                     fontFamily: 'Noto Sans KR',
                     fontStyle: 'normal',
                     fontSize: '14px',
@@ -129,8 +127,7 @@ const CardChannel = (props: {
                       backgroundColor: 'white',
                       color: '#000000',
                       border: '1px solid #000000',
-                      width: '140px',
-                      margin: '0 6px',
+                      width: '132px',
                       fontSize: '14px',
                     }}
                     target='newTab'
@@ -154,15 +151,12 @@ const CardChannel = (props: {
                 container
                 bgcolor={'#D1D1D1'}
                 justifyContent='center'
-                width='140px'
+                width='132px'
                 height={'32px'}
                 alignItems='center'
                 borderRadius={'5px'}
-                style={{cursor: 'pointer', margin: '0 6px', marginTop: '6px'}}
+                style={{cursor: 'pointer', margin: '6px 0', marginTop: '6px'}}
               >
-                <Grid>
-                  <img src='/img/note.png' alt='' />
-                </Grid>
                 <Grid>포스팅 완료</Grid>
               </Grid>
             ) : null}
@@ -173,7 +167,7 @@ const CardChannel = (props: {
                 style={{
                   backgroundColor: '#C5C5C5',
                   color: '#FFFFFF',
-                  width: '140px',
+                  width: '132px',
                   height: '32px',
                   justifyContent: 'center',
                   display: 'flex',
@@ -181,7 +175,6 @@ const CardChannel = (props: {
                   borderRadius: '5px',
                   cursor: 'pointer',
                   fontSize: '14px',
-                  margin: '0 6px',
                 }}
               >
                 <img src='/img/pen.png' alt='' />
@@ -192,54 +185,61 @@ const CardChannel = (props: {
             props.data.status === 1 &&
             props.data.postId &&
             props.data.post?.status === 0 ? (
-              <Grid container item xs={8} padding='0 2px' marginTop='6px'>
-                <Grid item xs={6}>
-                  <Button
-                    variant='contained'
-                    className='ccn-b-edit'
-                    style={{
-                      margin: '0 6px',
-                      height: '32px',
-                      width: '70px',
-                      fontWeight: 400,
-                      fontSize: '14px',
-                      padding: 0,
-                      textAlign: 'center',
-                    }}
-                    onClick={() => setOpenDialogReview(true)}
-                  >
-                    수정요청
-                  </Button>
-                </Grid>
-                <Grid item xs={6}>
-                  <Button
-                    variant='contained'
-                    className='ccn-b-pass'
-                    style={{
-                      marginLeft: '6px',
-                      height: '32px',
-                      width: '67px',
-                      padding: 0,
-                      fontWeight: 400,
-                      fontSize: '14px',
-                      display: 'flex',
-                      justifyContent: 'center',
-                      gap: 0,
-                    }}
-                    onClick={() => {
-                      dispatch(
-                        cardChannelActions.postCampaignStatus({
-                          id: Number(props.data.campaignId),
-                          status: 1,
-                          idPost: Number(props.data.postId),
-                          review: '',
-                        })
-                      )
-                    }}
-                  >
-                    <img src='/img/codicon_pass.png' alt='' /> 합격
-                  </Button>
-                </Grid>
+              <Grid
+                container
+                item
+                xs={12}
+                // padding='0 2px'
+                marginTop='6px'
+                justifyContent={'end'}
+              >
+                {/* <Grid item xs={6}> */}
+                <Button
+                  variant='contained'
+                  className='ccn-b-edit'
+                  style={{
+                    margin: '0 3px',
+                    height: '32px',
+                    width: '54px',
+                    fontWeight: 400,
+                    fontSize: '14px',
+                    padding: 0,
+                    textAlign: 'center',
+                  }}
+                  onClick={() => setOpenDialogReview(true)}
+                >
+                  수정요청
+                </Button>
+                {/* </Grid> */}
+                {/* <Grid item xs={6}> */}
+                <Button
+                  variant='contained'
+                  className='ccn-b-pass'
+                  style={{
+                    marginLeft: '3px',
+                    height: '32px',
+                    width: '54px',
+                    padding: 0,
+                    fontWeight: 400,
+                    fontSize: '14px',
+                    display: 'flex',
+                    justifyContent: 'center',
+                    gap: 0,
+                  }}
+                  onClick={() => {
+                    dispatch(
+                      cardChannelActions.postCampaignStatus({
+                        id: Number(props.data.campaignId),
+                        status: 1,
+                        idPost: Number(props.data.postId),
+                        review: '',
+                      })
+                    )
+                  }}
+                >
+                  <img src='/img/codicon_pass.png' alt='' /> 합격
+                </Button>
+                {/* </Grid> */}
               </Grid>
             ) : null}
 
@@ -252,7 +252,7 @@ const CardChannel = (props: {
                 style={{
                   color: '#FFFFFF',
                   height: '32px',
-                  width: '140px',
+                  width: '132px',
                   backgroundColor: '#4C4C4C',
                   margin: '0 6px',
                   fontSize: '14px',
@@ -278,9 +278,9 @@ const CardChannel = (props: {
                 className='ccn-b2'
                 style={{
                   backgroundColor: '#44B400',
-                  width: '140px',
+                  width: '132px',
                   height: '32px',
-                  margin: '0 6px',
+                  margin: '6px 0',
                   fontSize: '14px',
                   marginTop: '5px',
                 }}

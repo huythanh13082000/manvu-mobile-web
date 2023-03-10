@@ -4,13 +4,23 @@ import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown'
 import KeyboardArrowUpIcon from '@mui/icons-material/KeyboardArrowUp'
 import './packageRevu.css'
 import React, {useState} from 'react'
-import { useNavigate } from 'react-router-dom'
+import {useNavigate} from 'react-router-dom'
 
 const PackageRevu = (props: PackageType) => {
   const [status, setStatus] = useState(false)
-  const navigate= useNavigate()
+  const navigate = useNavigate()
+  console.log(props.suggest)
   return (
-    <div className='packageRevu-container'>
+    <div
+      className='packageRevu-container'
+      style={{position: 'relative', marginTop: props.suggest ? '2rem' : '1rem'}}
+    >
+      {props.suggest && (
+        <div className='packageRevu-suggest'>
+          <p>{props.suggest}</p>
+          <span></span>
+        </div>
+      )}
       <div
         style={{
           display: 'flex',
@@ -57,12 +67,7 @@ const PackageRevu = (props: PackageType) => {
             </div>
           )
         })}
-      {props.suggest && (
-        <>
-          <p className='packageRevu-suggest'>{props.suggest}</p>
-          <span className='packageRevu-triangle'></span>
-        </>
-      )}
+
       <div
         style={{display: 'flex', justifyContent: 'center'}}
         onClick={() => {

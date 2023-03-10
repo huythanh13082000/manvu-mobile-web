@@ -272,10 +272,10 @@ const ServiceCenterAdvertiser = () => {
         </span>
         <img src={rightImage} alt='' style={{width: '24px', height: '24px'}} />
       </p>
-      <p onClick={() => navigate(ROUTE.CAMPAIGN_FAVOURITE)}>
+      <p onClick={() => navigate(ROUTE.MY_CAMPAIGN_ADVERTISER)}>
         <span>
           <img src={heartIcon} alt='' />
-          <span>찜 목록 </span>
+          <span>캠페인 관리 및 현황</span>
         </span>
         <img src={rightImage} alt='' style={{width: '24px', height: '24px'}} />
       </p>

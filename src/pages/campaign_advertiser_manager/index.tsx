@@ -11,15 +11,16 @@ import {
 } from '../../feature/campaign_detail/campaignDetail.slice'
 import {selectListHashTag} from '../../feature/create_campaign/createCampaign.slice'
 import {selectTabCampaignDetail} from '../../feature/tab/tab.slice'
-import {selectUser} from '../../feature/user/user.slice'
+import {selectUser, userActions} from '../../feature/user/user.slice'
 import searchIcon from '../../asset/icons/search.png'
 import './CampaignDetail.css'
+import {authActions} from '../../feature/auth/auth.slice'
 
 const CampaignAdvertiserManager = () => {
   const [value, setValue] = React.useState<number>(0)
   const [valueTabApp, setValueTabApp] = useState(0)
   const [titleTabApp, setTitleTabApp] = useState('신청 리뷰어')
-  const campaignDetail = useAppSelector(selectcampaignDetail)
+
   const {id} = useParams()
   const dispatch = useAppDispatch()
   const handleChange = (event: React.SyntheticEvent, newValue: number) => {
@@ -38,7 +39,7 @@ const CampaignAdvertiserManager = () => {
       dispatch(campaignDetailAction.createRequest(id))
     }
   }
-  const user = useAppSelector(selectUser)
+
   const activeTabCampaignDetail = useAppSelector(selectTabCampaignDetail)
   const listHashTag = useAppSelector(selectListHashTag)
 
@@ -53,6 +54,7 @@ const CampaignAdvertiserManager = () => {
   React.useEffect(() => {
     window.scrollTo(0, 0)
     dispatch(campaignDetailAction.getCampaignDetail(Number(id)))
+    dispatch(userActions.getProfile())
   }, [dispatch, id])
   useEffect(() => {
     setValue(activeTabCampaignDetail)
@@ -61,7 +63,8 @@ const CampaignAdvertiserManager = () => {
   const getDate = (params: string): string => {
     return `${moment(params).format('MM')}월${moment(params).format('DD')}일`
   }
-  console.log(1221, campaignDetail)
+  const campaignDetail = useAppSelector(selectcampaignDetail)
+  const user = useAppSelector(selectUser)
   return (
     <Grid container justifyContent='center'>
       <AppBarCustom

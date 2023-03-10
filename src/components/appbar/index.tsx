@@ -1,10 +1,13 @@
 import WestIcon from '@mui/icons-material/West'
 import AppBar from '@mui/material/AppBar'
 import Toolbar from '@mui/material/Toolbar'
-import {useNavigate} from 'react-router-dom'
-import {useAppSelector} from '../../app/hooks'
-import {selectUser} from '../../feature/user/user.slice'
-import {ROUTE} from '../../router/routes'
+import { useEffect } from 'react'
+import { useNavigate } from 'react-router-dom'
+import { setTokenAxios } from '../../apis/axiosClient'
+import { useAppSelector } from '../../app/hooks'
+import noAvatar from '../../asset/images/no_image.png'
+import { selectUser } from '../../feature/user/user.slice'
+import { ROUTE } from '../../router/routes'
 
 const AppBarCustom = (props: {
   title?: string
@@ -23,6 +26,9 @@ const AppBarCustom = (props: {
       ? navigate(ROUTE.UPDATE_ADVERTISER)
       : navigate(ROUTE.UPDATE_MEMBER)
   }
+  useEffect(() => {
+    setTokenAxios()
+  }, [])
   return (
     <AppBar position='static'>
       <Toolbar>
@@ -58,7 +64,7 @@ const AppBarCustom = (props: {
                 borderRadius: '50%',
                 objectFit: 'cover',
               }}
-              src={props.imageUrl}
+              src={!props.imageUrl.includes('null') ? props.imageUrl : noAvatar}
               alt=''
               onClick={routeAvatar}
             />

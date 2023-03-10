@@ -94,8 +94,9 @@ const Payment = () => {
                 boxShadow: '0px 0px 6px rgba(0, 0, 0, 0.2)',
                 borderRadius: '6px',
               }}
+              key={item.name}
             >
-              <PackageRevu {...item} />
+              <PackageRevu {...item} key={item.name} />
             </div>
           )
         })}

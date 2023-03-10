@@ -2,7 +2,7 @@
   font-family: 'Noto Sans KR';
   font-style: normal;
   font-weight: 500;
-  font-size: 16px;
+  font-size: 14px;
   line-height: 24px;
   /* identical to box height, or 150% */
 
@@ -11,8 +11,6 @@
   color: #222222;
 }
 .ccn-p2 {
-  font-family: 'Noto Sans KR';
-  font-style: normal;
   font-weight: 400;
   font-size: 12px;
   line-height: 17px;
@@ -37,7 +35,7 @@
   font-family: 'Noto Sans KR' !important;
   font-style: normal !important;
   font-weight: 500 !important;
-  font-size: 16px !important;
+  font-size: 14px !important;
   line-height: 175% !important;
   /* identical to box height, or 24px */
   /* margin-bottom: 0.5rem !important; */
@@ -46,22 +44,14 @@
   /* Primary 1 – #0065F2 */
 }
 .ccn-b2 {
-  font-family: 'Noto Sans KR' !important;
-  font-style: normal !important;
-  font-weight: 500 !important;
-  font-size: 14px !important;
-  line-height: 175% !important;
-  /* identical to box height, or 24px */
-  letter-spacing: 0.1px !important;
+  font-weight: 400;
+  font-size: 14px;
   color: #ffffff !important;
 }
 
 .ccn-b-edit {
-  font-family: 'Noto Sans KR' !important;
-  font-style: normal !important;
   justify-content: center;
   align-items: center;
-  font-size: 16px !important;
   width: 120px;
   height: 40px;
   background: #4c4c4c !important;
@@ -70,12 +60,6 @@
 .ccn-b-pass {
   justify-content: center;
   align-items: center;
-  gap: 10px;
-  font-size: 16px !important;
-  width: 120px;
-  height: 40px;
-  font-family: 'Noto Sans KR' !important;
-  font-style: normal !important;
   background: #1bb650 !important;
   border-radius: 4px;
 }

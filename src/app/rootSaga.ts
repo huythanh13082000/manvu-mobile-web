@@ -2,7 +2,7 @@ import {all} from 'redux-saga/effects'
 import authSaga from '../feature/auth/auth.saga'
 import campaignSaga from '../feature/campaign/campaign.saga'
 import campaignDetailSaga from '../feature/campaign_detail/campaignDetail.saga'
-import campaignFavirateSaga from '../feature/campaign_favourate/campaignFavirate.saga'
+import campaignFavirateSaga from '../feature/campaign_favourate/campaignFavirateSaga'
 import cardSaga from '../feature/card/card.saga'
 import cardChannelSaga from '../feature/card_channel/cardChannel.saga'
 import createCampaignSaga from '../feature/create_campaign/createCampaign.Saga'
@@ -39,7 +39,6 @@ export default function* rootSaga() {
     authSaga(),
     registermemberSaga(),
     topicsSaga(),
-    campaignFavirateSaga(),
     faqSaga(),
     inappNotificationSaga(),
     withdrawSaga(),
@@ -49,5 +48,6 @@ export default function* rootSaga() {
     registerAdvertiserSaga(),
     paymentSaga(),
     cardChannelSaga(),
+    campaignFavirateSaga(),
   ])
 }

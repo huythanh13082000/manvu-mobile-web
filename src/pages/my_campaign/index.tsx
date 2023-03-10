@@ -256,7 +256,7 @@ const MyCampaign = () => {
           <FormControl
             style={{
               width: '200px',
-              margin: '1rem 0',
+              margin: '0.5rem 0 0 1rem',
             }}
           >
             <InputLabel id='mutiple-select-label'>모든 미디어</InputLabel>
@@ -314,11 +314,17 @@ const MyCampaign = () => {
                     </div>
                   )}
                   {value === 2 && (
-                    <div style={{display: 'flex', alignItems: 'center'}}>
+                    <div
+                      style={{
+                        display: 'flex',
+                        alignItems: 'center',
+                        justifyContent: 'center',
+                      }}
+                    >
                       <img
                         src={noteRed}
                         alt='error'
-                        style={{marginRight: '0.5rem'}}
+                        style={{marginRight: '0.2rem'}}
                       />
                       <img
                         src={buttonSend}
@@ -328,11 +334,12 @@ const MyCampaign = () => {
                           setStatus('update')
                           handleClickOpen()
                         }}
+                        style={{width: '80%'}}
                       />
                     </div>
                   )}
                   {value === 3 && (
-                    <div>
+                    <div style={{display: 'flex', justifyContent: 'center'}}>
                       <img src={buttonGreen} alt='accept' />
                     </div>
                   )}
@@ -346,6 +353,7 @@ const MyCampaign = () => {
                       }
                       target='_blank'
                       rel='noopener noreferrer'
+                      style={{display: 'flex', justifyContent: 'center'}}
                     >
                       <img src={buttonViolet} alt='end' />
                     </a>

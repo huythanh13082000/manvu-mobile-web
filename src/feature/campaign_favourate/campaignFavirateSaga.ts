@@ -1,10 +1,10 @@
 import {PayloadAction} from '@reduxjs/toolkit'
-import {call, put, takeEvery, takeLatest} from 'redux-saga/effects'
+import {call, put, takeEvery} from 'redux-saga/effects'
 import {advertiserCampaignApi} from '../../apis/advertiserCampaignApi'
 import {campaignApi} from '../../apis/campaignApi'
-import { Campaign } from '../../types/campaign.type'
-import { ListParams } from '../../types/common.type'
-import {homeActions, homeState} from './campaignFavirate.slice'
+import {Campaign} from '../../types/campaign.type'
+import {ListParams} from '../../types/common.type'
+import {homeActions, homeState} from './campaignFavirateSlice'
 
 function* getListCampaign(action: PayloadAction<ListParams>) {
   try {
@@ -49,9 +49,11 @@ function* getListCampaignSort(
       campaignApi.getListCampaign,
       action.payload
     )
-    yield put(homeActions.getListCampaignSortSuccess(listCampaign.list))
+    yield put(
+      homeActions.getListCampaignSortFavouriteSuccess(listCampaign.list)
+    )
   } catch (error) {
-    yield put(homeActions.getListCampaignSortFail())
+    yield put(homeActions.getListCampaignSortFavouriteFail())
   }
 }
 
@@ -96,8 +98,11 @@ export default function* campaignFavirateSaga() {
     homeActions.getListCampaignAdvertiser.type,
     getListCampaignAdvertiser
   )
-  yield takeLatest(homeActions.getListCampaignSearch.type, getListCampaignSearch)
-  yield takeEvery(homeActions.getListCampaignSort.type, getListCampaignSort)
+  yield takeEvery(homeActions.getListCampaignSearch.type, getListCampaignSearch)
+  yield takeEvery(
+    homeActions.getListCampaignSortFavourite.type,
+    getListCampaignSort
+  )
   yield takeEvery(
     homeActions.getListCampaignAdvertiserSort.type,
     getListCampaignAdvertiserSort
