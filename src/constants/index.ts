@@ -254,6 +254,28 @@ export const PACKAGE_RIVU: PackageType[] = [
     img: globalIcon,
   },
 ]
+export const BY_PACKAGE_REVU: any = {
+  Free: {
+    3: 0,
+    6: 0,
+    1: 0,
+  },
+  Starter: {
+    3: 47500,
+    6: 45000,
+    1: 40000,
+  },
+  Pro: {
+    3: 150000,
+    6: 140000,
+    1: 120000,
+  },
+  Global: {
+    3: 260000,
+    6: 200000,
+    1: 180000,
+  },
+}
 export const CARD_TYPE = [
   '일시불',
   '2개월',

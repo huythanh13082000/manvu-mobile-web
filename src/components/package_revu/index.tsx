@@ -4,9 +4,11 @@ import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown'
 import KeyboardArrowUpIcon from '@mui/icons-material/KeyboardArrowUp'
 import './packageRevu.css'
 import React, {useState} from 'react'
+import { useNavigate } from 'react-router-dom'
 
 const PackageRevu = (props: PackageType) => {
   const [status, setStatus] = useState(false)
+  const navigate= useNavigate()
   return (
     <div className='packageRevu-container'>
       <div
@@ -61,7 +63,12 @@ const PackageRevu = (props: PackageType) => {
           <span className='packageRevu-triangle'></span>
         </>
       )}
-      <div style={{display: 'flex', justifyContent: 'center'}}>
+      <div
+        style={{display: 'flex', justifyContent: 'center'}}
+        onClick={() => {
+          navigate(`/payment_bank_credit/${props.name}`)
+        }}
+      >
         <p style={{color: props.button.color}} className={'packageRevu-button'}>
           {props.button.text}
         </p>

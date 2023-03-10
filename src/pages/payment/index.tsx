@@ -1,16 +1,9 @@
-import {Grid} from '@mui/material'
 import {makeStyles} from '@mui/styles'
-import React from 'react'
 import {useNavigate} from 'react-router-dom'
-import {useAppDispatch, useAppSelector} from '../../app/hooks'
+import infoIcon from '../../asset/icons/info_blue.png'
 import AppBarCustom from '../../components/appbar'
 import PackageRevu from '../../components/package_revu'
-import {snackBarActions} from '../../components/snackbar/snackbarSlice'
 import {PACKAGE_RIVU} from '../../constants'
-import {paymentAction} from '../../feature/payment/payment.slice'
-import infoIcon from '../../asset/icons/info_blue.png'
-import {ROUTE} from '../../router/routes'
-import {selectUser} from '../../feature/user/user.slice'
 
 const useStyles = makeStyles({
   payment_container: {
@@ -71,97 +64,7 @@ const useStyles = makeStyles({
 
 const Payment = () => {
   const classes = useStyles()
-  const dispatch = useAppDispatch()
   const navigate = useNavigate()
-  const user = useAppSelector(selectUser)
-  const [open, setOpen] = React.useState<boolean>(false)
-  const [type, setType] = React.useState<string>('0')
-  const [price, setPrice] = React.useState<string>('')
-  const [depositorName, setDepositorName] = React.useState<string>('')
-  const [packageName, setPackageName] = React.useState('Free')
-  const [paymentType, setPaymentType] = React.useState('buy-package')
-  const [data, setData] = React.useState<string>('')
-  const [card, setCard] = React.useState<{
-    type: string
-    accountName: string
-    cardNumber: string
-    expirationMonth: number
-    expirationYear: number
-  }>()
-  const [check, setCheck] = React.useState<boolean>(false)
-  const handleSubmit = () => {
-    if (check) {
-      if (type === '0') {
-        dispatch(
-          paymentAction.createPayment(
-            paymentType === 'buy-package'
-              ? {
-                  type,
-                  price:
-                    data?.split(' ')[0] !== '1'
-                      ? (
-                          Number(data?.split(' ')[0]) *
-                            Number(data?.split(' ')[1]) +
-                          (Number(data?.split(' ')[0]) *
-                            Number(data?.split(' ')[1]) *
-                            10) /
-                            100
-                        ).toString()
-                      : (
-                          12 * Number(data?.split(' ')[1]) +
-                          (12 * Number(data?.split(' ')[1]) * 10) / 100
-                        ).toString(),
-                  depositorName,
-                  numberOfMonths: data?.split(' ')[0],
-                  package: packageName.toLocaleUpperCase(),
-                }
-              : {
-                  type,
-                  price: price.replaceAll(',', ''),
-                  depositorName,
-                }
-          )
-        )
-      } else {
-        dispatch(
-          paymentAction.createPayment(
-            paymentType === 'buy-package'
-              ? {
-                  type,
-                  price:
-                    data?.split(' ')[0] !== '1'
-                      ? (
-                          Number(data?.split(' ')[0]) *
-                            Number(data?.split(' ')[1]) +
-                          (Number(data?.split(' ')[0]) *
-                            Number(data?.split(' ')[1]) *
-                            10) /
-                            100
-                        ).toString()
-                      : (
-                          12 * Number(data?.split(' ')[1]) +
-                          (12 * Number(data?.split(' ')[1]) * 10) / 100
-                        ).toString(),
-                  card,
-                  numberOfMonths: data?.split(' ')[0],
-                  package: packageName.toLocaleUpperCase(),
-                }
-              : {
-                  type,
-                  price: price.replaceAll(',', ''),
-                  card,
-                }
-          )
-        )
-      }
-    } else if (!check)
-      dispatch(
-        snackBarActions.setStateSnackBar({
-          content: '결제약관을 동의해야 합니다',
-          type: 'error',
-        })
-      )
-  }
 
   return (
     <div className={classes.payment_container}>
@@ -190,12 +93,6 @@ const Payment = () => {
               style={{
                 boxShadow: '0px 0px 6px rgba(0, 0, 0, 0.2)',
                 borderRadius: '6px',
-              }}
-              onClick={() => {
-                setPackageName(item.name)
-                setPaymentType('buy-package')
-                setData('')
-                navigate(`/payment_bank_credit/${item.name}`)
               }}
             >
               <PackageRevu {...item} />

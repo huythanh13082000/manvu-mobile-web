@@ -1,16 +1,20 @@
-import { PayloadAction } from '@reduxjs/toolkit'
-import { call, put, takeEvery } from 'redux-saga/effects'
-import { paymentApi } from '../../apis/paymentApi'
-import { snackBarActions } from '../../components/snackbar/snackbarSlice'
-import { PaymentListModel, PaymentModel } from '../../types/payment.type'
-import { paymentAction } from './payment.slice'
+import {PayloadAction} from '@reduxjs/toolkit'
+import {NavigateFunction} from 'react-router-dom'
+import {call, put, takeEvery} from 'redux-saga/effects'
+import {paymentApi} from '../../apis/paymentApi'
+import {snackBarActions} from '../../components/snackbar/snackbarSlice'
+import {PaymentListModel, PaymentModel} from '../../types/payment.type'
+import {paymentAction} from './payment.slice'
 
-function* createPayment(action: PayloadAction<PaymentModel>) {
+function* createPayment(
+  action: PayloadAction<{data: PaymentModel; history: NavigateFunction}>
+) {
   try {
-    yield call(paymentApi.createPayment, action.payload)
+    yield call(paymentApi.createPayment, action.payload.data)
     yield put(
       snackBarActions.setStateSnackBar({content: 'success', type: 'success'})
     )
+    action.payload.history(-1)
   } catch (error) {
     yield put(
       snackBarActions.setStateSnackBar({content: 'error', type: 'error'})

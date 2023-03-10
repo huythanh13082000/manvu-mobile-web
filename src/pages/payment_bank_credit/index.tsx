@@ -1,12 +1,3 @@
-import {makeStyles} from '@mui/styles'
-import React from 'react'
-import AppBarCustom from '../../components/appbar'
-import infoIcon from '../../asset/icons/info_blue.png'
-import forbiddenCircle from '../../asset/icons/forbidden-circle.png'
-import InputForm from '../../components/input_form'
-import textForm from '../../asset/icons/원.png'
-import bankIcon from '../../asset/icons/bank_icon.png'
-import creditIcon from '../../asset/icons/credit_icon.png'
 import {
   Button,
   FormControl,
@@ -17,23 +8,31 @@ import {
   Select,
   TextField,
 } from '@mui/material'
-import Copy from '../../components/copy'
-import {useAppDispatch, useAppSelector} from '../../app/hooks'
-import {useNavigate, useParams} from 'react-router-dom'
-import {paymentAction} from '../../feature/payment/payment.slice'
-import {snackBarActions} from '../../components/snackbar/snackbarSlice'
-import {selectUser} from '../../feature/user/user.slice'
+import {makeStyles} from '@mui/styles'
 import {RecaptchaVerifier, signInWithPhoneNumber} from 'firebase/auth'
-import {auth} from '../../firebaseConfig'
-import {VERIFY_PHONE_NUMBER} from '../../apis/urlConfig'
+import React from 'react'
+import {useNavigate, useParams} from 'react-router-dom'
 import axiosClient from '../../apis/axiosClient'
-import {CARD_TYPE, PACKAGE_RIVU} from '../../constants'
-import noteRed from '../../asset/icons/note_red.png'
+import {VERIFY_PHONE_NUMBER} from '../../apis/urlConfig'
+import {useAppDispatch, useAppSelector} from '../../app/hooks'
+import bankIcon from '../../asset/icons/bank_icon.png'
+import creditIcon from '../../asset/icons/credit_icon.png'
+import forbiddenCircle from '../../asset/icons/forbidden-circle.png'
+import infoIcon from '../../asset/icons/info_blue.png'
 import noteGreen from '../../asset/icons/note_green.png'
-import './payment.css'
-import PackageRevu from '../../components/package_revu'
+import noteRed from '../../asset/icons/note_red.png'
+import textForm from '../../asset/icons/원.png'
+import AppBarCustom from '../../components/appbar'
+import Copy from '../../components/copy'
+import InputForm from '../../components/input_form'
 import PackageRevuNew from '../../components/package_revu_new'
+import {snackBarActions} from '../../components/snackbar/snackbarSlice'
+import {BY_PACKAGE_REVU, CARD_TYPE, PACKAGE_RIVU} from '../../constants'
+import {paymentAction} from '../../feature/payment/payment.slice'
+import {selectUser} from '../../feature/user/user.slice'
+import {auth} from '../../firebaseConfig'
 import {numberWithCommas} from '../../utils'
+import './payment.css'
 
 const useStyles = makeStyles({
   payment_bank_credit_container: {
@@ -152,20 +151,21 @@ const PaymentBankCredit = () => {
   const dispatch = useAppDispatch()
   const navigate = useNavigate()
   const user = useAppSelector(selectUser)
-  const [open, setOpen] = React.useState<boolean>(false)
   const [type, setType] = React.useState<string>('0')
   const [price, setPrice] = React.useState<string>('')
   const [depositorName, setDepositorName] = React.useState<string>('')
-  const [packageName, setPackageName] = React.useState('Free')
-  const [paymentType, setPaymentType] = React.useState('buy-package')
   const [data, setData] = React.useState<string>('')
   const [card, setCard] = React.useState<{
     type: string
     accountName: string
     cardNumber: string
-    expirationMonth: number
-    expirationYear: number
-  }>()
+    expirationMonth?: number
+    expirationYear?: number
+  }>({
+    type: '',
+    accountName: '',
+    cardNumber: '',
+  })
   const [check, setCheck] = React.useState<boolean>(false)
   const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     setType((event.target as HTMLInputElement).value)
@@ -177,29 +177,36 @@ const PaymentBankCredit = () => {
           paymentAction.createPayment(
             id !== 'no_package'
               ? {
-                  type,
-                  price:
-                    data?.split(' ')[0] !== '1'
-                      ? (
-                          Number(data?.split(' ')[0]) *
-                            Number(data?.split(' ')[1]) +
-                          (Number(data?.split(' ')[0]) *
-                            Number(data?.split(' ')[1]) *
-                            10) /
-                            100
-                        ).toString()
-                      : (
-                          12 * Number(data?.split(' ')[1]) +
-                          (12 * Number(data?.split(' ')[1]) * 10) / 100
-                        ).toString(),
-                  depositorName,
-                  numberOfMonths: data?.split(' ')[0],
-                  package: packageName.toLocaleUpperCase(),
+                  data: {
+                    type,
+                    price:
+                      data?.split(' ')[0] !== '1'
+                        ? (
+                            Number(data?.split(' ')[0]) *
+                              Number(data?.split(' ')[1]) +
+                            (Number(data?.split(' ')[0]) *
+                              Number(data?.split(' ')[1]) *
+                              10) /
+                              100
+                          ).toString()
+                        : (
+                            12 * Number(data?.split(' ')[1]) +
+                            (12 * Number(data?.split(' ')[1]) * 10) / 100
+                          ).toString(),
+                    depositorName,
+                    numberOfMonths:
+                      data?.split(' ')[0] === '1' ? '12' : data?.split(' ')[0],
+                    package: id && id.toLocaleUpperCase(),
+                  },
+                  history: navigate,
                 }
               : {
-                  type,
-                  price: price.replaceAll(',', ''),
-                  depositorName,
+                  data: {
+                    type,
+                    price: price.replaceAll(',', ''),
+                    depositorName,
+                  },
+                  history: navigate,
                 }
           )
         )
@@ -208,29 +215,36 @@ const PaymentBankCredit = () => {
           paymentAction.createPayment(
             id !== 'no_package'
               ? {
-                  type,
-                  price:
-                    data?.split(' ')[0] !== '1'
-                      ? (
-                          Number(data?.split(' ')[0]) *
-                            Number(data?.split(' ')[1]) +
-                          (Number(data?.split(' ')[0]) *
-                            Number(data?.split(' ')[1]) *
-                            10) /
-                            100
-                        ).toString()
-                      : (
-                          12 * Number(data?.split(' ')[1]) +
-                          (12 * Number(data?.split(' ')[1]) * 10) / 100
-                        ).toString(),
-                  card,
-                  numberOfMonths: data?.split(' ')[0],
-                  package: packageName.toLocaleUpperCase(),
+                  data: {
+                    type,
+                    price:
+                      data?.split(' ')[0] !== '1'
+                        ? (
+                            Number(data?.split(' ')[0]) *
+                              Number(data?.split(' ')[1]) +
+                            (Number(data?.split(' ')[0]) *
+                              Number(data?.split(' ')[1]) *
+                              10) /
+                              100
+                          ).toString()
+                        : (
+                            12 * Number(data?.split(' ')[1]) +
+                            (12 * Number(data?.split(' ')[1]) * 10) / 100
+                          ).toString(),
+                    card,
+                    numberOfMonths:
+                      data?.split(' ')[0] === '1' ? '12' : data?.split(' ')[0],
+                    package: id && id.toLocaleUpperCase(),
+                  },
+                  history: navigate,
                 }
               : {
-                  type,
-                  price: price.replaceAll(',', ''),
-                  card,
+                  data: {
+                    type,
+                    price: price.replaceAll(',', ''),
+                    card,
+                  },
+                  history: navigate,
                 }
           )
         )
@@ -243,10 +257,6 @@ const PaymentBankCredit = () => {
         })
       )
   }
-  const [accountName, setAccountName] = React.useState<string>('')
-  const [cardNumber, setCardNumber] = React.useState<string>('')
-  const [expirationMonth, setExpirationMonth] = React.useState<string>('')
-  const [expirationYear, setExpirationYear] = React.useState<string>('')
   const [code, setCode] = React.useState<string>('')
   const [buttonStatus, setButtonStatus] = React.useState(1)
   const [confirmOtp, setConfirmOtp] = React.useState<any>()
@@ -327,34 +337,147 @@ const PaymentBankCredit = () => {
                   boxShadow: '0px 0px 6px rgba(0, 0, 0, 0.2)',
                   borderRadius: '6px',
                 }}
-                onClick={() => {
-                  setPackageName(item.name)
-                  setPaymentType('buy-package')
-                  setData('')
-                }}
               >
                 <PackageRevuNew {...item} />
               </div>
             )
         })}
         {id === 'no_package' && <div></div>}
-        <div>
-          <InputForm
-            label='결제 금액'
-            placeholder=''
-            type='text'
-            value={price}
-            onChange={(e) => {
-              setPrice(e)
-            }}
-          />
-          <img src={textForm} alt='' />
-        </div>
+        {id === 'no_package' ? (
+          <>
+            <div>
+              <InputForm
+                label='결제 금액'
+                placeholder=''
+                type='text'
+                value={price}
+                onChange={(e) => {
+                  setPrice(e)
+                }}
+              />
+              <img src={textForm} alt='' />
+            </div>
 
-        <p>
-          <span>받을 포인트</span>{' '}
-          <span>{numberWithCommas(Number(price))} P</span>
-        </p>
+            <p>
+              <span>받을 포인트</span>{' '}
+              <span>{numberWithCommas(Number(price))} P</span>
+            </p>
+          </>
+        ) : (
+          <div>
+            <p
+              style={{
+                padding: '1rem 0',
+                alignItems: 'start',
+                margin: '0',
+              }}
+            >
+              <span
+                className='payment-span'
+                style={{fontSize: '14px', fontWeight: 700}}
+              >
+                월단위 선택
+              </span>
+              <br />
+              <FormControl>
+                <RadioGroup
+                  aria-labelledby='demo-radio-buttons-group-label'
+                  name='radio-buttons-group'
+                  onChange={(e) => setData(e.target.value)}
+                >
+                  <FormControlLabel
+                    value={`3 ${BY_PACKAGE_REVU[`${id}`][3]}`}
+                    control={<Radio />}
+                    label={
+                      <span
+                        className='payment-span'
+                        style={{
+                          fontWeight: 700,
+                          fontSize: '16px',
+                        }}
+                      >
+                        3개월{' '}
+                        <span style={{color: '#0067FF'}}>
+                          {numberWithCommas(BY_PACKAGE_REVU[`${id}`][3])} 원{' '}
+                          <span style={{color: 'black'}}>/월</span>
+                        </span>
+                      </span>
+                    }
+                  />
+                  <FormControlLabel
+                    value={`6 ${BY_PACKAGE_REVU[`${id}`][6]}`}
+                    control={<Radio />}
+                    label={
+                      <span
+                        className='payment-span'
+                        style={{fontWeight: 700, fontSize: '16px'}}
+                      >
+                        6개월{' '}
+                        <span style={{color: '#0067FF'}}>
+                          {numberWithCommas(BY_PACKAGE_REVU[`${id}`][6])} 원
+                        </span>
+                        /월
+                      </span>
+                    }
+                  />
+                  <FormControlLabel
+                    value={`1 ${BY_PACKAGE_REVU[`${id}`][1]}`}
+                    control={<Radio />}
+                    label={
+                      <span
+                        className='payment-span'
+                        style={{fontWeight: 700, fontSize: '16px'}}
+                      >
+                        1년{' '}
+                        <span style={{color: '#0067FF'}}>
+                          {numberWithCommas(BY_PACKAGE_REVU[`${id}`][1])} 원
+                        </span>
+                        /월
+                      </span>
+                    }
+                  />
+                </RadioGroup>
+              </FormControl>
+            </p>
+            <p style={{borderBottom: '1px solid #A2A5AA', margin: '0'}}></p>
+            <p
+              style={{
+                padding: '0',
+                display: 'flex',
+                alignItems: 'center',
+                justifyContent: 'space-between',
+                marginBottom: '0',
+              }}
+            >
+              <span
+                className='payment-span'
+                style={{fontSize: '14px', fontWeight: 700}}
+              >
+                결제금액 합계
+              </span>
+              <span
+                className='payment-span'
+                style={{fontWeight: 700, fontSize: '14px'}}
+              >
+                {data && (
+                  <span>
+                    {data?.split(' ')[0]}
+                    {data?.split(' ')[0] === '1' ? '년' : '개월'}{' '}
+                    <span style={{color: '#FD584E'}}>
+                      {numberWithCommas(
+                        Number(data?.split(' ')[1]) *
+                          Number(data?.split(' ')[0]) *
+                          Number(data?.split(' ')[0] === '1' ? 12 : 1)
+                      )}
+                      원
+                    </span>
+                  </span>
+                )}
+              </span>
+            </p>
+          </div>
+        )}
+
         <div>
           <p>결제 수단</p>
           <RadioGroup
@@ -491,12 +614,12 @@ const PaymentBankCredit = () => {
             <div>
               <p className={classes.p_label}>카드 번호</p>
               <TextField
-                value={cardNumber}
+                value={card.cardNumber}
                 size='small'
                 style={{width: '100%'}}
                 placeholder='카드 번호'
-                onChange={(e) => setCardNumber(e.target.value)}
-                error={cardNumber ? false : true}
+                onChange={(e) => setCard({...card, cardNumber: e.target.value})}
+                error={card.cardNumber ? false : true}
               />
             </div>
 
@@ -511,7 +634,7 @@ const PaymentBankCredit = () => {
               >
                 <TextField
                   type={'number'}
-                  value={expirationMonth}
+                  value={card.expirationMonth}
                   size='small'
                   style={{width: '49%'}}
                   placeholder='월'
@@ -521,21 +644,24 @@ const PaymentBankCredit = () => {
                       Number(e.target.value) >= 0 &&
                       Number(e.target.value) <= 12
                     ) {
-                      setExpirationMonth(e.target.value)
+                      setCard({
+                        ...card,
+                        expirationMonth: Number(e.target.value),
+                      })
                     }
                   }}
-                  error={expirationMonth ? false : true}
+                  error={card.expirationMonth ? false : true}
                 />
                 <TextField
                   type={'number'}
-                  value={expirationYear}
+                  value={card.expirationYear}
                   size='small'
                   style={{width: '49%'}}
                   placeholder='년도'
-                  error={expirationYear ? false : true}
+                  error={card.expirationYear ? false : true}
                   onChange={(e) => {
                     if (e.target.value.length <= 2) {
-                      setExpirationYear(e.target.value)
+                      setCard({...card, expirationYear: Number(e.target.value)})
                     }
                   }}
                 />
@@ -560,11 +686,11 @@ const PaymentBankCredit = () => {
               >
                 <FormControl fullWidth size='small' style={{width: '100%'}}>
                   <Select
-                    value={type}
+                    value={card.type}
                     onChange={(e) => {
-                      setType(e.target.value)
+                      setCard({...card, type: e.target.value})
                     }}
-                    error={type ? false : true}
+                    error={card.type ? false : true}
                   >
                     {CARD_TYPE.map((item) => {
                       return <MenuItem value={item}>{item}</MenuItem>

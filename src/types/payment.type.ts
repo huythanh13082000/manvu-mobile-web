@@ -6,8 +6,8 @@ export interface PaymentModel {
     type: string
     accountName: string
     cardNumber: string
-    expirationMonth: number
-    expirationYear: number
+    expirationMonth?: number
+    expirationYear?: number
   }
   package?:string
   numberOfMonths?:string

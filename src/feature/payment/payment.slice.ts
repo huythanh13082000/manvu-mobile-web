@@ -1,4 +1,5 @@
 import {createSlice, PayloadAction} from '@reduxjs/toolkit'
+import {NavigateFunction} from 'react-router-dom'
 import {RootState} from '../../app/store'
 import {PaymentListModel, PaymentModel} from '../../types/payment.type'
 import {mereAndSortListById} from '../../utils'
@@ -17,7 +18,10 @@ const paymentSlice = createSlice({
   name: 'payment',
   initialState,
   reducers: {
-    createPayment(state, action: PayloadAction<PaymentModel>) {
+    createPayment(
+      state,
+      action: PayloadAction<{data: PaymentModel; history: NavigateFunction}>
+    ) {
       state.loadding = true
     },
     createPaymentSuccess(state) {
