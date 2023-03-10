@@ -28,6 +28,7 @@ import {numberWithCommas} from '../../utils'
 
 const useStyles = makeStyles({
   service_center_advertiser_container: {
+    position: 'relative',
     '&>div:nth-of-type(1)': {
       padding: '0.5rem 1rem',
       '&>div': {
@@ -150,8 +151,13 @@ const useStyles = makeStyles({
       },
     },
     '&>div:nth-of-type(5)': {
+      marginTop: '7rem',
       padding: '1rem',
       background: ' #F4F4F4',
+      position: 'sticky',
+      bottom: 0,
+      left: 0,
+      right: 0,
       '&>button': {
         background: '#FFFFFF',
         border: '0.5px solid #A2A5AA',
@@ -300,13 +306,13 @@ const ServiceCenterAdvertiser = () => {
         </span>
         <img src={rightImage} alt='' style={{width: '24px', height: '24px'}} />
       </p>
-      <p>
+      {/* <p>
         <span>
           <img src={setting} alt='' />
           <span>알림설정</span>
         </span>
         <img src={rightImage} alt='' style={{width: '24px', height: '24px'}} />
-      </p>
+      </p> */}
       <div>
         <Button onClick={handleLogout}>로그아웃 계정</Button>
         <p>

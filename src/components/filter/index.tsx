@@ -65,7 +65,7 @@ export default function Filter(props: {
     setColumsfilter('')
   }
   return (
-    <div style={{cursor: 'pointer'}}>
+    <div style={{cursor: 'pointer', width: '81px'}}>
       <span
         onClick={handleClick}
         className='filter-span1'

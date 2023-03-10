@@ -105,45 +105,47 @@ const ServicePage = () => {
   return (
     <div className={classes.service_container}>
       <HeaderSearch />
-      <Tabs onChange={handleChange} value={value} variant='scrollable'>
-        <Tab
-          className='buttomCustom'
-          label={'전체'}
-          onClick={() => {
-            setTitle('전체')
-            setOffset(0)
-          }}
-        />
-        {listTab.map((item, index) => {
-          return (
+      <Box bgcolor={'#F6F6F6'}>
+        <div style={{display: 'flex', alignItems: 'center'}}>
+          <div>
+            <Filter
+              medias={medias}
+              tagIds={tagIds}
+              setMedias={(params) => setMedias(params)}
+              setTagIds={(params) => setTagIds(params)}
+              areaIds={areaIds}
+              setAreaIds={(params) => setAreaIds(params)}
+              setOffset={(params) => {
+                setOffset(params)
+              }}
+              columsfilter={columsfilter}
+              setColumsfilter={(params) => setColumsfilter(params)}
+            />
+          </div>
+
+          <Tabs onChange={handleChange} value={value} variant='scrollable'>
             <Tab
-              key={item.text}
-              label={item.text}
+              className='buttomCustom'
+              label={'전체'}
               onClick={() => {
-                setTitle(item.text)
+                setTitle('전체')
                 setOffset(0)
               }}
             />
-          )
-        })}
-      </Tabs>
-
-      <Box bgcolor={'#F6F6F6'} padding='1rem 0'>
-        <Grid container justifyContent={'space-between'}>
-          <Filter
-            medias={medias}
-            tagIds={tagIds}
-            setMedias={(params) => setMedias(params)}
-            setTagIds={(params) => setTagIds(params)}
-            areaIds={areaIds}
-            setAreaIds={(params) => setAreaIds(params)}
-            setOffset={(params) => {
-              setOffset(params)
-            }}
-            columsfilter={columsfilter}
-            setColumsfilter={(params) => setColumsfilter(params)}
-          />
-        </Grid>
+            {listTab.map((item, index) => {
+              return (
+                <Tab
+                  key={item.text}
+                  label={item.text}
+                  onClick={() => {
+                    setTitle(item.text)
+                    setOffset(0)
+                  }}
+                />
+              )
+            })}
+          </Tabs>
+        </div>
       </Box>
       <InfiniteScroll
         dataLength={listCampaignService.length}

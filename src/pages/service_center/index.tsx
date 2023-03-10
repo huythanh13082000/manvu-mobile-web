@@ -358,13 +358,13 @@ const ServiceCenter = () => {
         </span>
         <img src={rightImage} alt='' style={{width: '24px', height: '24px'}} />
       </p>
-      <p>
+      {/* <p>
         <span>
           <img src={setting} alt='' />
           <span>알림설정</span>
         </span>
         <img src={rightImage} alt='' style={{width: '24px', height: '24px'}} />
-      </p>
+      </p> */}
       <div>
         <Button onClick={handleLogout}>로그아웃 계정</Button>
         <p>
