@@ -209,6 +209,24 @@ const ServiceCenterAdvertiser = () => {
     navigate(ROUTE.LOGIN)
     window.location.reload()
   }
+  const navigateSwitch = (index: number) => {
+    switch (index) {
+      case 0:
+        navigate(`${ROUTE.MY_CAMPAIGN_ADVERTISER}/all`)
+        break
+      case 1:
+        navigate(`${ROUTE.MY_CAMPAIGN_ADVERTISER}/in_progress`)
+        break
+      case 2:
+        navigate(`${ROUTE.MY_CAMPAIGN_ADVERTISER}/requesting_update`)
+        break
+      case 3:
+        navigate(`${ROUTE.MY_CAMPAIGN_ADVERTISER}/complete`)
+        break
+      default:
+        break
+    }
+  }
   return (
     <div className={classes.service_center_advertiser_container}>
       <AppBarCustom
@@ -219,7 +237,7 @@ const ServiceCenterAdvertiser = () => {
       <div></div>
 
       <div>
-        <p onClick={() => navigate(ROUTE.MY_CAMPAIGN_ADVERTISER)}>
+        <p onClick={() => navigate(`${ROUTE.MY_CAMPAIGN_ADVERTISER}/all`)}>
           <span>나의 캠페인</span>
           <img
             src={rightImage}
@@ -230,7 +248,7 @@ const ServiceCenterAdvertiser = () => {
         <div style={{justifyContent: 'space-between'}}>
           {advertiserCampaignMineCount &&
             Object.keys(advertiserCampaignMineCount).map((key, index) => (
-              <div>
+              <div onClick={() => navigateSwitch(index)}>
                 <img src={group} alt='' />
                 <p>{advertiserCampaignMineCount[`${key}`]}</p>
                 <div>{renderText(index)}</div>

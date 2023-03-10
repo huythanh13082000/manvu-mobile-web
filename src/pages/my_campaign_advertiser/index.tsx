@@ -1,19 +1,18 @@
-import React, {useState, useEffect} from 'react'
-import {makeStyles} from '@mui/styles'
-import AppBarCustom from '../../components/appbar'
-import {Tab, Tabs} from '@mui/material'
-import {useAppDispatch, useAppSelector} from '../../app/hooks'
 import MoreVertIcon from '@mui/icons-material/MoreVert'
+import {Tab, Tabs} from '@mui/material'
+import {makeStyles} from '@mui/styles'
+import moment from 'moment'
+import React, {useEffect, useState} from 'react'
+import {useNavigate, useParams} from 'react-router-dom'
+import {useAppDispatch, useAppSelector} from '../../app/hooks'
+import AppBarCustom from '../../components/appbar'
+import {selectListHashTag} from '../../feature/create_campaign/createCampaign.slice'
 import {
   myCampaignAdvertiserActions,
   selectAdvertiserCampaignMine,
   selectAdvertiserCampaignMineCount,
   selectAdvertiserCampaignTotal,
 } from '../../feature/my_campaign_advertiser/myCampaignAdvertiser.slice'
-import {useNavigate} from 'react-router-dom'
-import {selectListHashTag} from '../../feature/create_campaign/createCampaign.slice'
-import moment from 'moment'
-import {ROUTE} from '../../router/routes'
 
 const useStyle = makeStyles({
   my_campaign_advertiser: {
@@ -60,16 +59,32 @@ const MyCampaignAdvertiser = () => {
   const classes = useStyle()
   const [value, setValue] = React.useState(0)
   const navigate = useNavigate()
-  const [type, setType] = useState<string>('all')
+  const {id} = useParams()
+  const [type, setType] = useState<string>('')
   const dispatch = useAppDispatch()
   const advertiserCampaignMineCount: any = useAppSelector(
     selectAdvertiserCampaignMineCount
   )
-  const [tabActive, setTabActive] = useState<number>(2)
-  const listHashTag = useAppSelector(selectListHashTag)
-  const [campaignId, setCampaignId] = useState<number>()
-  const [tabValue, setTabValue] = useState<string>('전체 캠페인')
 
+  useEffect(() => {
+    id && setType(id)
+    switch (id) {
+      case 'all':
+        setValue(0)
+        break
+      case 'in_progress':
+        setValue(1)
+        break
+      case 'requesting_update':
+        setValue(2)
+        break
+      case 'complete':
+        setValue(3)
+        break
+      default:
+        break
+    }
+  }, [id])
   const handleChange = (event: React.SyntheticEvent, newValue: number) => {
     setValue(newValue)
     switch (newValue) {
@@ -90,13 +105,13 @@ const MyCampaignAdvertiser = () => {
     }
   }
   const listCampaignAdvertiser = useAppSelector(selectAdvertiserCampaignMine)
-  const total = useAppSelector(selectAdvertiserCampaignTotal)
   useEffect(() => {
-    dispatch(
-      myCampaignAdvertiserActions.getAdvertiserCampaignMine({
-        type: type,
-      })
-    )
+    type &&
+      dispatch(
+        myCampaignAdvertiserActions.getAdvertiserCampaignMine({
+          type: type,
+        })
+      )
   }, [dispatch, type])
 
   useEffect(() => {
@@ -114,31 +129,19 @@ const MyCampaignAdvertiser = () => {
         <Tab
           label={`전체(${advertiserCampaignMineCount['countTotal']})`}
           iconPosition='end'
-          onClick={() => {
-            setTabValue('전체 캠페인')
-          }}
         />
 
         <Tab
           label={`진행중(${advertiserCampaignMineCount['countInProgress']})`}
           iconPosition='end'
-          onClick={() => {
-            setTabValue('진행중 캠페인')
-          }}
         />
         <Tab
           label={`수정(${advertiserCampaignMineCount['countRequestUpdate']})`}
           iconPosition='end'
-          onClick={() => {
-            setTabValue('수정 캠페인')
-          }}
         />
         <Tab
           label={`완료(${advertiserCampaignMineCount['countComplete']})`}
           iconPosition='end'
-          onClick={() => {
-            setTabValue('완료 캠페인')
-          }}
         />
       </Tabs>
       <div>

@@ -358,7 +358,7 @@ const MessageDetail = () => {
                 width: '92%',
                 borderRadius: '20px',
                 border: '1px solid #ACB1B6',
-                margin: '0 1rem',
+                marginLeft: '1rem',
                 paddingLeft: '10px',
               }}
               placeholder='내용을 입력해주세요.'
@@ -370,7 +370,7 @@ const MessageDetail = () => {
               }}
             />
           </Grid>
-          <Grid item xs={1}>
+          <Grid item xs={1} style={{display: 'flex'}}>
             <img
               src={sendMessage}
               style={{cursor: 'pointerf'}}

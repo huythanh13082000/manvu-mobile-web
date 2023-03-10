@@ -125,8 +125,8 @@ function UploadImg(props: {
                   }
                   alt={item}
                   style={{
-                    width: '100px',
-                    height: '100px',
+                    width: '110px',
+                    height: '110px',
                     borderRadius: '8px',
                     marginRight: '0.8rem',
                     objectFit: 'cover',
