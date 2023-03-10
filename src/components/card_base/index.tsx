@@ -107,16 +107,19 @@ const useStyles = makeStyles({
         },
       },
       '&>div:nth-of-type(4)': {
-        margin: '5px 0',
         width: '100%',
-        '&>span': {
-          boxSizing: 'border-box',
-          width: '40px',
+        margin: 'auto',
+        overflowX: 'scroll',
+        overflowY: 'hidden',
+        whiteSpace: 'nowrap',
+        scrollSnapType: 'x',
+        display: 'flex',
+        '&>div': {
           height: '19px',
           background: '#F4F4F4',
           borderRadius: '3px',
           fontWeight: 400,
-          fontSize: '10px',
+          fontSize: '12px',
           padding: '2.5px 6px',
           marginRight: '5px',
         },
@@ -197,7 +200,7 @@ const CardBase = (props: {data: Campaign; style?: React.CSSProperties}) => {
         <div>
           {listHashTag?.map((item) => {
             if (props.data?.tags.includes(item.id))
-              return <span>{item.text}</span>
+              return <div>{item.text}</div>
             else return null
           })}
         </div>

@@ -65,7 +65,7 @@ const Home = () => {
     <div className={classes.home_container}>
       <HeaderSearch />
 
-      <Box bgcolor={'#F6F6F6'} padding='1rem 0'>
+      <Box bgcolor={'#F6F6F6'} padding='0.7rem 0'>
         <Grid container justifyContent={'space-between'}>
           <Filter
             medias={medias}
