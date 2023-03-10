@@ -10,6 +10,7 @@ interface Props {
   data: Withdraw
   setShowWithdrawMoney: () => void
   setDataWithdrawMoney: (e: WithdrawMoney) => void
+  setValue?: () => void
 }
 
 const ComponentWH = (props: Props) => {
@@ -29,13 +30,25 @@ const ComponentWH = (props: Props) => {
             <div style={{display: 'flex', justifyContent: 'end'}}>
               <span
                 onClick={() => {
-                  props.setDataWithdrawMoney({
-                    point: props.data.point,
-                    recipientInformation: {...props.data.recipientInformation},
-                    status: props.data.status,
-                    id: props.data.id,
-                  })
-                  props.setShowWithdrawMoney()
+                  localStorage.setItem(
+                    'data_withdraw_money',
+                    JSON.stringify({
+                      point: props.data.point,
+                      recipientInformation: {
+                        ...props.data.recipientInformation,
+                      },
+                      status: props.data.status,
+                      id: props.data.id,
+                    })
+                  )
+                  props && props.setValue && props.setValue()
+                  // props.setDataWithdrawMoney({
+                  //   point: props.data.point,
+                  //   recipientInformation: {...props.data.recipientInformation},
+                  //   status: props.data.status,
+                  //   id: props.data.id,
+                  // })
+                  // props.setShowWithdrawMoney()
                 }}
               >
                 <MoreHorizIcon style={{margin: 0, padding: 0}} />

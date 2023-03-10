@@ -108,12 +108,14 @@ const useStyles = makeStyles({
       },
       '&>div:nth-of-type(4)': {
         width: '100%',
-        margin: 'auto',
         overflowX: 'scroll',
         overflowY: 'hidden',
         whiteSpace: 'nowrap',
         scrollSnapType: 'x',
-        display: 'flex',
+        margin: '6px 0',
+        display: '-webkit-box',
+        overflow: '-moz-scrollbars-none',
+        msOverflowStyle: 'none',
         '&>div': {
           height: '19px',
           background: '#F4F4F4',
@@ -124,6 +126,11 @@ const useStyles = makeStyles({
           marginRight: '5px',
         },
       },
+      '&>div:nth-of-type(4)::-webkit-scrollbar': {
+        width: 0,
+        height: '5px',
+      },
+
       '&>div:nth-of-type(5)': {
         display: 'flex',
         '&>span': {

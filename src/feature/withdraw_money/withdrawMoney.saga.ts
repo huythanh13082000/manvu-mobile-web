@@ -36,7 +36,7 @@ function* createWithdrawMoney(
   }
 }
 function* updateWithdrawMoney(
-  action: PayloadAction<{data: WithdrawMoney; history?: () => void}>
+  action: PayloadAction<{data: WithdrawMoney; history: NavigateFunction}>
 ) {
   try {
     yield call(withdrawApi.updateWithdrawMoney, action.payload.data)
@@ -52,7 +52,7 @@ function* updateWithdrawMoney(
         type: 'success',
       })
     )
-    action.payload.history && action.payload.history()
+    action.payload.history && action.payload.history(ROUTE.SERVICE_CENTER)
   } catch (error: any) {
     yield put(
       snackBarActions.setStateSnackBar({

@@ -1,21 +1,21 @@
-import {Grid, Tab, Tabs} from '@mui/material'
-import {makeStyles} from '@mui/styles'
-import React, {useEffect, useState} from 'react'
+import { Tab, Tabs } from '@mui/material'
+import Box from '@mui/material/Box/Box'
+import { makeStyles } from '@mui/styles'
+import React, { useEffect, useState } from 'react'
 import InfiniteScroll from 'react-infinite-scroll-component'
-import {useAppDispatch, useAppSelector} from '../../app/hooks'
+import { useAppDispatch, useAppSelector } from '../../app/hooks'
 import CardBase from '../../components/card_base'
 import Filter from '../../components/filter'
 import HeaderSearch from '../../components/header/headerSearch'
-import Box from '@mui/material/Box/Box'
 import {
   productActions,
   selectCategories,
   selectListCampaignProduct,
-  selectOffsetProduct,
+  selectOffsetProduct
 } from '../../feature/product/product.slice'
-import {Area} from '../../types/area.type'
-import {Campaign} from '../../types/campaign.type'
-import {Categories} from '../../types/categories.type'
+import { Area } from '../../types/area.type'
+import { Campaign } from '../../types/campaign.type'
+import { Categories } from '../../types/categories.type'
 
 const useStyles = makeStyles({
   product_container: {

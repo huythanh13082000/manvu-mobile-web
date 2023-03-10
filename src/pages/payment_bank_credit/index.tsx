@@ -700,9 +700,9 @@ const PaymentBankCredit = () => {
               </div>
             </div>
             <div>
-              <p className={classes.p_label} style={{fontWeight: 700}}>
+              <div className={classes.p_label} style={{fontWeight: 700}}>
                 전화번호 인증 *
-              </p>
+              </div>
               <p className={classes.p_label}>
                 회원가입시 가입한 휴대전화 번호로 인증번호가 전송됩니다.
                 인증해주세요.

@@ -112,19 +112,24 @@ const WithdrawMoneyPage = (props: {data?: WithdrawMoney}) => {
   const navigate = useNavigate()
 
   useEffect(() => {
-    if (props.data) {
-      setBankName(props.data.recipientInformation.bankName)
-      setPoint(props.data.point.toString())
-      setName(props.data.recipientInformation.name)
-      setIdentityCard(props.data.recipientInformation.identityCard.toString())
+    const data = localStorage.getItem('data_withdraw_money')
+    if (data) {
+      const dateParse = JSON.parse(data)
+      setBankName(dateParse.recipientInformation.bankName)
+      setPoint(dateParse.point.toString())
+      setName(dateParse.recipientInformation.name)
+      setIdentityCard(dateParse.recipientInformation.identityCard.toString())
       setBankAccountNumber(
-        props.data.recipientInformation.bankAccountNumber.toString()
+        dateParse.recipientInformation.bankAccountNumber.toString()
       )
       setCheck1(true)
       setCheck2(true)
-      setId(props.data.id)
+      setId(dateParse.id)
     }
-  }, [props.data])
+  }, [])
+  useEffect(() => {
+    return () => localStorage.removeItem('data_withdraw_money')
+  })
 
   const handleChange = (event: SelectChangeEvent) => {
     setBankName(event.target.value as string)
@@ -142,11 +147,6 @@ const WithdrawMoneyPage = (props: {data?: WithdrawMoney}) => {
       setIdentityCard(event.target.value)
     }
   }
-  // useEffect(() => {
-  //   return () => {
-  //     props && props.setDataWithdrawMoney && props.setDataWithdrawMoney()
-  //   }
-  // })
   const handleUpdate = () => {
     const data: WithdrawMoney = {
       status: 0,
@@ -162,9 +162,7 @@ const WithdrawMoneyPage = (props: {data?: WithdrawMoney}) => {
     dispatch(
       withdrawMoneyActions.update({
         data: data,
-        history: () => {
-          console.log(111)
-        },
+        history: navigate,
       })
     )
   }
@@ -508,7 +506,7 @@ const WithdrawMoneyPage = (props: {data?: WithdrawMoney}) => {
               <div>
                 <div>
                   <p
-                    className='payment-spanDialog'
+                    // className='payment-spanDialog'
                     style={{
                       fontWeight: 700,
                       fontSize: '16px',

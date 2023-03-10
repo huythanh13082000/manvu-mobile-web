@@ -27,7 +27,7 @@ const useStyles = makeStyles({
   },
 })
 
-const PointTransaction = () => {
+const PointTransaction = (props: {setValue?: () => void}) => {
   const classes = useStyles()
   const [value, setValue] = React.useState(0)
 
@@ -44,16 +44,6 @@ const PointTransaction = () => {
   const listWithdraw = useAppSelector(selectListWithdraw)
   const [showWithdrawMoney, setShowWithdrawMoney] = useState(false)
   const user = useAppSelector(selectUser)
-  const styleTab = {
-    fontFamily: 'Noto Sans KR',
-    fontStyle: 'normal',
-    fontWeight: 700,
-    fontSize: '16px',
-    lineHeight: '24px',
-    color: '#585858',
-    padding: '0.5rem 3rem',
-    width: '50%',
-  }
   const [dataWithdrawMoney, setDataWithdrawMoney] = useState<
     WithdrawMoney | undefined
   >(undefined)
@@ -85,6 +75,7 @@ const PointTransaction = () => {
           onChange={handleChange}
           value={value}
           aria-label='Tabs where each tab needs to be selected manually'
+          style={{margin: 0, padding: 0}}
         >
           <Tab label='적립' />
           <Tab label='출금내역' />
@@ -122,6 +113,7 @@ const PointTransaction = () => {
                   setDataWithdrawMoney={(data: WithdrawMoney) =>
                     setDataWithdrawMoney(data)
                   }
+                  setValue={props.setValue}
                 />
               </Grid>
             )

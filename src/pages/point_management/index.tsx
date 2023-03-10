@@ -42,9 +42,8 @@ const PointManagement = () => {
           <Tab label='포인트 관리' {...a11yProps(1)} />
         </Tabs>
       </div>
-      <br />
       {value === 0 && <WithdrawMoneyPage />}
-      {value === 1 && <PointTransaction />}
+      {value === 1 && <PointTransaction setValue={() => setValue(0)} />}
     </div>
   )
 }

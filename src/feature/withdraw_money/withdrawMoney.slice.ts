@@ -33,7 +33,7 @@ const withdrawMoneySlice = createSlice({
     },
     update(
       state,
-      action: PayloadAction<{data: WithdrawMoney; history?: () => void}>
+      action: PayloadAction<{data: WithdrawMoney; history: NavigateFunction}>
     ) {},
   },
 })

@@ -37,7 +37,7 @@ const Point = (props: Props) => {
             </p>
           </Grid>
         </Grid>
-        <Grid item xs={3} container justifyContent='end'>
+        <Grid item xs={4} container justifyContent='end'>
           <p className='point-p4'>
             {numberWithCommas(props.data?.point || 0)} P
           </p>
