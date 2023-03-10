@@ -6,6 +6,8 @@ import {
   SelectChangeEvent,
   TextareaAutosize,
   TextField,
+  useMediaQuery,
+  useTheme,
 } from '@mui/material'
 import Button from '@mui/material/Button'
 import Dialog from '@mui/material/Dialog'
@@ -76,6 +78,8 @@ export default function DialogRequest(Props: {
   setOpenDialogCreate?: () => void
 }) {
   const dispatch = useAppDispatch()
+  const theme = useTheme()
+  const fullScreen = useMediaQuery(theme.breakpoints.down('md'))
   const [open, setOpen] = React.useState(Props.open)
   const [type, setType] = React.useState<string>()
   const [phoneNumber, setPhoneNumber] = React.useState<string>()
@@ -178,6 +182,7 @@ export default function DialogRequest(Props: {
         onClose={handleClose}
         aria-labelledby='customized-dialog-title'
         open={open}
+        fullScreen={fullScreen}
       >
         <BootstrapDialogTitle
           id='customized-dialog-title'

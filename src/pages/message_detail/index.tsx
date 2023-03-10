@@ -2,7 +2,15 @@ import {Close} from '@mui/icons-material'
 import DeleteSweepOutlinedIcon from '@mui/icons-material/DeleteSweepOutlined'
 import ModeEditOutlineOutlinedIcon from '@mui/icons-material/ModeEditOutlineOutlined'
 import MoreVertOutlinedIcon from '@mui/icons-material/MoreVertOutlined'
-import {Button, Grid, IconButton, Menu, MenuItem} from '@mui/material'
+import {
+  Button,
+  Grid,
+  IconButton,
+  Menu,
+  MenuItem,
+  useMediaQuery,
+  useTheme,
+} from '@mui/material'
 import {makeStyles} from '@mui/styles'
 import moment from 'moment'
 import React, {useEffect, useState} from 'react'
@@ -29,6 +37,7 @@ const useStyles = makeStyles({
 
 const MessageDetail = () => {
   const classes = useStyles()
+
   const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null)
   const open = Boolean(anchorEl)
   const dispatch = useAppDispatch()

@@ -20,7 +20,7 @@ const createCampaignSlice = createSlice({
   name: 'createCampaign',
   initialState,
   reducers: {
-    createCampaign(state, action: PayloadAction<CreateCampaign>) {
+    createCampaign(state, action: PayloadAction<{data: CreateCampaign; history: NavigateFunction}>) {
       state.loadding = true
     },
     createCampaignSuccess(state) {

@@ -6,6 +6,7 @@ import {hashTagApi} from '../../apis/hashTagApi'
 import {placeApi} from '../../apis/placeApi'
 import {tabApi} from '../../apis/tabApi'
 import {uploadImagesThumbsApi} from '../../apis/uploadImagesThumbsApi'
+import {loadingActions} from '../../components/loading/loadingSlice'
 import {snackBarActions} from '../../components/snackbar/snackbarSlice'
 import {Categories} from '../../types/categories.type'
 import {CreateCampaign} from '../../types/createCampaign.type'
@@ -13,23 +14,28 @@ import {Place} from '../../types/place.type'
 import {myCampaignAdvertiserActions} from '../my_campaign_advertiser/myCampaignAdvertiser.slice'
 import {createCampaignActions} from './createCampaign.slice'
 
-function* createCampaign(action: PayloadAction<CreateCampaign>) {
+function* createCampaign(
+  action: PayloadAction<{data: CreateCampaign; history: NavigateFunction}>
+) {
   try {
+    yield put(loadingActions.openLoading())
     let fileUpload: {images?: []; thumbs?: []} = {}
     if (
-      action.payload.formData &&
-      !action.payload.formData.entries().next().done
+      action.payload.data.formData &&
+      !action.payload.data.formData.entries().next().done
     ) {
       fileUpload = yield call(
         uploadImagesThumbsApi.uploadImagesThumbs,
-        action.payload.formData
+        action.payload.data.formData
       )
     }
     yield call(advertiserCampaignApi.createCampaign, {
-      ...action.payload,
+      ...action.payload.data,
       images: fileUpload.images,
     })
     yield put(createCampaignActions.createCampaignSuccess())
+    yield put(loadingActions.loadingSuccess())
+    yield action.payload.history(-1)
     yield put(
       snackBarActions.setStateSnackBar({
         content: '성공을 창조하다',
@@ -42,6 +48,7 @@ function* createCampaign(action: PayloadAction<CreateCampaign>) {
       })
     )
   } catch (error: any) {
+    yield put(loadingActions.loadingSuccess())
     yield put(createCampaignActions.createCampaignFail())
     yield put(
       snackBarActions.setStateSnackBar({
@@ -56,6 +63,7 @@ function* updateCampaign(
   action: PayloadAction<{data: CreateCampaign; history: NavigateFunction}>
 ) {
   try {
+    yield put(loadingActions.openLoading())
     let fileUpload: {images?: []; thumbs?: []} = {}
     if (
       action.payload.data.formData &&
@@ -78,6 +86,7 @@ function* updateCampaign(
       })
     }
     yield put(createCampaignActions.updateCampaignSuccess())
+    yield put(loadingActions.loadingSuccess())
     yield put(
       snackBarActions.setStateSnackBar({
         content: '성공을 창조하다',
@@ -91,6 +100,7 @@ function* updateCampaign(
       })
     )
   } catch (error: any) {
+    yield put(loadingActions.loadingSuccess())
     yield put(createCampaignActions.createCampaignFail())
     yield put(
       snackBarActions.setStateSnackBar({

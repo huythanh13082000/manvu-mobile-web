@@ -3,6 +3,7 @@ import {NavigateFunction} from 'react-router-dom'
 import {call, put, takeEvery} from 'redux-saga/effects'
 import {authApi} from '../../apis/authApi'
 import {userApi} from '../../apis/userApi'
+import { loadingActions } from '../../components/loading/loadingSlice'
 import {snackBarActions} from '../../components/snackbar/snackbarSlice'
 import {ROUTE} from '../../router/routes'
 import {User} from '../../types/user.type'
@@ -10,9 +11,12 @@ import {userActions} from './user.slice'
 
 function* getUser() {
   try {
+    yield put(loadingActions.openLoading())
     const userProfile: {profile: User} = yield call(userApi.getUser)
     yield put(userActions.getProfileSuccess(userProfile))
+    yield put(loadingActions.loadingSuccess())
   } catch (error) {
+    yield put(loadingActions.loadingSuccess())
     yield put(userActions.getProfileFail())
   }
 }

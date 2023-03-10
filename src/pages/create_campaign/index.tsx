@@ -216,7 +216,13 @@ const CreateCampaignPage = () => {
       areaIds &&
       CategoryIds
     ) {
-      if (!id) dispatch(createCampaignActions.createCampaign(campaign))
+      if (!id)
+        dispatch(
+          createCampaignActions.createCampaign({
+            data: campaign,
+            history: navigate,
+          })
+        )
       else
         dispatch(
           createCampaignActions.updateCampaign({
