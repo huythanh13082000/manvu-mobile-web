@@ -116,7 +116,7 @@ const WithdrawMoneyPage = (props: {data?: WithdrawMoney}) => {
     if (data) {
       const dateParse = JSON.parse(data)
       setBankName(dateParse.recipientInformation.bankName)
-      setPoint(dateParse.point.toString())
+      setPoint(numberWithCommas(dateParse.point.toString()))
       setName(dateParse.recipientInformation.name)
       setIdentityCard(dateParse.recipientInformation.identityCard.toString())
       setBankAccountNumber(
