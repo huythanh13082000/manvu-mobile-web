@@ -104,7 +104,7 @@ const ServicePage = () => {
   ])
   return (
     <div className={classes.service_container}>
-      <HeaderSearch />
+      {/* <HeaderSearch /> */}
       <Box bgcolor={'#F6F6F6'}>
         <div style={{display: 'flex', alignItems: 'center'}}>
           <div>

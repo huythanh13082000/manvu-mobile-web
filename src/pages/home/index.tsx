@@ -63,7 +63,7 @@ const Home = () => {
   }, [dispatch, limit, offset, medias, tagIds, columsfilter, areaIds])
   return (
     <div className={classes.home_container}>
-      <HeaderSearch />
+      {/* <HeaderSearch /> */}
 
       <Box bgcolor={'#F6F6F6'} padding='0.7rem 0'>
         <Grid container justifyContent={'space-between'}>

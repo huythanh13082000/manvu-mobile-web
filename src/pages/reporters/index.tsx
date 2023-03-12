@@ -78,7 +78,7 @@ const ReportersPage = () => {
   }, [value, dispatch, limit, medias, tagIds, columsfilter, areaIds])
   return (
     <div className={classes.reporters_container}>
-      <HeaderSearch />
+      {/* <HeaderSearch /> */}
       <Box bgcolor={'#F6F6F6'}>
         <div style={{display: 'flex', alignItems: 'center'}}>
           <div>

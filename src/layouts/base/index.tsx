@@ -1,9 +1,12 @@
 import {makeStyles} from '@mui/styles'
 import React, {ReactNode, useEffect} from 'react'
+import {useLocation} from 'react-router-dom'
 import {setTokenAxios} from '../../apis/axiosClient'
 import {useAppDispatch} from '../../app/hooks'
+import HeaderSearch from '../../components/header/headerSearch'
 import {createCampaignActions} from '../../feature/create_campaign/createCampaign.slice'
 import {userActions} from '../../feature/user/user.slice'
+import {ROUTE} from '../../router/routes'
 
 const useStyles = makeStyles({
   base_layout_container: {
@@ -17,6 +20,7 @@ const useStyles = makeStyles({
 const BaseLayout = (props: {children: ReactNode}) => {
   const classes = useStyles()
   const dispatch = useAppDispatch()
+  const location = useLocation()
   useEffect(() => {
     dispatch(createCampaignActions.getListHashTag())
   }, [dispatch])
@@ -26,7 +30,22 @@ const BaseLayout = (props: {children: ReactNode}) => {
       dispatch(userActions.getProfile())
     }
   }, [dispatch])
-  return <div className={classes.base_layout_container}>{props.children}</div>
+  const showHeaderSearch = () => {
+    const arrayRoute = [
+      ROUTE.HOME,
+      ROUTE.PRODUCT,
+      ROUTE.REPORTERS,
+      ROUTE.SERVICE,
+      ROUTE.SERVICES,
+    ]
+    if (arrayRoute.includes(location.pathname)) return <HeaderSearch />
+  }
+  return (
+    <div className={classes.base_layout_container}>
+      {showHeaderSearch()}
+      {props.children}
+    </div>
+  )
 }
 
 export default BaseLayout

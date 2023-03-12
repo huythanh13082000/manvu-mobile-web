@@ -78,7 +78,7 @@ const ProductPage = () => {
   }, [value, dispatch, limit, offset, medias, tagIds, columsfilter, areaIds])
   return (
     <div className={classes.product_container}>
-      <HeaderSearch />
+      {/* <HeaderSearch /> */}
        <Box bgcolor={'#F6F6F6'}>
         <div style={{display: 'flex', alignItems: 'center'}}>
           <div>
