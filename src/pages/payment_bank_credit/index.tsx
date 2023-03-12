@@ -349,7 +349,7 @@ const PaymentBankCredit = () => {
               <InputForm
                 label='결제 금액'
                 placeholder=''
-                type='text'
+                type='number'
                 value={price}
                 onChange={(e) => {
                   setPrice(e)

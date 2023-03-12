@@ -308,7 +308,7 @@ const ServiceCenter = () => {
       </div>
 
       <div>
-        <p onClick={() => navigate(ROUTE.MY_CAMPAIGN)}>
+        <p onClick={() => navigate(`${ROUTE.MY_CAMPAIGN}/all`)}>
           <span>나의 캠페인</span>
           <img
             src={rightImage}

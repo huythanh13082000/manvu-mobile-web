@@ -38,7 +38,7 @@ const Notification = () => {
           loader={<></>}
         >
           {listInappNotification?.map((item) => (
-            <CardInappNotification item={item} />
+            <CardInappNotification item={item} key={item.id} />
           ))}
         </InfiniteScroll>
       )}

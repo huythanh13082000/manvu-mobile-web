@@ -63,7 +63,7 @@ const CardInappNotification = (props: {item?: InappNotification}) => {
                 })
               )
             dispatch(tabActions.activeTabPointManagement(2))
-            navigate('/pointManagement')
+            navigate(ROUTE.POINT_MANAGEMENT)
           } else {
             if (props.item?.id)
               dispatch(
